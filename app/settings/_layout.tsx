@@ -1,13 +1,13 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
 import { Stack } from 'expo-router'
+import React from 'react'
+import { StyleSheet } from 'react-native'
 
 const _layout = () => {
   return (
     <Stack>
-        <Stack.Screen name='account'/>
-        <Stack.Screen name='security'/>
-        <Stack.Screen name='help'/>
+      <Stack.Screen name='account' options={{ headerShown: false }} />
+      <Stack.Screen name='security' options={{ headerShown: false }} />
+      <Stack.Screen name='help' options={{ headerShown: false }} />
     </Stack>
   )
 }

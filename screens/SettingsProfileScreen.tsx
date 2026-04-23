@@ -1,15 +1,17 @@
+import { useRouter } from 'expo-router';
 import React, { useState } from "react";
 import {
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
-  ScrollView,
 } from "react-native";
 
 const IdentityProfile = ({ navigation }: any) => {
+  const router = useRouter();
   const [form, setForm] = useState({
     fullName: "Allah Dino",
     email: "allahdino2026@gmail.com",
@@ -29,12 +31,13 @@ const IdentityProfile = ({ navigation }: any) => {
         <Text style={styles.heading}>Identity & Profile</Text>
 
         <View style={styles.formContainer}>
-          <Text style={styles.label}>FULL NAME</Text>
+          <Text style={styles.label} >FULL NAME</Text>
           <TextInput
             style={styles.input}
             value={form.fullName}
             onChangeText={(text) => handleChange("fullName", text)}
             placeholder="Enter full name"
+            editable={false}
           />
 
           <Text style={styles.label}>EMAIL ADDRESS</Text>
@@ -44,6 +47,7 @@ const IdentityProfile = ({ navigation }: any) => {
             onChangeText={(text) => handleChange("email", text)}
             placeholder="Enter email"
             keyboardType="email-address"
+            editable={false}
           />
 
           <Text style={styles.label}>PHONE NUMBER</Text>
@@ -53,6 +57,7 @@ const IdentityProfile = ({ navigation }: any) => {
             onChangeText={(text) => handleChange("phone", text)}
             placeholder="Enter phone"
             keyboardType="phone-pad"
+            editable={false}
           />
 
           <Text style={styles.label}>MARKET NAME</Text>
@@ -61,6 +66,7 @@ const IdentityProfile = ({ navigation }: any) => {
             value={form.market}
             onChangeText={(text) => handleChange("market", text)}
             placeholder="Enter market name"
+            editable={false}
           />
 
           <Text style={styles.label}>DISTRICT NAME</Text>
@@ -69,11 +75,12 @@ const IdentityProfile = ({ navigation }: any) => {
             value={form.district}
             onChangeText={(text) => handleChange("district", text)}
             placeholder="Enter district"
+            editable={false}
           />
 
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation?.goBack()}
+            onPress={() => router.back()}
           >
             <Text style={styles.buttonText}>← Back</Text>
           </TouchableOpacity>

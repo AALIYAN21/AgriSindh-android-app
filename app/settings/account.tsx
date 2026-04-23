@@ -1,10 +1,11 @@
-import { StyleSheet, Text, View } from 'react-native'
+import IdentityProfile from '@/screens/SettingsProfileScreen'
 import React from 'react'
+import { StyleSheet, View } from 'react-native'
 
 const account = () => {
   return (
-    <View>
-      <Text>account</Text>
+    <View style={{ flex: 1 }}>
+      <IdentityProfile />
     </View>
   )
 }

@@ -1,10 +1,12 @@
 // app/(tabs)/profile.js
 import { Fonts } from '@/constants/theme'
 import { MaterialIcons } from '@expo/vector-icons'
+import { useRouter } from 'expo-router'
 import React from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 const Profile = () => {
+    const router = useRouter()
     return (
         <View style={styles.container}>
 
@@ -31,16 +33,19 @@ const Profile = () => {
                     icon="person-outline"
                     title="Account Information"
                     subtitle="Personal details and professional bio"
+                    onPress={() => router.push("/settings/account")}
                 />
                 <MenuItem
                     icon="security"
                     title="Security"
                     subtitle="Password, 2FA, and login history"
+                    onPress={() => router.push("/settings/security")}
                 />
                 <MenuItem
                     icon="support-agent"
                     title="Help & Support"
                     subtitle="Documentation and priority assistance"
+                    onPress={() => router.push("/settings/help")}
                 />
             </View>
 
@@ -61,8 +66,8 @@ export default Profile
 type IconName = React.ComponentProps<typeof MaterialIcons>['name']
 
 // 🔹 Reusable Menu Item
-const MenuItem = ({ icon, title, subtitle }: { icon: IconName, title: string, subtitle: string }) => (
-    <TouchableOpacity style={styles.menuItem}>
+const MenuItem = ({ icon, title, subtitle, onPress }: { icon: IconName, title: string, subtitle: string, onPress: () => void }) => (
+    <TouchableOpacity style={styles.menuItem} onPress={onPress}>
         <View style={styles.iconBox}>
             <MaterialIcons name={icon} size={20} color="#1F5D2B" />
         </View>
