@@ -23,9 +23,7 @@ const FeatureScreen = () => {
       {/* FEATURE CARD */}
       <View style={styles.cardWrapper}>
         <ImageBackground
-          source={{
-            uri: "https://images.unsplash.com/photo-1610348725531-843dff563e2c?auto=format&fit=crop&q=80&w=2000",
-          }}
+          source={require("../assets/images/Card.jpg")}
           style={styles.card}
           imageStyle={styles.image}
         >

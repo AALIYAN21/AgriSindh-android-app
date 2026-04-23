@@ -24,6 +24,7 @@ export default function RootLayout() {
         <Stack.Screen name="index" />
         <Stack.Screen name="notification" options={{ headerShown: false }} />
         <Stack.Screen name="commodityForm" />
+        <Stack.Screen name='settings'/>
       </Stack>
       <StatusBar style="dark" />
     </ThemeProvider>
