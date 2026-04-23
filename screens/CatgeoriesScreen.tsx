@@ -1,10 +1,11 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
 import CatgeoriesCard from '@/components/CatgeoriesCard'
+import { Colors } from '@/constants/theme'
+import React from 'react'
+import { StyleSheet, Text, View } from 'react-native'
 
 const CatgeoriesScreen = () => {
   return (
-   <View style={styles.container}>
+    <View style={styles.container}>
       {/* Label */}
       <Text style={styles.label}>THE CULTIVATED LEDGER</Text>
 
@@ -18,7 +19,7 @@ const CatgeoriesScreen = () => {
         Add new agricultural products to your ledger.
       </Text>
       <View style={styles.categoryCardContainer}>
-      <CatgeoriesCard/>
+        <CatgeoriesCard />
       </View>
     </View>
   )
@@ -27,12 +28,14 @@ const CatgeoriesScreen = () => {
 export default CatgeoriesScreen
 
 const styles = StyleSheet.create({
-    container: {
+  container: {
+    backgroundColor: "#F6F7FB",
     marginBottom: 48,
     paddingHorizontal: 16,
-    top: "5%"
+    top: "8%"
   },
   categoryCardContainer: {
+    backgroundColor: "#F6F7FB",
     marginTop: '5%'
   },
 
@@ -42,24 +45,25 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     color: "#2e7d32", // primary green
     fontWeight: "700",
-    marginBottom: 8,
+    marginBottom: 3,
+    marginTop: 5,
   },
 
   heading: {
     fontSize: 34,
     fontWeight: "800",
-    color: "#215c24", // dark text
+    color: Colors.light.primary,
     lineHeight: 38,
-    marginBottom: 12,
+    marginBottom: 3,
   },
-    description: {
+  description: {
     fontSize: 16,
     color: "#6b7280", // muted gray
     lineHeight: 24,
     maxWidth: 420,
   },
 
-    highlight: {
+  highlight: {
     color: "#2e7d32", // primary green
   },
 

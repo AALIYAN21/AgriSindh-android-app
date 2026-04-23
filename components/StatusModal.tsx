@@ -1,11 +1,14 @@
+import { Colors } from "@/constants/theme";
+import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
 import {
-  View,
+  Modal,
+  StyleSheet,
   Text,
   TouchableOpacity,
-  StyleSheet,
-  Modal,
+  View,
 } from "react-native";
+
 
 type Props = {
   status: "sync" | "upload";
@@ -16,12 +19,12 @@ const statusConfig = {
   sync: {
     title: "Sync Complete",
     message: "Your data has been successfully synced.",
-    icon: "🔄",
+    icon: <MaterialIcons name="refresh" size={80} color={Colors.light.primary} />,
   },
   upload: {
     title: "Upload Complete",
     message: "Your data has been successfully uploaded.",
-    icon: "✅",
+    icon: <MaterialIcons name="check-circle" size={80} color={Colors.light.primary} />,
   },
 };
 
@@ -87,7 +90,7 @@ const styles = StyleSheet.create({
 
   button: {
     width: "100%",
-    backgroundColor: "#16a34a",
+    backgroundColor: Colors.light.primary,
     paddingVertical: 12,
     borderRadius: 30,
     alignItems: "center",

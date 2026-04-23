@@ -1,12 +1,13 @@
+import { Colors } from "@/constants/theme";
+import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
   ImageBackground,
+  StyleSheet,
+  Text,
   TouchableOpacity,
+  View,
 } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
 
 const FeatureScreen = () => {
   return (
@@ -34,7 +35,7 @@ const FeatureScreen = () => {
             <TouchableOpacity style={styles.button}>
               <Text style={styles.buttonText}>Add Commodities</Text>
               {/* <Text style={styles.icon}>＋</Text> */}
-              <MaterialIcons name="add-circle-outline" color={"white"} size={20}/>
+              <MaterialIcons name="add-circle-outline" color={"white"} size={20} />
             </TouchableOpacity>
           </View>
         </ImageBackground>
@@ -43,28 +44,14 @@ const FeatureScreen = () => {
   );
 };
 
-/* NAV ITEM COMPONENT */
-const NavItem = ({ icon, label, active }: {icon: any, label: string, active: boolean}) => {
-  return (
-    <TouchableOpacity
-      style={[styles.navItem, active && styles.navItemActive]}
-    >
-      <Text style={styles.navIcon}>{icon}</Text>
-
-      <Text style={[styles.navLabel, active && styles.navLabelActive]}>
-        {label}
-      </Text>
-    </TouchableOpacity>
-  );
-};
 
 export default FeatureScreen;
 
 /* STYLES */
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "#F6F7FB",
     flex: 1,
-    backgroundColor: "#f5f5f5",
   },
 
   /* CARD */
@@ -112,7 +99,7 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#2e7d32",
+    backgroundColor: Colors.light.primary,
     paddingVertical: 14,
     paddingHorizontal: 70,
     borderRadius: 20,
@@ -130,47 +117,4 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 
-  /* BOTTOM NAV */
-  bottomNav: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    flexDirection: "row",
-    justifyContent: "space-around",
-    paddingVertical: 12,
-    paddingBottom: 20,
-    backgroundColor: "rgba(255,255,255,0.95)",
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
-    elevation: 10,
-  },
-
-  navItem: {
-    alignItems: "center",
-    padding: 8,
-  },
-
-  navItemActive: {
-    backgroundColor: "#2e7d32",
-    borderRadius: 14,
-    paddingHorizontal: 14,
-    paddingVertical: 6,
-  },
-
-  navIcon: {
-    fontSize: 18,
-  },
-
-  navLabel: {
-    fontSize: 10,
-    marginTop: 4,
-    color: "#666",
-    fontWeight: "600",
-    textTransform: "uppercase",
-  },
-
-  navLabelActive: {
-    color: "#fff",
-  },
 });

@@ -1,3 +1,4 @@
+import { Colors } from '@/constants/theme';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import React, { useMemo, useState } from 'react';
 import {
@@ -41,6 +42,17 @@ export default function CommodityTable() {
 
     const selectedDate = date.toISOString().split('T')[0];
 
+    // ✅ DATE HANDLER (FIXED)
+    const onChangeDate = (event: any, selectedDate?: Date) => {
+        if (Platform.OS === 'android') {
+            setShowPicker(false);
+        }
+
+        if (selectedDate) {
+            setDate(selectedDate);
+        }
+    };
+
     const filteredData = useMemo(() => {
         return DATA.filter(item => {
             const matchCategory =
@@ -53,11 +65,9 @@ export default function CommodityTable() {
         });
     }, [selectedCommodity, selectedDate]);
 
-    const visibleData = expanded
-        ? filteredData
-        : filteredData.slice(0, 4);
+    const visibleData = expanded ? filteredData : filteredData.slice(0, 4);
 
-    const renderItem = ({ item }: { item: any }) => (
+    const renderItem = ({ item }: any) => (
         <View style={styles.row}>
             <View style={[styles.iconBox, { backgroundColor: item.color }]}>
                 <Text style={styles.iconText}>
@@ -80,7 +90,8 @@ export default function CommodityTable() {
 
             {/* FILTERS */}
             <View style={styles.filterRow}>
-                {/* DROPDOWN */}
+
+                {/* CATEGORY */}
                 <TouchableOpacity
                     style={styles.dropdown}
                     onPress={() => setShowDropdown(true)}
@@ -105,7 +116,7 @@ export default function CommodityTable() {
                 </TouchableOpacity>
             </View>
 
-            {/* TABLE HEADER */}
+            {/* HEADER */}
             <View style={styles.tableHeader}>
                 <Text style={styles.h1}>Commodity</Text>
                 <Text style={styles.h2}>Price</Text>
@@ -117,8 +128,8 @@ export default function CommodityTable() {
                 keyExtractor={item => item.id}
                 renderItem={renderItem}
                 scrollEnabled={false}
-                nestedScrollEnabled={true}
             />
+
             {filteredData.length > 4 && (
                 <TouchableOpacity
                     onPress={() => setExpanded(!expanded)}
@@ -130,12 +141,8 @@ export default function CommodityTable() {
                 </TouchableOpacity>
             )}
 
-            {/* CATEGORY DROPDOWN MODAL */}
-            <Modal
-                visible={showDropdown}
-                transparent
-                animationType="fade"
-            >
+            {/* CATEGORY MODAL */}
+            <Modal visible={showDropdown} transparent animationType="fade">
                 <TouchableOpacity
                     style={styles.modalOverlay}
                     onPress={() => setShowDropdown(false)}
@@ -157,17 +164,42 @@ export default function CommodityTable() {
                 </TouchableOpacity>
             </Modal>
 
-            {/* DATE PICKER */}
-            {showPicker && (
+            {/* ✅ ANDROID PICKER */}
+            {showPicker && Platform.OS === 'android' && (
                 <DateTimePicker
                     value={date}
                     mode="date"
-                    display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-                    onChange={(event, selectedDate) => {
-                        setShowPicker(false);
-                        if (selectedDate) setDate(selectedDate);
-                    }}
+                    display="default"
+                    onChange={onChangeDate}
                 />
+            )}
+
+            {/* ✅ iOS PICKER (MODAL STYLE) */}
+            {showPicker && Platform.OS === 'ios' && (
+                <Modal transparent animationType="slide">
+                    <View style={styles.pickerModal}>
+                        <View style={styles.pickerContainer}>
+
+                            <DateTimePicker
+                                value={date}
+                                mode="date"
+                                display="spinner"
+                                onChange={onChangeDate}
+                                textColor="#000"   // ✅ FIX: makes text visible on iOS
+                            />
+
+                            <TouchableOpacity
+                                style={styles.doneBtn}
+                                onPress={() => setShowPicker(false)}
+                            >
+                                <Text style={{ color: '#fff', fontWeight: '700' }}>
+                                    Done
+                                </Text>
+                            </TouchableOpacity>
+
+                        </View>
+                    </View>
+                </Modal>
             )}
         </View>
     );
@@ -183,7 +215,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 30,
         fontWeight: '900',
-        color: 'darkgreen',
+        color: Colors.light.primary,
     },
 
     subtitle: {
@@ -191,7 +223,26 @@ const styles = StyleSheet.create({
         color: '#64748B',
         marginBottom: 12,
     },
+    pickerModal: {
+        flex: 1,
+        justifyContent: 'flex-end',
+        backgroundColor: 'rgba(0,0,0,0.4)',
+    },
 
+    pickerContainer: {
+        backgroundColor: '#fff',
+        padding: 16,
+        borderTopLeftRadius: 16,
+        borderTopRightRadius: 16,
+    },
+
+    doneBtn: {
+        marginTop: 10,
+        backgroundColor: '#0B6B3A',
+        padding: 12,
+        borderRadius: 10,
+        alignItems: 'center',
+    },
     filterRow: {
         flexDirection: 'row',
         gap: 8,
@@ -220,7 +271,7 @@ const styles = StyleSheet.create({
     },
 
     filterBtn: {
-        backgroundColor: '#0B6B3A',
+        backgroundColor: Colors.light.primary,
         paddingHorizontal: 14,
         justifyContent: 'center',
         borderRadius: 8,
@@ -269,7 +320,7 @@ const styles = StyleSheet.create({
     },
 
     expandText: {
-        color: '#0B6B3A',
+        color: Colors.light.primary,
         fontWeight: '700',
     },
 

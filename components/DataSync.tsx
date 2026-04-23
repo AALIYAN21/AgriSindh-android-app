@@ -1,9 +1,8 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import { useState } from "react";
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { PieChart } from "react-native-gifted-charts";
-import StatusModal from "./PopCard";
+import StatusModal from "./StatusModal";
 
 const DataSyncStatus = () => {
   const [showModal, setShowModal] = useState(false);
