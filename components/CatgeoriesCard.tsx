@@ -1,5 +1,6 @@
 import { Colors } from "@/constants/theme";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useRouter } from 'expo-router';
 import React from "react";
 import {
   ImageBackground,
@@ -10,6 +11,13 @@ import {
 } from "react-native";
 
 const FeatureScreen = () => {
+
+  const router = useRouter();
+
+  const handlePress = () => {
+    router.push('/commodityForm');
+  };
+
   return (
     <View style={styles.container}>
       {/* FEATURE CARD */}
@@ -32,7 +40,7 @@ const FeatureScreen = () => {
               Manage all your agricultural commodities in one centralized location.
             </Text>
 
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={() => handlePress()}>
               <Text style={styles.buttonText}>Add Commodities</Text>
               {/* <Text style={styles.icon}>＋</Text> */}
               <MaterialIcons name="add-circle-outline" color={"white"} size={20} />

@@ -23,6 +23,7 @@ export default function RootLayout() {
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="index" />
         <Stack.Screen name="notification" options={{ headerShown: false }} />
+        <Stack.Screen name="commodityForm" />
       </Stack>
       <StatusBar style="dark" />
     </ThemeProvider>
