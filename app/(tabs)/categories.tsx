@@ -1,11 +1,10 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
+import CatgeoriesScreen from '@/screens/CatgeoriesScreen'
 
 const categories = () => {
     return (
-        <View>
-            <Text>categories</Text>
-        </View>
+     <CatgeoriesScreen/>
     )
 }
 
