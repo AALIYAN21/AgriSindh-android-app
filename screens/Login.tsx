@@ -2,12 +2,12 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
-    Image,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -23,68 +23,70 @@ const Login = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Logo */}
-      <View style={styles.logoContainer}>
-        <Image
-          source={require("../assets/images/swat-logo.png")}
-          style={styles.logo}
-          resizeMode="contain"
-        />
-        <Text style={styles.logoText}>SWAT AMIS</Text>
-      </View>
+      <View style={styles.contentParent}>
+        {/* Logo */}
+        <View style={styles.logoContainer}>
+          <Image
+            source={require("../assets/images/swat-logo.png")}
+            style={styles.logo}
+            resizeMode="contain"
+          />
+          <Text style={styles.logoText}>SWAT AMIS</Text>
+        </View>
 
-      {/* Header */}
-      <Text style={styles.title}>Login</Text>
-      <Text style={styles.subtitle}>
-        Please enter your credentials to continue.
-      </Text>
-
-      {/* Username */}
-      <Text style={styles.label}>EMAIL OR USERNAME</Text>
-      <View style={styles.inputContainer}>
-        <MaterialIcons
-          name="person-outline"
-          size={18}
-          color="#999"
-        />
-        <TextInput
-          placeholder="e.g. j.doe@swat-amis.com"
-          placeholderTextColor="#bbb"
-          style={styles.input}
-          value={username}
-          onChangeText={setUsername}
-        />
-      </View>
-
-      {/* Password */}
-      <Text style={styles.label}>PASSWORD</Text>
-      <View style={styles.inputContainer}>
-        <MaterialIcons
-          name="lock-outline"
-          size={18}
-          color="#999"
-        />
-        <TextInput
-          placeholder="••••••••••••"
-          placeholderTextColor="#bbb"
-          secureTextEntry
-          style={styles.input}
-          value={password}
-          onChangeText={setPassword}
-        />
-        <MaterialIcons
-          name="visibility-off"
-          size={18}
-          color="#bbb"
-        />
-      </View>
-
-      {/* Login Button */}
-      <TouchableOpacity style={styles.loginButton} onPress={() => handleLogin()}>
-        <Text style={styles.loginText}>
-          Login ➜
+        {/* Header */}
+        <Text style={styles.title}>Login</Text>
+        <Text style={styles.subtitle}>
+          Please enter your credentials to continue.
         </Text>
-      </TouchableOpacity>
+
+        {/* Username */}
+        <Text style={styles.label}>EMAIL OR USERNAME</Text>
+        <View style={styles.inputContainer}>
+          <MaterialIcons
+            name="person-outline"
+            size={18}
+            color="#999"
+          />
+          <TextInput
+            placeholder="e.g. j.doe@swat-amis.com"
+            placeholderTextColor="#bbb"
+            style={styles.input}
+            value={username}
+            onChangeText={setUsername}
+          />
+        </View>
+
+        {/* Password */}
+        <Text style={styles.label}>PASSWORD</Text>
+        <View style={styles.inputContainer}>
+          <MaterialIcons
+            name="lock-outline"
+            size={18}
+            color="#999"
+          />
+          <TextInput
+            placeholder="••••••••••••"
+            placeholderTextColor="#bbb"
+            secureTextEntry
+            style={styles.input}
+            value={password}
+            onChangeText={setPassword}
+          />
+          <MaterialIcons
+            name="visibility-off"
+            size={18}
+            color="#bbb"
+          />
+        </View>
+
+        {/* Login Button */}
+        <TouchableOpacity style={styles.loginButton} onPress={() => handleLogin()}>
+          <Text style={styles.loginText}>
+            Login ➜
+          </Text>
+        </TouchableOpacity>
+      </View>
 
     </SafeAreaView>
   );
@@ -97,9 +99,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     paddingHorizontal: 30,
-    paddingTop: 50,
   },
-
+  contentParent: {
+    top: '18%'
+  },
   logoContainer: {
     flexDirection: "row",
     alignItems: "center",
