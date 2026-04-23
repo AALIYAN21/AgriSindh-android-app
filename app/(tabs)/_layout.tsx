@@ -60,7 +60,7 @@ export default Layout;
 const styles = StyleSheet.create({
   tabBar: {
     position: 'absolute',
-    height: 70, // Increased height to accommodate the padding/highlight
+    height: 85, // Increased height to accommodate the padding/highlight
     borderRadius: 20,
     backgroundColor: '#F6F7FB',
     borderTopWidth: 0,
