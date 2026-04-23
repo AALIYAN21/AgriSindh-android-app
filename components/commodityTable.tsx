@@ -57,7 +57,7 @@ export default function CommodityTable() {
         ? filteredData
         : filteredData.slice(0, 4);
 
-    const renderItem = ({ item } : {item : any}) => (
+    const renderItem = ({ item }: { item: any }) => (
         <View style={styles.row}>
             <View style={[styles.iconBox, { backgroundColor: item.color }]}>
                 <Text style={styles.iconText}>
