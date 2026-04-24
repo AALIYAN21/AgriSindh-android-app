@@ -19,9 +19,9 @@ export default function RootLayout() {
           header: () => <AppHeader />,
         }}
       >
+        <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" />
-        <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="notification" options={{ headerShown: false }} />
         <Stack.Screen name="commodityForm" />
         <Stack.Screen name='settings' />
