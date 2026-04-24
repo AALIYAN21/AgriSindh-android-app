@@ -31,7 +31,7 @@
           "image": "./assets/images/swat-splash-icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#1F5D2B",
+          "backgroundColor": "#2e7d32",
           "dark": {
             "backgroundColor": "#000000"
           }

@@ -25,7 +25,7 @@ export default function Splash() {
 
         // ⏳ REDIRECT AFTER 3 SEC
         const redirectTimer = setTimeout(() => {
-            router.replace("/login");
+            router.replace("/onboarding");
         }, 3000);
 
         return () => clearTimeout(redirectTimer);
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: "100%",
         height: "100%",
-        backgroundColor: "#2e7d32",
+        backgroundColor: "#ffffff",
         justifyContent: "center",
         alignItems: "center",
     },

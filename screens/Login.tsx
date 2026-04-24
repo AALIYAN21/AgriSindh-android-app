@@ -197,10 +197,7 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     borderRadius: 10,
     alignItems: "flex-start",
-    shadowColor: "#154212",
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
-    elevation: 4,
+    shadowColor: "#154212"
   },
   forgetPasswordText: {
     color: "#154212",

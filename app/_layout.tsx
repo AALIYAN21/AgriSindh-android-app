@@ -25,6 +25,7 @@ export default function RootLayout() {
         <Stack.Screen name="notification" options={{ headerShown: false }} />
         <Stack.Screen name="commodityForm" />
         <Stack.Screen name='settings' />
+        <Stack.Screen name='onboarding' options={{ headerShown: false }} />
       </Stack>
       <StatusBar style="dark" />
     </ThemeProvider>
