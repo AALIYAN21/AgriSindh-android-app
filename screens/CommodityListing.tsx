@@ -4,7 +4,6 @@ import { router } from 'expo-router';
 import React, { useMemo, useState } from 'react';
 import {
     Platform,
-    SafeAreaView,
     ScrollView,
     StyleSheet,
     Text,
@@ -66,7 +65,7 @@ const CommodityListing = () => {
     const handleCloseModal = () => setModalVisible(false);
 
     return (
-        <SafeAreaView style={styles.safeArea}>
+        <View style={styles.safeArea}>
             {isModalVisible && (
                 <StatusModal onClose={handleCloseModal} status="upload" />
             )}
@@ -198,7 +197,7 @@ const CommodityListing = () => {
                 </TouchableOpacity>
 
             </ScrollView>
-        </SafeAreaView>
+        </View>
     );
 };
 

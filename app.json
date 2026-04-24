@@ -16,7 +16,8 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.aali_edward.AmisSindh"
     },
     "web": {
       "output": "static",
@@ -41,6 +42,13 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "54f36e13-668a-45cc-910a-38a7f378e596"
+      }
+    },
+    "owner": "aali_edward"
   }
 }
