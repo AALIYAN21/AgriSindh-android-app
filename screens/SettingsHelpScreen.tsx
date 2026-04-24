@@ -1,20 +1,19 @@
+import StatusModal from "@/components/StatusModal";
+import { MaterialIcons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
+  Alert,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
-  ScrollView,
-  Alert,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { MaterialIcons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
-import StatusModal from "@/components/StatusModal";
 
 const HelpSupport = ({ navigation }: any) => {
-    const router = useRouter();
+  const router = useRouter();
   const [complaint, setComplaint] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -33,10 +32,10 @@ const HelpSupport = ({ navigation }: any) => {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-        {isModalVisible && 
-        <StatusModal status="upload" onClose={handleDismissModal}/>
-        }
+    <View style={styles.container}>
+      {isModalVisible &&
+        <StatusModal status="upload" onClose={handleDismissModal} />
+      }
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Heading */}
         <Text style={styles.heading}>Help & Support</Text>
@@ -77,7 +76,7 @@ const HelpSupport = ({ navigation }: any) => {
           <Text style={styles.backText}> Back to Dashboard</Text>
         </TouchableOpacity>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -87,8 +86,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F4F4F4",
-    padding: 18,
-    marginTop: "-8%"
+    padding: 18
   },
 
   heading: {

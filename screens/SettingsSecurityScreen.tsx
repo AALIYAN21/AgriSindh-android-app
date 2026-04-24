@@ -1,19 +1,18 @@
+import { MaterialIcons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import React from "react";
 import {
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  ScrollView,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { MaterialIcons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
 
 const PrivacySecurity = ({ navigation }: any) => {
   const router = useRouter();
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Text style={styles.heading}>Privacy & Security</Text>
 
@@ -89,7 +88,7 @@ const PrivacySecurity = ({ navigation }: any) => {
           <Text style={styles.buttonText}> Back</Text>
         </TouchableOpacity>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -100,7 +99,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#F3F4F2",
     padding: 18,
-    marginTop: '-8%'
   },
 
   heading: {

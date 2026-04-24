@@ -1,13 +1,12 @@
 import { useRouter } from 'expo-router';
 import React, { useState } from "react";
 import {
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 
 const IdentityProfile = ({ navigation }: any) => {
@@ -25,7 +24,7 @@ const IdentityProfile = ({ navigation }: any) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Text style={styles.smallHeading}>ACCOUNT MANAGEMENT</Text>
         <Text style={styles.heading}>Identity & Profile</Text>
@@ -86,7 +85,7 @@ const IdentityProfile = ({ navigation }: any) => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
