@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import PrivacySecurity from '@/screens/SettingsSecurityScreen'
 
 const security = () => {
   return (
-    <View>
-      <Text>security</Text>
+    <View style={{flex: 1}}>
+      <PrivacySecurity/>
     </View>
   )
 }
