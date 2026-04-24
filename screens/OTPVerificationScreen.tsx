@@ -18,24 +18,26 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 const OTPVerificationScreen = () => {
     const [otp, setOtp] = useState(['', '', '', '']);
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const inputs = useRef([]);
+    const inputs = useRef<Array<TextInput | null>>([]);
     const router = useRouter();
 
-    const handleChange = (text, index) => {
+
+
+    const handleChange = (text: any, index: any) => {
         const newOtp = [...otp];
         newOtp[index] = text;
         setOtp(newOtp);
 
         // Auto-focus next input if text is entered
         if (text && index < 3) {
-            inputs.current[index + 1].focus();
+            inputs.current[index + 1]?.focus();
         }
     };
 
-    const handleKeyPress = (e, index) => {
+    const handleKeyPress = (e: any, index: any) => {
         // Move to previous input on backspace if current field is empty
         if (e.nativeEvent.key === 'Backspace' && !otp[index] && index > 0) {
-            inputs.current[index - 1].focus();
+            inputs.current[index - 1]?.focus();
         }
     };
 
@@ -71,7 +73,7 @@ const OTPVerificationScreen = () => {
                             {otp.map((digit, index) => (
                                 <View key={index} style={styles.inputWrapper}>
                                     <TextInput
-                                        ref={(ref) => (inputs.current[index] = ref)}
+                                        ref={(ref) => { inputs.current[index] = ref }}
                                         style={styles.otpInput}
                                         maxLength={1}
                                         keyboardType="number-pad"
