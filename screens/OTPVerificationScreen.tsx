@@ -1,4 +1,3 @@
-import StatusModal from '@/components/StatusModal';
 import { AntDesign } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { useRef, useState } from 'react';
@@ -42,12 +41,7 @@ const OTPVerificationScreen = () => {
     };
 
     const handleOTPVerification = () => {
-        setIsModalVisible(true);
-    }
-
-    const handleCloseModal = () => {
-        setIsModalVisible(false);
-        router.push('/(tabs)/home');
+        router.push('/(auth)/set-password');
     }
 
     return (
@@ -102,15 +96,6 @@ const OTPVerificationScreen = () => {
                                 <Text style={styles.resendLink}>Resend</Text>
                             </TouchableOpacity>
                         </View>
-
-                        {
-                            isModalVisible && (
-                                <StatusModal
-                                    status="otp"
-                                    onClose={() => handleCloseModal()}
-                                />
-                            )
-                        }
                     </View>
                 </KeyboardAvoidingView>
             </TouchableWithoutFeedback>

@@ -11,7 +11,7 @@ import {
 
 
 type Props = {
-  status: "sync" | "upload" | "otp";
+  status: "sync" | "upload" | "otp" | "passwordReset";
   onClose: () => void;
 };
 
@@ -31,13 +31,18 @@ const statusConfig = {
     message: "Your OTP has been successfully verified.",
     icon: <MaterialIcons name="check-circle" size={80} color={Colors.light.primary} />,
   },
+  passwordReset: {
+    title: "Password Reset",
+    message: "You can now login with your new password.",
+    icon: <MaterialIcons name="check-circle" size={80} color={Colors.light.primary} />,
+  },
 };
 
 export default function StatusModal({ status = "upload", onClose }: Props) {
   const data = statusConfig[status] || statusConfig.upload;
 
   return (
-    <Modal transparent animationType="fade" visible>
+    <Modal transparent animationType="fade" visible={status !== null}>
       <View style={styles.overlay}>
         <View style={styles.card}>
 

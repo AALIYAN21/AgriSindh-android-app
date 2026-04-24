@@ -7,6 +7,8 @@ const _layout = () => {
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name='login' />
       <Stack.Screen name='forgetPassword' />
+      <Stack.Screen name='otp-verification' />
+      <Stack.Screen name='set-password' />
     </Stack>
   )
 }
