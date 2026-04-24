@@ -4,8 +4,9 @@ import { StyleSheet } from 'react-native'
 
 const _layout = () => {
   return (
-    <Stack screenOptions={{headerShown: false}}>
-        <Stack.Screen name='login'/>
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name='login' />
+      <Stack.Screen name='forgetPassword' />
     </Stack>
   )
 }

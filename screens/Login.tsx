@@ -3,10 +3,14 @@ import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
   Image,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -21,73 +25,87 @@ const Login = () => {
     router.push("/(tabs)/home")
   }
 
+  const handleForgetPassword = () => {
+    router.push("/(auth)/forgetPassword")
+  }
+
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.contentParent}>
-        {/* Logo */}
-        <View style={styles.logoContainer}>
-          <Image
-            source={require("../assets/images/swat-logo.png")}
-            style={styles.logo}
-            resizeMode="contain"
-          />
-          <Text style={styles.logoText}>SWAT AMIS</Text>
-        </View>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+          <View style={styles.contentParent}>
+            {/* Logo */}
+            <View style={styles.logoContainer}>
+              <Image
+                source={require("../assets/images/swat-logo.png")}
+                style={styles.logo}
+                resizeMode="contain"
+              />
+              <Text style={styles.logoText}>SWAT AMIS</Text>
+            </View>
 
-        {/* Header */}
-        <Text style={styles.title}>Login</Text>
-        <Text style={styles.subtitle}>
-          Please enter your credentials to continue.
-        </Text>
+            {/* Header */}
+            <Text style={styles.title}>Login</Text>
+            <Text style={styles.subtitle}>
+              Please enter your credentials to continue.
+            </Text>
 
-        {/* Username */}
-        <Text style={styles.label}>EMAIL OR USERNAME</Text>
-        <View style={styles.inputContainer}>
-          <MaterialIcons
-            name="person-outline"
-            size={18}
-            color="#999"
-          />
-          <TextInput
-            placeholder="e.g. j.doe@swat-amis.com"
-            placeholderTextColor="#bbb"
-            style={styles.input}
-            value={username}
-            onChangeText={setUsername}
-          />
-        </View>
+            {/* Username */}
+            <Text style={styles.label}>EMAIL OR USERNAME</Text>
+            <View style={styles.inputContainer}>
+              <MaterialIcons
+                name="person-outline"
+                size={18}
+                color="#999"
+              />
+              <TextInput
+                placeholder="e.g. j.doe@swat-amis.com"
+                placeholderTextColor="#bbb"
+                style={styles.input}
+                value={username}
+                onChangeText={setUsername}
+              />
+            </View>
 
-        {/* Password */}
-        <Text style={styles.label}>PASSWORD</Text>
-        <View style={styles.inputContainer}>
-          <MaterialIcons
-            name="lock-outline"
-            size={18}
-            color="#999"
-          />
-          <TextInput
-            placeholder="••••••••••••"
-            placeholderTextColor="#bbb"
-            secureTextEntry
-            style={styles.input}
-            value={password}
-            onChangeText={setPassword}
-          />
-          <MaterialIcons
-            name="visibility-off"
-            size={18}
-            color="#bbb"
-          />
-        </View>
+            {/* Password */}
+            <Text style={styles.label}>PASSWORD</Text>
+            <View style={styles.inputContainer}>
+              <MaterialIcons
+                name="lock-outline"
+                size={18}
+                color="#999"
+              />
+              <TextInput
+                placeholder="••••••••••••"
+                placeholderTextColor="#bbb"
+                secureTextEntry
+                style={styles.input}
+                value={password}
+                onChangeText={setPassword}
+              />
+              <MaterialIcons
+                name="visibility-off"
+                size={18}
+                color="#bbb"
+              />
+            </View>
 
-        {/* Login Button */}
-        <TouchableOpacity style={styles.loginButton} onPress={() => handleLogin()}>
-          <Text style={styles.loginText}>
-            Login ➜
-          </Text>
-        </TouchableOpacity>
-      </View>
+            {/* Login Button */}
+            <TouchableOpacity style={styles.loginButton} onPress={() => handleLogin()}>
+              <Text style={styles.loginText}>
+                Login ➜
+              </Text>
+            </TouchableOpacity>
 
+            {/* Forget Password Button */}
+            <TouchableOpacity style={styles.forgetPasswordButton} onPress={() => handleForgetPassword()}>
+              <Text style={styles.forgetPasswordText}>
+                Forgot Password ➜
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
     </SafeAreaView>
   );
 };
@@ -98,7 +116,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    paddingHorizontal: 30,
+    paddingHorizontal: 25,
   },
   contentParent: {
     top: '18%'
@@ -172,6 +190,20 @@ const styles = StyleSheet.create({
 
   loginText: {
     color: "#fff",
+    fontSize: 15,
+    fontWeight: "700",
+  },
+  forgetPasswordButton: {
+    paddingVertical: 16,
+    borderRadius: 10,
+    alignItems: "flex-start",
+    shadowColor: "#154212",
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  forgetPasswordText: {
+    color: "#154212",
     fontSize: 15,
     fontWeight: "700",
   },

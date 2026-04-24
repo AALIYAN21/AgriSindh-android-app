@@ -11,7 +11,7 @@ import {
 
 
 type Props = {
-  status: "sync" | "upload";
+  status: "sync" | "upload" | "otp";
   onClose: () => void;
 };
 
@@ -24,6 +24,11 @@ const statusConfig = {
   upload: {
     title: "Upload Complete",
     message: "Your data has been successfully uploaded.",
+    icon: <MaterialIcons name="check-circle" size={80} color={Colors.light.primary} />,
+  },
+  otp: {
+    title: "OTP Verified",
+    message: "Your OTP has been successfully verified.",
     icon: <MaterialIcons name="check-circle" size={80} color={Colors.light.primary} />,
   },
 };
