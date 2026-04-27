@@ -22,8 +22,7 @@
       "package": "com.aali_edward.AmisSindh"
     },
     "web": {
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "output": "static"
     },
     "plugins": [
       "expo-router",
