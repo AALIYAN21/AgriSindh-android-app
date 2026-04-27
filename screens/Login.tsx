@@ -36,11 +36,18 @@ const Login = () => {
           <View style={styles.contentParent}>
             {/* Logo */}
             <View style={styles.logoContainer}>
-              <Image
-                source={require("../assets/images/swat-logo.png")}
-                style={styles.logo}
-                resizeMode="contain"
-              />
+              <View style={styles.logosRow}>
+                <Image
+                  source={require("../assets/images/swat-app-icon-ios.png")}
+                  style={styles.logo}
+                  resizeMode="contain"
+                />
+                <Image
+                  source={require("../assets/images/sindh-gov-logo.png")}
+                  style={styles.logo}
+                  resizeMode="contain"
+                />
+              </View>
               <Text style={styles.logoText}>SWAT AMIS</Text>
             </View>
 
@@ -122,19 +129,26 @@ const styles = StyleSheet.create({
     top: '18%'
   },
   logoContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 50,
+  },
+  logosRow: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 40,
+    justifyContent: "center",
+    gap: 20,
+    marginBottom: 15,
   },
 
   logo: {
-    width: 28,
-    height: 28,
+    width: 80,
+    height: 80,
     marginRight: 8,
   },
 
   logoText: {
-    fontSize: 15,
+    fontSize: 20,
     fontWeight: "700",
     color: "#154212",
   },

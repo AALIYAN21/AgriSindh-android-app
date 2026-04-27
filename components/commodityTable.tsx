@@ -1,5 +1,7 @@
 import { Colors } from '@/constants/theme';
+import { MaterialIcons } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { useRouter } from 'expo-router';
 import React, { useMemo, useState } from 'react';
 import {
     FlatList,
@@ -29,6 +31,7 @@ const DATA = [
 ];
 
 export default function CommodityTable() {
+    const router = useRouter();
     const prev = new Date();
     prev.setDate(prev.getDate() - 1);
 
@@ -83,10 +86,21 @@ export default function CommodityTable() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Daily Volume of Commodities</Text>
-            <Text style={styles.subtitle}>
-                Latest trading metrics for active market entities.
-            </Text>
+            <View style={styles.headerRow}>
+                <View style={{ flex: 1, paddingRight: 10 }}>
+                    <Text style={styles.title}>Daily Volume of Commodities</Text>
+                    <Text style={styles.subtitle}>
+                        Latest trading metrics for active market entities.
+                    </Text>
+                </View>
+                <TouchableOpacity
+                    style={styles.recordBtn}
+                    onPress={() => router.push('/commodityForm')}
+                >
+                    <Text style={styles.recordBtnText}>Record Items</Text>
+                    <MaterialIcons name="add-circle-outline" color={"white"} size={20} />
+                </TouchableOpacity>
+            </View>
 
             {/* FILTERS */}
             <View style={styles.filterRow}>
@@ -213,7 +227,7 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        fontSize: 30,
+        fontSize: 25,
         fontWeight: '900',
         color: Colors.light.primary,
     },
@@ -222,6 +236,31 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: '#64748B',
         marginBottom: 12,
+    },
+    headerRow: {
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+        marginBottom: 10,
+    },
+    recordBtn: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 5,
+        backgroundColor: Colors.light.primary,
+        paddingVertical: 15,
+        paddingHorizontal: 20,
+        borderRadius: 10,
+        elevation: 3,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+    },
+    recordBtnText: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 14,
     },
     pickerModal: {
         flex: 1,

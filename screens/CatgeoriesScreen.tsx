@@ -11,7 +11,7 @@ const CatgeoriesScreen = () => {
 
       {/* Heading */}
       <Text style={styles.heading}>
-        List Commodities
+        Record Commodities
       </Text>
 
       {/* Description */}

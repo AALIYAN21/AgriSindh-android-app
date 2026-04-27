@@ -19,19 +19,19 @@ const STAGES = [
         id: 1,
         title: 'Sindh Agriculture And Water Transformation',
         description: 'The Agriculture Management Information System (AMIS) is designed to provide transparent, efficient, and reliable access',
-        image: require('@/assets/images/onboarding-1.png'),
+        image: require('../assets/images/onboarding-1.jpg'),
     },
     {
         id: 2,
         title: 'Centralized Record',
         description: 'The all-in-one record keeping solution for the Sindh Water & Agriculture Transformation Project. Real-time data management at your fingertips',
-        image: require('@/assets/images/onboarding-2.png'),
+        image: require('../assets/images/onboarding-2.jpg'),
     },
     {
         id: 3,
         title: 'Technology Powered Agriculture',
         description: 'SWAT AMIS is a platform powered by technology to provide transparent, efficient and reliable access.',
-        image: require('@/assets/images/onboarding-3.png'),
+        image: require('../assets/images/onboarding-3.jpg'),
     },
 ];
 

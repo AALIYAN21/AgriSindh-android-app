@@ -32,14 +32,14 @@ const FeatureScreen = () => {
 
           {/* CONTENT */}
           <View style={styles.content}>
-            <Text style={styles.title}>Add Items</Text>
+            <Text style={styles.title}>Record Commodities</Text>
 
             <Text style={styles.description}>
               Manage all your agricultural commodities in one centralized location.
             </Text>
 
             <TouchableOpacity style={styles.button} onPress={() => handlePress()}>
-              <Text style={styles.buttonText}>Add Commodities</Text>
+              <Text style={styles.buttonText}>Record Items</Text>
               {/* <Text style={styles.icon}>＋</Text> */}
               <MaterialIcons name="add-circle-outline" color={"white"} size={20} />
             </TouchableOpacity>

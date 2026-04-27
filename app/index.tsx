@@ -55,6 +55,12 @@ export default function Splash() {
                 <Text style={styles.fullForm}>
                     Sindh Water & Agriculture Transformation
                 </Text>
+
+                {/* Footer */}
+                <View style={styles.footer}>
+                    <Text style={styles.footerText}>Powered by</Text>
+                    <Text style={styles.footerText}>Verge Systems (Pvt) Ltd</Text>
+                </View>
             </Animated.View>
         </ImageBackground>
     );
@@ -67,11 +73,12 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "100%",
         backgroundColor: "#ffffff",
-        justifyContent: "center",
-        alignItems: "center",
     },
 
     logoContainer: {
+        flex: 1,
+        width: "100%",
+        justifyContent: "center",
         alignItems: "center",
     },
 
@@ -99,6 +106,19 @@ const styles = StyleSheet.create({
     backdrop: {
         ...StyleSheet.absoluteFillObject,
         backgroundColor: "rgba(0,0,0,0.25)",
+    },
+
+    footer: {
+        position: "absolute",
+        bottom: 40,
+        width: "100%",
+        alignItems: "center",
+    },
+
+    footerText: {
+        color: "#c8e6c9",
+        fontSize: 12,
+        fontWeight: "600",
     },
 
 });
