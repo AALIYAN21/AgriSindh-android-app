@@ -4,16 +4,18 @@
     "slug": "AmisSindh",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/swat-app-icon.android.png",
+    "icon": "./assets/images/swat-app-icon-android.png",
     "scheme": "amissindh",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "icon": "./assets/images/swat-app-icon-ios.png"
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#ffffff",
+        "foregroundImage": "./assets/images/swat-app-icon-android.png"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
@@ -37,7 +39,8 @@
           }
         }
       ],
-      "expo-font"
+      "expo-font",
+      "@react-native-community/datetimepicker"
     ],
     "experiments": {
       "typedRoutes": true,

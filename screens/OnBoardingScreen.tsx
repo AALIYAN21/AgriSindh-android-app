@@ -1,4 +1,5 @@
 import { useRouter } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import {
     Dimensions,
@@ -16,14 +17,14 @@ const { width } = Dimensions.get('window');
 const STAGES = [
     {
         id: 1,
-        title: 'Sindh Agriculture Water',
+        title: 'Sindh Agriculture And Water Transformation',
         description: 'The Agriculture Management Information System (AMIS) is designed to provide transparent, efficient, and reliable access',
         image: require('@/assets/images/onboarding-1.png'),
     },
     {
         id: 2,
         title: 'Centralized Record',
-        description: 'Keep track of all your records in one place.',
+        description: 'The all-in-one record keeping solution for the Sindh Water & Agriculture Transformation Project. Real-time data management at your fingertips',
         image: require('@/assets/images/onboarding-2.png'),
     },
     {
@@ -58,49 +59,55 @@ const OnboardingScreen = () => {
     };
 
     return (
-        <ImageBackground
-            source={STAGES[currentStage].image}
-            style={styles.backgroundImage}
-            resizeMode="cover"
-        >
-            <View style={styles.overlay} />
-            <SafeAreaView style={styles.container}>
-                {/* Top Progress Bars (WhatsApp Style) */}
-                <View style={styles.indicatorContainer}>
-                    {STAGES.map((_, index) => (
-                        <View key={index} style={styles.indicatorBackground}>
-                            <View
-                                style={[
-                                    styles.indicatorProgress,
-                                    {
-                                        width: index <= currentStage ? '100%' : '0%',
-                                    },
-                                ]}
-                            />
-                        </View>
-                    ))}
-                </View>
-
-                {/* Content Section */}
-                <TouchableWithoutFeedback onPress={handlePress}>
-                    <View style={styles.content}>
-                        <View style={styles.textWrapper}>
-                            <Text style={styles.title}>{STAGES[currentStage].title}</Text>
-                            <Text style={styles.subtitle}>{STAGES[currentStage].description}</Text>
-                        </View>
+        <>
+            <StatusBar
+                animated={true}
+                translucent={true}
+            />
+            <ImageBackground
+                source={STAGES[currentStage].image}
+                style={styles.backgroundImage}
+                resizeMode="cover"
+            >
+                <View style={styles.overlay} />
+                <SafeAreaView style={styles.container}>
+                    {/* Top Progress Bars (WhatsApp Style) */}
+                    <View style={styles.indicatorContainer}>
+                        {STAGES.map((_, index) => (
+                            <View key={index} style={styles.indicatorBackground}>
+                                <View
+                                    style={[
+                                        styles.indicatorProgress,
+                                        {
+                                            width: index <= currentStage ? '100%' : '0%',
+                                        },
+                                    ]}
+                                />
+                            </View>
+                        ))}
                     </View>
-                </TouchableWithoutFeedback>
 
-                {/* Bottom Section */}
-                <View style={styles.footer}>
-                    {currentStage < STAGES.length - 1 && (
-                        <TouchableOpacity onPress={() => router.replace('/login')}>
-                            <Text style={styles.skipText}>Skip Onboarding</Text>
-                        </TouchableOpacity>
-                    )}
-                </View>
-            </SafeAreaView>
-        </ImageBackground>
+                    {/* Content Section */}
+                    <TouchableWithoutFeedback onPress={handlePress}>
+                        <View style={styles.content}>
+                            <View style={styles.textWrapper}>
+                                <Text style={styles.title}>{STAGES[currentStage].title}</Text>
+                                <Text style={styles.subtitle}>{STAGES[currentStage].description}</Text>
+                            </View>
+                        </View>
+                    </TouchableWithoutFeedback>
+
+                    {/* Bottom Section */}
+                    <View style={styles.footer}>
+                        {currentStage < STAGES.length - 1 && (
+                            <TouchableOpacity onPress={() => router.replace('/login')}>
+                                <Text style={styles.skipText}>SKIP ONBOARDING</Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
+                </SafeAreaView>
+            </ImageBackground>
+        </>
     );
 };
 
