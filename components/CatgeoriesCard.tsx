@@ -1,4 +1,5 @@
 import { Colors } from "@/constants/theme";
+import { useTranslation } from "@/hooks/useLanguage";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from 'expo-router';
 import React from "react";
@@ -13,6 +14,8 @@ import {
 const FeatureScreen = () => {
 
   const router = useRouter();
+
+  const t = useTranslation();
 
   const handlePress = () => {
     router.push('/commodityForm');
@@ -32,14 +35,14 @@ const FeatureScreen = () => {
 
           {/* CONTENT */}
           <View style={styles.content}>
-            <Text style={styles.title}>Record Commodities</Text>
+            <Text style={styles.title}>{t("categories.categoriesCard.titleHeader")}</Text>
 
             <Text style={styles.description}>
-              Manage all your agricultural commodities in one centralized location.
+              {t("categories.categoriesCard.subTitle")}
             </Text>
 
             <TouchableOpacity style={styles.button} onPress={() => handlePress()}>
-              <Text style={styles.buttonText}>Record Items</Text>
+              <Text style={styles.buttonText}>{t("categories.categoriesCard.button")}</Text>
               {/* <Text style={styles.icon}>＋</Text> */}
               <MaterialIcons name="add-circle-outline" color={"white"} size={20} />
             </TouchableOpacity>
@@ -96,7 +99,7 @@ const styles = StyleSheet.create({
   },
 
   description: {
-    fontSize: 16,
+    fontSize: 14,
     color: "rgba(255,255,255,0.8)",
     marginBottom: 20,
     lineHeight: 22,

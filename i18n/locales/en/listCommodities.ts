@@ -1,0 +1,17 @@
+export default {
+    titleHeader: "List Commodities",
+    subTitle: "List all market commodities from here.",
+    categorySelection: "Select Category",
+    selectorsVegetables: "Vegetables",
+    selectorFruits: "Fruits",
+    EntryDate: "Entry Data",
+    tableItemHeader: "Item",
+    tableGradeHeader: "Grade",
+    tableKgsHeader: "Kgs",
+    tablePriceHeader: "Price/kg",
+    addRow: "Add Row",
+    uploadVegetablePhoto: "Upload Vegetables Photos",
+    uploadFruitsPhoto: "Upload Fruits Photos",
+    saveBtn: "Save and Continue",
+    backBtn: "Back"
+}

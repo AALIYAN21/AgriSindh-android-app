@@ -5,4 +5,6 @@ export default {
     tableHeaderCommodity: "اجناس",
     tableHeaderPrice: "قیمت",
     tableHeaderVolume: "حجم",
+    toggleMore: "مزید دکھائیں",
+    toggleLess: "کم دکھائیں"
 }

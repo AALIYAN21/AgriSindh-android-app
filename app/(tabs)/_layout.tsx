@@ -1,9 +1,12 @@
+import { useTranslation } from '@/hooks/useLanguage';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 const Layout = () => {
+  const t = useTranslation();
+
   return (
     <Tabs
       screenOptions={{
@@ -19,7 +22,7 @@ const Layout = () => {
       <Tabs.Screen
         name="home"
         options={{
-          title: 'HOME',
+          title: t("tabs.home"),
           tabBarIcon: ({ color, focused }) => (
             <View style={[styles.iconContainer, focused && styles.activeIcon]}>
               <MaterialIcons name="home" size={24} color={focused ? '#fff' : color} />
@@ -31,7 +34,7 @@ const Layout = () => {
       <Tabs.Screen
         name="categories"
         options={{
-          title: 'CATEGORIES',
+          title: t("tabs.categories"),
           tabBarIcon: ({ color, focused }) => (
             <View style={[styles.iconContainer, focused && styles.activeIcon]}>
               <MaterialIcons name="list" size={24} color={focused ? '#fff' : color} />
@@ -43,7 +46,7 @@ const Layout = () => {
       <Tabs.Screen
         name="profile"
         options={{
-          title: 'PROFILE',
+          title: t("tabs.profile"),
           tabBarIcon: ({ color, focused }) => (
             <View style={[styles.iconContainer, focused && styles.activeIcon]}>
               <MaterialIcons name="person" size={24} color={focused ? '#fff' : color} />

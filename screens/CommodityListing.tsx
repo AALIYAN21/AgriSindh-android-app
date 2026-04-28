@@ -1,4 +1,5 @@
 import StatusModal from '@/components/StatusModal';
+import { useTranslation } from '@/hooks/useLanguage';
 import { FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker'; // 1. Import ImagePicker
 import { router } from 'expo-router';
@@ -30,6 +31,8 @@ type CategoryType = 'Vegetables' | 'Fruits';
 const CommodityListing = () => {
     const [category, setCategory] = useState<CategoryType>('Vegetables');
     const [isModalVisible, setModalVisible] = useState(false);
+
+    const t = useTranslation();
 
     // 3. State for images per category
     const [images, setImages] = useState<Record<CategoryType, string[]>>({
@@ -164,10 +167,10 @@ const CommodityListing = () => {
                     <Text style={styles.tagText}>COMMODITY LISTING</Text>
                 </View>
 
-                <Text style={styles.mainTitle}>List Commodities</Text>
-                <Text style={styles.subtitle}>List all market commodities from here.</Text>
+                <Text style={styles.mainTitle}>{t("listCommodities.titleHeader")}</Text>
+                <Text style={styles.subtitle}>{t("listCommodities.subTitle")}</Text>
 
-                <Text style={styles.sectionLabel}>SELECT CATEGORY</Text>
+                <Text style={styles.sectionLabel}>{t("listCommodities.categorySelection")}</Text>
 
                 <View style={styles.segmentContainer}>
                     {(['Vegetables', 'Fruits'] as CategoryType[]).map((cat) => (
@@ -177,7 +180,9 @@ const CommodityListing = () => {
                             onPress={() => setCategory(cat)}
                         >
                             <Text style={[styles.segmentText, category === cat && styles.activeSegmentText]}>
-                                {cat}
+                                {cat === "Vegetables"
+                                    ? t("listCommodities.selectorsVegetables")
+                                    : t("listCommodities.selectorFruits")}
                             </Text>
                         </TouchableOpacity>
                     ))}
@@ -185,7 +190,7 @@ const CommodityListing = () => {
 
                 {/* DATE */}
                 <View style={styles.card}>
-                    <Text style={styles.cardLabel}>ENTRY DATE</Text>
+                    <Text style={styles.cardLabel}>{t("listCommodities.EntryDate")}</Text>
                     <View style={styles.dateInput}>
                         <Text style={styles.dateText}>{todaysDate}</Text>
                         <MaterialIcons name="lock" size={18} color="#999" />
@@ -195,10 +200,10 @@ const CommodityListing = () => {
                 {/* TABLE */}
                 <View style={styles.tableCard}>
                     <View style={styles.tableHeader}>
-                        <Text style={[styles.headerCell, { flex: 2.5 }]}>ITEM</Text>
-                        <Text style={[styles.headerCell, { flex: 2 }]}>GRADE</Text>
-                        <Text style={[styles.headerCell, { flex: 1.2 }]}>KGS</Text>
-                        <Text style={[styles.headerCell, { flex: 1.5 }]}>PRICE/KG</Text>
+                        <Text style={[styles.headerCell, { flex: 2.5 }]}>{t("listCommodities.tableItemHeader")}</Text>
+                        <Text style={[styles.headerCell, { flex: 2 }]}>{t("listCommodities.tableGradeHeader")}</Text>
+                        <Text style={[styles.headerCell, { flex: 1.2 }]}>{t("listCommodities.tableKgsHeader")}</Text>
+                        <Text style={[styles.headerCell, { flex: 1.5 }]}>{t("listCommodities.tablePriceHeader")}</Text>
                     </View>
 
                     {listData[category].map((row) => (
@@ -254,12 +259,16 @@ const CommodityListing = () => {
 
                     <TouchableOpacity style={styles.addRowBtn} onPress={addRow}>
                         <MaterialIcons name="add-circle" size={20} color="#1F5D2B" />
-                        <Text style={styles.addRowText}>Add Row</Text>
+                        <Text style={styles.addRowText}>{t("listCommodities.addRow")}</Text>
                     </TouchableOpacity>
                 </View>
 
                 {/* 5. IMAGE UPLOAD SECTION */}
-                <Text style={styles.sectionLabel}>UPLOAD {category.toUpperCase()} PHOTOS</Text>
+                <Text style={styles.sectionLabel}>
+                    {category === "Vegetables"
+                        ? t("listCommodities.uploadVegetablePhoto")
+                        : t("listCommodities.uploadFruitsPhoto")}
+                </Text>
                 <View style={styles.imageSection}>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.imageScroll}>
                         <TouchableOpacity style={styles.uploadBox} onPress={handleImageUpload}>
@@ -280,12 +289,12 @@ const CommodityListing = () => {
 
                 <TouchableOpacity style={styles.saveBtn} onPress={handleSave}>
                     <FontAwesome5 name="save" size={18} color="#FFF" style={{ marginRight: 8 }} />
-                    <Text style={styles.saveBtnText}>Save and Continue</Text>
+                    <Text style={styles.saveBtnText}>{t("listCommodities.saveBtn")}</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.cancelBtn} onPress={() => router.back()}>
                     <MaterialIcons name="arrow-back" size={20} color="#1F5D2B" style={{ marginRight: 8 }} />
-                    <Text style={styles.cancelText}>Back</Text>
+                    <Text style={styles.cancelText}>{t("listCommodities.backBtn")}</Text>
                 </TouchableOpacity>
 
             </ScrollView>

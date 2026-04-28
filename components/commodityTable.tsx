@@ -154,7 +154,7 @@ export default function CommodityTable() {
                     style={styles.expandBtn}
                 >
                     <Text style={styles.expandText}>
-                        {expanded ? 'Show Less' : 'Show More'}
+                        {expanded ? t("commodityTable.toggleLess") : t("commodityTable.toggleMore")}
                     </Text>
                 </TouchableOpacity>
             )}

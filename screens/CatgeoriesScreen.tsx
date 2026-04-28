@@ -1,9 +1,11 @@
 import CatgeoriesCard from '@/components/CatgeoriesCard'
 import { Colors } from '@/constants/theme'
+import { useTranslation } from '@/hooks/useLanguage'
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
 const CatgeoriesScreen = () => {
+  const t = useTranslation();
   return (
     <View style={styles.container}>
       {/* Label */}
@@ -11,12 +13,12 @@ const CatgeoriesScreen = () => {
 
       {/* Heading */}
       <Text style={styles.heading}>
-        Record Commodities
+        {t("categories.titleHeader")}
       </Text>
 
       {/* Description */}
       <Text style={styles.description}>
-        Add new agricultural products to your ledger.
+        {t("categories.subTitle")}
       </Text>
       <View style={styles.categoryCardContainer}>
         <CatgeoriesCard />

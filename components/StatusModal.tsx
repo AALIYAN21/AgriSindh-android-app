@@ -1,4 +1,5 @@
 import { Colors } from "@/constants/theme";
+import { useTranslation } from "@/hooks/useLanguage";
 import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
 import {
@@ -15,30 +16,46 @@ type Props = {
   onClose: () => void;
 };
 
+// const statusConfig = {
+//   sync: {
+//     title: "Sync Complete",
+//     message: "Your data has been successfully synced.",
+//     icon: <MaterialIcons name="refresh" size={80} color={Colors.light.primary} />,
+//   },
+//   upload: {
+//     title: "Upload Complete",
+//     message: "Your data has been successfully uploaded.",
+//     icon: <MaterialIcons name="check-circle" size={80} color={Colors.light.primary} />,
+//   },
+//   otp: {
+//     title: "OTP Verified",
+//     message: "Your OTP has been successfully verified.",
+//     icon: <MaterialIcons name="check-circle" size={80} color={Colors.light.primary} />,
+//   },
+//   passwordReset: {
+//     title: "Password Reset",
+//     message: "You can now login with your new password.",
+//     icon: <MaterialIcons name="check-circle" size={80} color={Colors.light.primary} />,
+//   },
+// };
+
 const statusConfig = {
   sync: {
-    title: "Sync Complete",
-    message: "Your data has been successfully synced.",
     icon: <MaterialIcons name="refresh" size={80} color={Colors.light.primary} />,
   },
   upload: {
-    title: "Upload Complete",
-    message: "Your data has been successfully uploaded.",
     icon: <MaterialIcons name="check-circle" size={80} color={Colors.light.primary} />,
   },
   otp: {
-    title: "OTP Verified",
-    message: "Your OTP has been successfully verified.",
     icon: <MaterialIcons name="check-circle" size={80} color={Colors.light.primary} />,
   },
   passwordReset: {
-    title: "Password Reset",
-    message: "You can now login with your new password.",
     icon: <MaterialIcons name="check-circle" size={80} color={Colors.light.primary} />,
   },
 };
 
 export default function StatusModal({ status = "upload", onClose }: Props) {
+  const t = useTranslation();
   const data = statusConfig[status] || statusConfig.upload;
 
   return (
@@ -46,14 +63,26 @@ export default function StatusModal({ status = "upload", onClose }: Props) {
       <View style={styles.overlay}>
         <View style={styles.card}>
 
-          <Text style={styles.icon}>{data.icon}</Text>
+          {/* ICON */}
+          <View style={{ marginBottom: 10 }}>
+            {data.icon}
+          </View>
 
-          <Text style={styles.title}>{data.title}</Text>
+          {/* TITLE */}
+          <Text style={styles.title}>
+            {t(`status.${status}.title`)}
+          </Text>
 
-          <Text style={styles.message}>{data.message}</Text>
+          {/* DESCRIPTION */}
+          <Text style={styles.message}>
+            {t(`status.${status}.description`)}
+          </Text>
 
+          {/* BUTTON */}
           <TouchableOpacity style={styles.button} onPress={onClose}>
-            <Text style={styles.buttonText}>OK</Text>
+            <Text style={styles.buttonText}>
+              {t("status.ok")}
+            </Text>
           </TouchableOpacity>
 
         </View>

@@ -5,4 +5,6 @@ export default {
     tableHeaderCommodity: "Commodity",
     tableHeaderPrice: "Price",
     tableHeaderVolume: "Volume",
+    toggleMore: "Show More",
+    toggleLess: "Show Less"
 }

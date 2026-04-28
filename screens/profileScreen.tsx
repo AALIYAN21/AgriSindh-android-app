@@ -1,5 +1,6 @@
 // app/(tabs)/profile.js
 import { Fonts } from '@/constants/theme'
+import { useTranslation } from '@/hooks/useLanguage'
 import { MaterialIcons } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
 import React from 'react'
@@ -7,6 +8,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 const Profile = () => {
     const router = useRouter()
+    const t = useTranslation();
     return (
         <View style={styles.container}>
 
@@ -26,25 +28,25 @@ const Profile = () => {
             <Text style={styles.email}>alikhan2026@gmail.com</Text>
 
             {/* Settings */}
-            <Text style={styles.sectionTitle}>SETTINGS</Text>
+            <Text style={styles.sectionTitle}>{t("profile.titleSettings")}</Text>
 
             <View style={styles.card}>
                 <MenuItem
                     icon="person-outline"
-                    title="Account Information"
-                    subtitle="Personal details and professional bio"
+                    title={t("profile.titleAccountInfo")}
+                    subtitle={t("profile.subTitleAccountInfo")}
                     onPress={() => router.push("/settings/account")}
                 />
                 <MenuItem
                     icon="security"
-                    title="Security"
-                    subtitle="Password, 2FA, and login history"
+                    title={t("profile.titleSecurity")}
+                    subtitle={t("profile.subTitleSecurity")}
                     onPress={() => router.push("/settings/security")}
                 />
                 <MenuItem
                     icon="support-agent"
-                    title="Help & Support"
-                    subtitle="Documentation and priority assistance"
+                    title={t("profile.titleHelpAndSupport")}
+                    subtitle={t("profile.subTitleHelpAndSupport")}
                     onPress={() => router.push("/settings/help")}
                 />
             </View>
@@ -52,7 +54,7 @@ const Profile = () => {
             {/* Logout */}
             <TouchableOpacity style={styles.logout}>
                 <MaterialIcons name="logout" size={18} color="#D32F2F" />
-                <Text style={styles.logoutText}>Logout</Text>
+                <Text style={styles.logoutText}>{t("profile.logoutbtn")}</Text>
             </TouchableOpacity>
 
             {/* Footer */}

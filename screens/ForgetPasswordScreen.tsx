@@ -1,3 +1,4 @@
+import { useTranslation } from '@/hooks/useLanguage';
 import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
@@ -17,6 +18,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 const ForgotPasswordScreen = () => {
     const [email, setEmail] = useState('');
     const router = useRouter();
+
+    const t = useTranslation();
 
     const handleBackToLogin = () => {
         router.back();
@@ -38,13 +41,13 @@ const ForgotPasswordScreen = () => {
                     {/* 3. This inner View must also have flex: 1 */}
                     <View style={styles.content}>
 
-                        <Text style={styles.title}>Forgot{'\n'}Password</Text>
+                        <Text style={styles.title}>{t("forgotPassword.titleHeader")}</Text>
 
                         <Text style={styles.subtitle}>
-                            Enter your email address and we'll send you an OTP to reset your password.
+                            {t("forgotPassword.subTitle")}
                         </Text>
 
-                        <Text style={styles.label}>EMAIL ADDRESS</Text>
+                        <Text style={styles.label}>{t("forgotPassword.inputTitle")}</Text>
                         <View style={styles.inputContainer}>
                             <MaterialCommunityIcons name="at" size={20} color="#999" style={styles.icon} />
                             <TextInput
@@ -60,14 +63,14 @@ const ForgotPasswordScreen = () => {
 
                         <TouchableOpacity style={styles.button} activeOpacity={0.8} onPress={handleSendOtp}>
                             <View style={styles.buttonContent}>
-                                <Text style={styles.buttonText}>Send OTP</Text>
+                                <Text style={styles.buttonText}>{t("forgotPassword.sendOtpBtn")}</Text>
                                 <AntDesign name="arrow-right" size={20} color="white" />
                             </View>
                         </TouchableOpacity>
 
                         <TouchableOpacity style={styles.backButton} onPress={handleBackToLogin}>
                             <AntDesign name="arrow-left" size={16} color="#1D4219" />
-                            <Text style={styles.backText}>Back to Login</Text>
+                            <Text style={styles.backText}>{t("forgotPassword.backBtn")}</Text>
                         </TouchableOpacity>
 
                     </View>
@@ -88,7 +91,7 @@ const styles = StyleSheet.create({
         paddingTop: 80,
     },
     title: {
-        fontSize: 48,
+        fontSize: 45,
         fontWeight: 'bold',
         color: '#1D4219',
         lineHeight: 52,

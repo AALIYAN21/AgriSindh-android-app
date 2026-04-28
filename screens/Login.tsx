@@ -1,3 +1,4 @@
+import { useTranslation } from "@/hooks/useLanguage";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
@@ -19,6 +20,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const t = useTranslation();
 
   // 👁 NEW STATE
   const [showPassword, setShowPassword] = useState(false);
@@ -82,16 +85,15 @@ const Login = () => {
           style={{ flex: 1 }}
         >
           <View style={styles.contentParent}>
-            <Text style={styles.title}>Login</Text>
+            <Text style={styles.title}>{t("login.loginTitle")}</Text>
 
             <Text style={styles.subtitle}>
-              Please enter your credentials to
-              continue.
+              {t("login.loginDescription")}
             </Text>
 
             {/* Username */}
             <Text style={styles.label}>
-              EMAIL OR USERNAME
+              {t("login.Email")}
             </Text>
 
             <View style={styles.inputContainer}>
@@ -113,7 +115,7 @@ const Login = () => {
 
             {/* Password */}
             <Text style={styles.label}>
-              PASSWORD
+              {t("login.password")}
             </Text>
 
             <View style={styles.inputContainer}>
@@ -158,7 +160,7 @@ const Login = () => {
               onPress={handleLogin}
             >
               <Text style={styles.loginText}>
-                Login ➜
+                {t("login.LoginBtn")} ➜
               </Text>
             </TouchableOpacity>
 
@@ -176,7 +178,7 @@ const Login = () => {
                   styles.forgetPasswordText
                 }
               >
-                Forgot Password ➜
+                {t("login.forgetPassword")} ➜
               </Text>
             </TouchableOpacity>
           </View>

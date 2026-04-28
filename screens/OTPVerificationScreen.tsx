@@ -1,3 +1,4 @@
+import { useTranslation } from '@/hooks/useLanguage';
 import { AntDesign } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
@@ -20,6 +21,8 @@ const OTPVerificationScreen = () => {
     const [timer, setTimer] = useState(60);
     const inputs = useRef<Array<TextInput | null>>([]);
     const router = useRouter();
+
+    const t = useTranslation();
 
     useEffect(() => {
         const countdown = setInterval(() => {
@@ -73,9 +76,9 @@ const OTPVerificationScreen = () => {
                     <View style={styles.card}>
 
                         {/* Title & Subtitle */}
-                        <Text style={styles.title}>Verify OTP</Text>
+                        <Text style={styles.title}>{t("verifyOTP.titleHeader")}</Text>
                         <Text style={styles.subtitle}>
-                            Enter the 4-digit code sent to your email.
+                            {t("verifyOTP.subTitle")}
                         </Text>
 
                         {/* OTP Input Fields */}
@@ -99,7 +102,7 @@ const OTPVerificationScreen = () => {
                         {/* Verify Button */}
                         <TouchableOpacity style={styles.button} activeOpacity={0.8} onPress={() => handleOTPVerification()}>
                             <View style={styles.buttonContent}>
-                                <Text style={styles.buttonText}>Verify & Proceed</Text>
+                                <Text style={styles.buttonText}>{t("verifyOTP.verifyBtn")}</Text>
                                 {/* Fixed icon name to 'arrowright' */}
                                 <AntDesign name="arrow-right" size={18} color="white" />
                             </View>
@@ -107,13 +110,13 @@ const OTPVerificationScreen = () => {
 
                         <Text style={styles.timerText}>
                             {timer > 0
-                                ? `Resend OTP in ${formatTime(timer)}`
-                                : 'You can resend OTP now'}
+                                ? `${t("verifyOTP.otpTimer")} ${formatTime(timer)}`
+                                : `${t("verifyOTP.otpTimer")}`}
                         </Text>
 
                         {/* Resend Link */}
                         <View style={styles.resendContainer}>
-                            <Text style={styles.resendText}>Didn't receive the code? </Text>
+                            <Text style={styles.resendText}>{t("verifyOTP.resend")}</Text>
                             <TouchableOpacity disabled={timer > 0}>
                                 <Text style={[styles.resendLink, { opacity: timer > 0 ? 0.5 : 1 }]}>
                                     Resend
@@ -210,6 +213,7 @@ const styles = StyleSheet.create({
     },
     resendContainer: {
         flexDirection: 'row',
+        gap: 5,
         marginBottom: 30,
     },
     resendText: {

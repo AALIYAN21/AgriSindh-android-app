@@ -1,0 +1,17 @@
+export default {
+    titleHeader: "اجناس کی فہرست",
+    subTitle: "یہاں سے مارکیٹ کی تمام اجناس کی فہرست دیکھیں۔",
+    categorySelection: "زمرہ منتخب کریں",
+    selectorsVegetables: "سبزیاں",
+    selectorFruits: "پھل",
+    EntryDate: "اندراج کی تاریخ",
+    tableItemHeader: "آئٹم",
+    tableGradeHeader: "درجہ",
+    tableKgsHeader: "کلوگرام",
+    tablePriceHeader: "قیمت فی کلو",
+    addRow: "نئی قطار شامل کریں",
+    uploadVegetablePhoto: "سبزیوں کی تصاویر اپلوڈ کریں",
+    uploadFruitsPhoto: "پھلوں کی تصاویر اپلوڈ کریں",
+    saveBtn: "محفوظ کریں",
+    backBtn: "واپس جائیں"
+};
