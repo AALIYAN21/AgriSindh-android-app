@@ -20,6 +20,9 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  // 👁 NEW STATE
+  const [showPassword, setShowPassword] = useState(false);
+
   const router = useRouter();
 
   const handleLogin = () => {
@@ -36,39 +39,68 @@ const Login = () => {
 
       {/* Green Header */}
       <View style={styles.headerContainer}>
-        <SafeAreaView edges={['top']}>
+        <SafeAreaView edges={["top"]}>
           <View style={styles.headerContent}>
             <View style={styles.logosRow}>
               <Image
                 source={require("../assets/images/sindh-gov-logo.png")}
-                style={[styles.headerLogo, { tintColor: "white" }]}
+                style={[
+                  styles.headerLogo,
+                  { tintColor: "white" },
+                ]}
                 resizeMode="contain"
               />
+
               <Image
                 source={require("../assets/images/swat-logo.png")}
                 style={styles.headerLogo}
                 resizeMode="contain"
               />
             </View>
-            <Text style={styles.logoText}>SWAT AMIS</Text>
+
+            <Text style={styles.logoText}>
+              SWAT AMIS
+            </Text>
+
+            <Text style={styles.logoSubText}>
+              Transforming Manual Records into
+              Digital Insights
+            </Text>
           </View>
         </SafeAreaView>
       </View>
 
-      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <TouchableWithoutFeedback
+        onPress={() => Keyboard.dismiss()}
+      >
         <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          behavior={
+            Platform.OS === "ios"
+              ? "padding"
+              : "height"
+          }
           style={{ flex: 1 }}
         >
           <View style={styles.contentParent}>
             <Text style={styles.title}>Login</Text>
+
             <Text style={styles.subtitle}>
-              Please enter your credentials to continue.
+              Please enter your credentials to
+              continue.
             </Text>
 
-            <Text style={styles.label}>EMAIL OR USERNAME</Text>
+            {/* Username */}
+            <Text style={styles.label}>
+              EMAIL OR USERNAME
+            </Text>
+
             <View style={styles.inputContainer}>
-              <MaterialIcons name="person-outline" size={18} color="#999" />
+              <MaterialIcons
+                name="person-outline"
+                size={18}
+                color="#999"
+              />
+
               <TextInput
                 placeholder="e.g. j.doe@swat-amis.com"
                 placeholderTextColor="#bbb"
@@ -79,29 +111,73 @@ const Login = () => {
               />
             </View>
 
-            <Text style={styles.label}>PASSWORD</Text>
+            {/* Password */}
+            <Text style={styles.label}>
+              PASSWORD
+            </Text>
+
             <View style={styles.inputContainer}>
-              <MaterialIcons name="lock-outline" size={18} color="#999" />
+              <MaterialIcons
+                name="lock-outline"
+                size={18}
+                color="#999"
+              />
+
               <TextInput
                 placeholder="••••••••••••"
                 placeholderTextColor="#bbb"
-                secureTextEntry
+                secureTextEntry={!showPassword}
                 style={styles.input}
                 value={password}
                 onChangeText={setPassword}
               />
-              <MaterialIcons name="visibility-off" size={18} color="#bbb" />
+
+              {/* 👁 FUNCTIONAL EYE */}
+              <TouchableOpacity
+                onPress={() =>
+                  setShowPassword(
+                    !showPassword
+                  )
+                }
+              >
+                <MaterialIcons
+                  name={
+                    showPassword
+                      ? "visibility"
+                      : "visibility-off"
+                  }
+                  size={20}
+                  color="#999"
+                />
+              </TouchableOpacity>
             </View>
 
-            <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-              <Text style={styles.loginText}>Login ➜</Text>
+            {/* Login Button */}
+            <TouchableOpacity
+              style={styles.loginButton}
+              onPress={handleLogin}
+            >
+              <Text style={styles.loginText}>
+                Login ➜
+              </Text>
             </TouchableOpacity>
 
+            {/* Forgot Password */}
             <TouchableOpacity
-              style={styles.forgetPasswordButton}
-              onPress={handleForgetPassword}
+              style={
+                styles.forgetPasswordButton
+              }
+              onPress={
+                handleForgetPassword
+              }
             >
-              <Text style={styles.forgetPasswordText}>Forgot Password ➜</Text>
+              <Text
+                style={
+                  styles.forgetPasswordText
+                }
+              >
+                Forgot Password ➜
+              </Text>
             </TouchableOpacity>
           </View>
         </KeyboardAvoidingView>
@@ -117,22 +193,28 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
   },
+
   headerContainer: {
-    backgroundColor: "#154212", // Pure SWAT Green
+    backgroundColor: "#154212",
     width: "100%",
     borderBottomLeftRadius: 35,
     borderBottomRightRadius: 35,
     elevation: 8,
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
     shadowOpacity: 0.3,
     shadowRadius: 5,
   },
+
   headerContent: {
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 25,
   },
+
   logosRow: {
     flexDirection: "row",
     alignItems: "center",
@@ -140,34 +222,46 @@ const styles = StyleSheet.create({
     gap: 20,
     marginBottom: 12,
   },
+
   headerLogo: {
     width: 65,
     height: 65,
-    // Explicitly setting transparent background and clearing any tints
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
   },
+
   logoText: {
     fontSize: 22,
     fontWeight: "800",
     color: "#fff",
     letterSpacing: 0.5,
   },
+
+  logoSubText: {
+    fontSize: 10,
+    fontWeight: "300",
+    color: "#fff",
+    letterSpacing: 0.5,
+  },
+
   contentParent: {
     flex: 1,
     paddingHorizontal: 25,
     paddingTop: "15%",
   },
+
   title: {
     fontSize: 34,
     fontWeight: "700",
     color: "#111",
     marginBottom: 6,
   },
+
   subtitle: {
     fontSize: 12,
     color: "#777",
     marginBottom: 35,
   },
+
   label: {
     fontSize: 10,
     fontWeight: "700",
@@ -176,6 +270,7 @@ const styles = StyleSheet.create({
     marginTop: 18,
     letterSpacing: 1,
   },
+
   inputContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -183,12 +278,14 @@ const styles = StyleSheet.create({
     borderBottomColor: "#ddd",
     paddingBottom: 8,
   },
+
   input: {
     flex: 1,
     marginLeft: 8,
     fontSize: 14,
     color: "#111",
   },
+
   loginButton: {
     backgroundColor: "#154212",
     marginTop: 45,
@@ -196,15 +293,18 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: "center",
   },
+
   loginText: {
     color: "#fff",
     fontSize: 16,
     fontWeight: "700",
   },
+
   forgetPasswordButton: {
     paddingVertical: 20,
     alignItems: "flex-start",
   },
+
   forgetPasswordText: {
     color: "#154212",
     fontSize: 14,
