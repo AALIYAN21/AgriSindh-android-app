@@ -1,11 +1,15 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { PieChart } from "react-native-gifted-charts";
 import StatusModal from "./StatusModal";
+import { useTranslation } from "@/hooks/useLanguage";
 
 const DataSyncStatus = () => {
   const [showModal, setShowModal] = useState(false);
+  const t = useTranslation();
+
+
 
   const pieData = [
     { value: 65, color: "#154212" },
@@ -26,9 +30,9 @@ const DataSyncStatus = () => {
         />
       )}
       <View style={styles.container}>
-        <Text style={styles.heading}>Data Sync Status</Text>
+        <Text style={styles.heading}>{t("dataSync.titleHeader")}</Text>
         <Text style={styles.subHeading}>
-          Current state of data synchronization
+          {t("dataSync.subTitle")}
         </Text>
 
         <View style={styles.card}>
@@ -62,7 +66,7 @@ const DataSyncStatus = () => {
 
           <TouchableOpacity style={styles.button} onPress={handleUpload}>
             <MaterialIcons name="sync" size={22} color="white" />
-            <Text style={styles.buttonText}>Sync Now</Text>
+            <Text style={styles.buttonText}>{t("dataSync.syncButton")}</Text>
           </TouchableOpacity>
 
         </View>
