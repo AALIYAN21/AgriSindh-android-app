@@ -1,3 +1,4 @@
+import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
@@ -18,24 +19,25 @@ const STAGES = [
     {
         id: 1,
         title: 'Sindh Agriculture And Water Transformation',
-        description: 'The Agriculture Management Information System (AMIS) is designed to provide transparent, efficient, and reliable access',
+        description:
+            'The Agriculture Management Information System (AMIS) is designed to provide transparent, efficient, and reliable access',
         image: require('../assets/images/onboarding-1.jpg'),
     },
     {
         id: 2,
         title: 'Centralized Record',
-        description: 'The all-in-one record keeping solution for the Sindh Water & Agriculture Transformation Project. Real-time data management at your fingertips',
+        description:
+            'The all-in-one record keeping solution for the Sindh Water & Agriculture Transformation Project. Real-time data management at your fingertips',
         image: require('../assets/images/onboarding-2.jpg'),
     },
     {
         id: 3,
         title: 'Technology Powered Agriculture',
-        description: 'SWAT AMIS is a platform powered by technology to provide transparent, efficient and reliable access.',
+        description:
+            'SWAT AMIS is a platform powered by technology to provide transparent, efficient and reliable access.',
         image: require('../assets/images/onboarding-3.jpg'),
     },
 ];
-
-const STAGE_DURATION = 1500; // 1.5 seconds per stage
 
 const OnboardingScreen = () => {
     const [currentStage, setCurrentStage] = useState(0);
@@ -43,15 +45,14 @@ const OnboardingScreen = () => {
 
     const handlePress = (event: any) => {
         const tapX = event.nativeEvent.locationX;
+
         if (tapX < width / 2) {
-            // Left tap: Go backward
             if (currentStage > 0) {
-                setCurrentStage((prev) => prev - 1);
+                setCurrentStage(prev => prev - 1);
             }
         } else {
-            // Right tap: Go forward
             if (currentStage < STAGES.length - 1) {
-                setCurrentStage((prev) => prev + 1);
+                setCurrentStage(prev => prev + 1);
             } else {
                 router.replace('/login');
             }
@@ -60,18 +61,26 @@ const OnboardingScreen = () => {
 
     return (
         <>
-            <StatusBar
-                animated={true}
-                translucent={true}
-            />
+            <StatusBar animated translucent />
+
             <ImageBackground
                 source={STAGES[currentStage].image}
                 style={styles.backgroundImage}
                 resizeMode="cover"
             >
-                <View style={styles.overlay} />
+                {/* ✅ FIXED OVERLAY (soft + professional) */}
+                <LinearGradient
+                    colors={[
+                        'rgba(0,0,0,0.05)',  // very light top (keeps image clean)
+                        'rgba(0,0,0,0.25)',  // subtle middle
+                        'rgba(0,0,0,0.65)',  // stronger only at bottom for text
+                    ]}
+                    locations={[0, 0.6, 1]}
+                    style={StyleSheet.absoluteFillObject}
+                />
+
                 <SafeAreaView style={styles.container}>
-                    {/* Top Progress Bars (WhatsApp Style) */}
+                    {/* Progress */}
                     <View style={styles.indicatorContainer}>
                         {STAGES.map((_, index) => (
                             <View key={index} style={styles.indicatorBackground}>
@@ -87,17 +96,21 @@ const OnboardingScreen = () => {
                         ))}
                     </View>
 
-                    {/* Content Section */}
+                    {/* Content */}
                     <TouchableWithoutFeedback onPress={handlePress}>
                         <View style={styles.content}>
                             <View style={styles.textWrapper}>
-                                <Text style={styles.title}>{STAGES[currentStage].title}</Text>
-                                <Text style={styles.subtitle}>{STAGES[currentStage].description}</Text>
+                                <Text style={styles.title}>
+                                    {STAGES[currentStage].title}
+                                </Text>
+                                <Text style={styles.subtitle}>
+                                    {STAGES[currentStage].description}
+                                </Text>
                             </View>
                         </View>
                     </TouchableWithoutFeedback>
 
-                    {/* Bottom Section */}
+                    {/* Footer */}
                     <View style={styles.footer}>
                         {currentStage < STAGES.length - 1 && (
                             <TouchableOpacity onPress={() => router.replace('/login')}>
@@ -115,11 +128,7 @@ const styles = StyleSheet.create({
     backgroundImage: {
         flex: 1,
         width: '100%',
-        height: '100%',
-    },
-    overlay: {
-        ...StyleSheet.absoluteFillObject,
-        backgroundColor: 'rgba(0, 0, 0, 0.35)',
+        height: '110%',
     },
     container: {
         flex: 1,
@@ -134,7 +143,7 @@ const styles = StyleSheet.create({
     indicatorBackground: {
         flex: 1,
         height: 4,
-        backgroundColor: 'rgba(255, 255, 255, 0.3)',
+        backgroundColor: 'rgba(255,255,255,0.25)',
         marginHorizontal: 4,
         borderRadius: 2,
         overflow: 'hidden',
@@ -161,7 +170,7 @@ const styles = StyleSheet.create({
     },
     subtitle: {
         fontSize: 16,
-        color: '#E0E0E0',
+        color: '#EDEDED',
         lineHeight: 24,
     },
     footer: {

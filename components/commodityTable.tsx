@@ -1,4 +1,7 @@
 import { Colors } from '@/constants/theme';
+// import i18n from "@/i18n/index";
+// import { useLanguageStore } from '@/i18n/store/languageStore';
+import { useTranslation } from '@/hooks/useLanguage';
 import { MaterialIcons } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useRouter } from 'expo-router';
@@ -34,6 +37,7 @@ export default function CommodityTable() {
     const router = useRouter();
     const prev = new Date();
     prev.setDate(prev.getDate() - 1);
+    const t = useTranslation();
 
     const [selectedCommodity, setSelectedCommodity] = useState('All Commodities');
     const [showDropdown, setShowDropdown] = useState(false);
@@ -88,16 +92,16 @@ export default function CommodityTable() {
         <View style={styles.container}>
             <View style={styles.headerRow}>
                 <View style={{ flex: 1, paddingRight: 10 }}>
-                    <Text style={styles.title}>Daily Volume of Commodities</Text>
+                    <Text style={styles.title}>{t("commodityTable.tableTitle")}</Text>
                     <Text style={styles.subtitle}>
-                        Latest trading metrics for active market entities.
+                        {t("commodityTable.tableSubTitle")}
                     </Text>
                 </View>
                 <TouchableOpacity
                     style={styles.recordBtn}
                     onPress={() => router.push('/commodityForm')}
                 >
-                    <Text style={styles.recordBtnText}>Record Items</Text>
+                    <Text style={styles.recordBtnText}>{t("commodityTable.recordButton")}</Text>
                     <MaterialIcons name="add-circle-outline" color={"white"} size={20} />
                 </TouchableOpacity>
             </View>

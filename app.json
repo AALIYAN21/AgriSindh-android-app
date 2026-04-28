@@ -55,7 +55,9 @@
           "cameraPermission": "The SWAT AMIS App needs access your camera to take the picture of the commodities.",
           "microPhonePermission": "The SWAT AMIS App needs access your microphone to record the voice note of the commodities."
         }
-      ]
+      ],
+      "expo-web-browser",
+      "expo-localization"
     ],
     "experiments": {
       "typedRoutes": true,
