@@ -56,7 +56,7 @@ const Profile = () => {
             </TouchableOpacity>
 
             {/* Footer */}
-            <Text style={styles.footer}>VERSION 1.0.1 AMIS (SWAT)</Text>
+            <Text style={styles.footer}>Powerd By Verge Systems Pvt. Ltd.</Text>
         </View>
     )
 }

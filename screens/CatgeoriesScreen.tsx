@@ -7,7 +7,7 @@ const CatgeoriesScreen = () => {
   return (
     <View style={styles.container}>
       {/* Label */}
-      <Text style={styles.label}>THE CULTIVATED LEDGER</Text>
+      {/* <Text style={styles.label}>DIGITAL AGRICULTURAL LEDGER</Text> */}
 
       {/* Heading */}
       <Text style={styles.heading}>

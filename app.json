@@ -19,7 +19,12 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.aali_edward.AmisSindh"
+      "package": "com.aali_edward.AmisSindh",
+      "permissions": [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ]
     },
     "web": {
       "output": "static"
@@ -39,7 +44,18 @@
         }
       ],
       "expo-font",
-      "@react-native-community/datetimepicker"
+      "@react-native-community/datetimepicker",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The SWAT AMIS App needs access your photos to to upload the record of the commodities.",
+          "colors": {
+            "cropToolabrColor": "#ffffff"
+          },
+          "cameraPermission": "The SWAT AMIS App needs access your camera to take the picture of the commodities.",
+          "microPhonePermission": "The SWAT AMIS App needs access your microphone to record the voice note of the commodities."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

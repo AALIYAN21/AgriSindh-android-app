@@ -1,6 +1,6 @@
 import { AntDesign } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
     Keyboard,
     KeyboardAvoidingView,
@@ -17,8 +17,24 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 const OTPVerificationScreen = () => {
     const [otp, setOtp] = useState(['', '', '', '']);
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [timer, setTimer] = useState(60);
     const inputs = useRef<Array<TextInput | null>>([]);
     const router = useRouter();
+
+    useEffect(() => {
+        const countdown = setInterval(() => {
+            setTimer((prevTimer) => (prevTimer > 0 ? prevTimer - 1 : 0));
+        }, 1000);
+
+        return () => clearInterval(countdown);
+    }, []);
+
+    const formatTime = (seconds: number) => {
+        const mins = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+
+        return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    };
 
 
 
@@ -89,11 +105,19 @@ const OTPVerificationScreen = () => {
                             </View>
                         </TouchableOpacity>
 
+                        <Text style={styles.timerText}>
+                            {timer > 0
+                                ? `Resend OTP in ${formatTime(timer)}`
+                                : 'You can resend OTP now'}
+                        </Text>
+
                         {/* Resend Link */}
                         <View style={styles.resendContainer}>
                             <Text style={styles.resendText}>Didn't receive the code? </Text>
-                            <TouchableOpacity>
-                                <Text style={styles.resendLink}>Resend</Text>
+                            <TouchableOpacity disabled={timer > 0}>
+                                <Text style={[styles.resendLink, { opacity: timer > 0 ? 0.5 : 1 }]}>
+                                    Resend
+                                </Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -144,6 +168,11 @@ const styles = StyleSheet.create({
         width: '100%',
         paddingHorizontal: 10,
         marginBottom: 30,
+    },
+    timerText: {
+        fontSize: 13,
+        color: '#888',
+        marginBottom: 15,
     },
     inputWrapper: {
         width: 60,

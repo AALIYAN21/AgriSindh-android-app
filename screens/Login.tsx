@@ -6,6 +6,7 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
+  StatusBar,
   StyleSheet,
   Text,
   TextInput,
@@ -22,66 +23,65 @@ const Login = () => {
   const router = useRouter();
 
   const handleLogin = () => {
-    router.push("/(tabs)/home")
-  }
+    router.push("/(tabs)/home");
+  };
 
   const handleForgetPassword = () => {
-    router.push("/(auth)/forgetPassword")
-  }
+    router.push("/(auth)/forgetPassword");
+  };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-          <View style={styles.contentParent}>
-            {/* Logo */}
-            <View style={styles.logoContainer}>
-              <View style={styles.logosRow}>
-                <Image
-                  source={require("../assets/images/swat-app-icon-ios.png")}
-                  style={styles.logo}
-                  resizeMode="contain"
-                />
-                <Image
-                  source={require("../assets/images/sindh-gov-logo.png")}
-                  style={styles.logo}
-                  resizeMode="contain"
-                />
-              </View>
-              <Text style={styles.logoText}>SWAT AMIS</Text>
-            </View>
+    <View style={styles.container}>
+      <StatusBar barStyle="light-content" />
 
-            {/* Header */}
+      {/* Green Header */}
+      <View style={styles.headerContainer}>
+        <SafeAreaView edges={['top']}>
+          <View style={styles.headerContent}>
+            <View style={styles.logosRow}>
+              <Image
+                source={require("../assets/images/sindh-gov-logo.png")}
+                style={[styles.headerLogo, { tintColor: "white" }]}
+                resizeMode="contain"
+              />
+              <Image
+                source={require("../assets/images/swat-logo.png")}
+                style={styles.headerLogo}
+                resizeMode="contain"
+              />
+            </View>
+            <Text style={styles.logoText}>SWAT AMIS</Text>
+          </View>
+        </SafeAreaView>
+      </View>
+
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={{ flex: 1 }}
+        >
+          <View style={styles.contentParent}>
             <Text style={styles.title}>Login</Text>
             <Text style={styles.subtitle}>
               Please enter your credentials to continue.
             </Text>
 
-            {/* Username */}
             <Text style={styles.label}>EMAIL OR USERNAME</Text>
             <View style={styles.inputContainer}>
-              <MaterialIcons
-                name="person-outline"
-                size={18}
-                color="#999"
-              />
+              <MaterialIcons name="person-outline" size={18} color="#999" />
               <TextInput
                 placeholder="e.g. j.doe@swat-amis.com"
                 placeholderTextColor="#bbb"
                 style={styles.input}
                 value={username}
                 onChangeText={setUsername}
+                autoCapitalize="none"
               />
             </View>
 
-            {/* Password */}
             <Text style={styles.label}>PASSWORD</Text>
             <View style={styles.inputContainer}>
-              <MaterialIcons
-                name="lock-outline"
-                size={18}
-                color="#999"
-              />
+              <MaterialIcons name="lock-outline" size={18} color="#999" />
               <TextInput
                 placeholder="••••••••••••"
                 placeholderTextColor="#bbb"
@@ -90,30 +90,23 @@ const Login = () => {
                 value={password}
                 onChangeText={setPassword}
               />
-              <MaterialIcons
-                name="visibility-off"
-                size={18}
-                color="#bbb"
-              />
+              <MaterialIcons name="visibility-off" size={18} color="#bbb" />
             </View>
 
-            {/* Login Button */}
-            <TouchableOpacity style={styles.loginButton} onPress={() => handleLogin()}>
-              <Text style={styles.loginText}>
-                Login ➜
-              </Text>
+            <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+              <Text style={styles.loginText}>Login ➜</Text>
             </TouchableOpacity>
 
-            {/* Forget Password Button */}
-            <TouchableOpacity style={styles.forgetPasswordButton} onPress={() => handleForgetPassword()}>
-              <Text style={styles.forgetPasswordText}>
-                Forgot Password ➜
-              </Text>
+            <TouchableOpacity
+              style={styles.forgetPasswordButton}
+              onPress={handleForgetPassword}
+            >
+              <Text style={styles.forgetPasswordText}>Forgot Password ➜</Text>
             </TouchableOpacity>
           </View>
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -123,49 +116,58 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    paddingHorizontal: 25,
   },
-  contentParent: {
-    top: '18%'
+  headerContainer: {
+    backgroundColor: "#154212", // Pure SWAT Green
+    width: "100%",
+    borderBottomLeftRadius: 35,
+    borderBottomRightRadius: 35,
+    elevation: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
   },
-  logoContainer: {
+  headerContent: {
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 50,
+    paddingVertical: 25,
   },
   logosRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     gap: 20,
-    marginBottom: 15,
+    marginBottom: 12,
   },
-
-  logo: {
-    width: 80,
-    height: 80,
-    marginRight: 8,
+  headerLogo: {
+    width: 65,
+    height: 65,
+    // Explicitly setting transparent background and clearing any tints
+    backgroundColor: 'transparent',
   },
-
   logoText: {
-    fontSize: 20,
-    fontWeight: "700",
-    color: "#154212",
+    fontSize: 22,
+    fontWeight: "800",
+    color: "#fff",
+    letterSpacing: 0.5,
   },
-
+  contentParent: {
+    flex: 1,
+    paddingHorizontal: 25,
+    paddingTop: "15%",
+  },
   title: {
     fontSize: 34,
     fontWeight: "700",
     color: "#111",
     marginBottom: 6,
   },
-
   subtitle: {
     fontSize: 12,
     color: "#777",
     marginBottom: 35,
   },
-
   label: {
     fontSize: 10,
     fontWeight: "700",
@@ -174,7 +176,6 @@ const styles = StyleSheet.create({
     marginTop: 18,
     letterSpacing: 1,
   },
-
   inputContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -182,58 +183,31 @@ const styles = StyleSheet.create({
     borderBottomColor: "#ddd",
     paddingBottom: 8,
   },
-
   input: {
     flex: 1,
     marginLeft: 8,
-    fontSize: 13,
+    fontSize: 14,
     color: "#111",
   },
-
   loginButton: {
     backgroundColor: "#154212",
     marginTop: 45,
-    paddingVertical: 16,
-    borderRadius: 10,
+    paddingVertical: 18,
+    borderRadius: 12,
     alignItems: "center",
-    shadowColor: "#154212",
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
-    elevation: 4,
   },
-
   loginText: {
     color: "#fff",
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: "700",
   },
   forgetPasswordButton: {
-    paddingVertical: 16,
-    borderRadius: 10,
+    paddingVertical: 20,
     alignItems: "flex-start",
-    shadowColor: "#154212"
   },
   forgetPasswordText: {
     color: "#154212",
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: "700",
-  },
-
-  footerRow: {
-    flexDirection: "row",
-    marginTop: 45,
-    justifyContent: "space-between",
-  },
-
-  footerSmall: {
-    fontSize: 11,
-    color: "#777",
-  },
-
-  warning: {
-    fontSize: 10,
-    color: "#999",
-    marginTop: 20,
-    lineHeight: 16,
   },
 });

@@ -19,11 +19,33 @@ const SetNewPasswordScreen = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [passwordError, setPasswordError] = useState('');
     const router = useRouter();
 
     const handleResetPassword = () => {
-        // Logic to reset password
-        console.log("Password reset triggered");
+        if (passwordError || !password || password !== confirmPassword) {
+            setPasswordError(passwordError || 'Passwords do not match');
+            return;
+        }
+
+        setIsModalVisible(true);
+    };
+
+    const validatePassword = (value: string) => {
+        const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&]).{8,}$/;
+
+        if (!value) {
+            setPasswordError('');
+            return;
+        }
+
+        if (!regex.test(value)) {
+            setPasswordError(
+                'Password must be 8+ chars, include letters, numbers & a special character'
+            );
+        } else {
+            setPasswordError('');
+        }
     };
 
     const handlePasswordRest = () => {
@@ -61,9 +83,15 @@ const SetNewPasswordScreen = () => {
                                 placeholderTextColor="#999"
                                 secureTextEntry
                                 value={password}
-                                onChangeText={setPassword}
+                                onChangeText={(text) => {
+                                    setPassword(text);
+                                    validatePassword(text);
+                                }}
                             />
                         </View>
+                        {passwordError ? (
+                            <Text style={styles.errorText}>{passwordError}</Text>
+                        ) : null}
 
                         {/* Confirm Password Input */}
                         <View style={styles.inputContainer}>
@@ -112,6 +140,12 @@ const styles = StyleSheet.create({
     flexContainer: {
         flex: 1,
     },
+    errorText: {
+        color: '#D32F2F',
+        fontSize: 12,
+        marginBottom: 16,
+        marginLeft: 5,
+    },
     content: {
         flex: 1,
         paddingHorizontal: 35,
@@ -140,7 +174,7 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         paddingHorizontal: 15,
         height: 55,
-        marginBottom: 15, // Tighter spacing between inputs
+        marginBottom: 18, // Tighter spacing between inputs
     },
     icon: {
         marginRight: 12,
