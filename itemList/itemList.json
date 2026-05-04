@@ -1,0 +1,806 @@
+{
+  "fruits": [
+    {
+      "id": 1,
+      "name_en": "Banana",
+      "name_ur": "کیلا"
+    },
+    {
+      "id": 3,
+      "name_en": "Coconut, Large Piece",
+      "name_ur": "ناریل، بڑا ٹکڑا"
+    },
+    {
+      "id": 4,
+      "name_en": "Coconut, Small Piece",
+      "name_ur": "ناریل، چھوٹا ٹکڑا"
+    },
+    {
+      "id": 5,
+      "name_en": "Sugar Cane",
+      "name_ur": "گنا"
+    },
+    {
+      "id": 6,
+      "name_en": "Papaya",
+      "name_ur": "پپیتا"
+    },
+    {
+      "id": 8,
+      "name_en": "Apple Golden",
+      "name_ur": "سیب گولڈن"
+    },
+    {
+      "id": 10,
+      "name_en": "Apple Kullu",
+      "name_ur": "سیب کُلّو"
+    },
+    {
+      "id": 12,
+      "name_en": "Apple Gaja",
+      "name_ur": "سیب گاجا"
+    },
+    {
+      "id": 13,
+      "name_en": "Apple Irani",
+      "name_ur": "ایرانی سیب"
+    },
+    {
+      "id": 14,
+      "name_en": "Pear",
+      "name_ur": "ناشپاتی"
+    },
+    {
+      "id": 15,
+      "name_en": "Pomegranate Irani",
+      "name_ur": "ایرانی انار"
+    },
+    {
+      "id": 17,
+      "name_en": "Pomegranate Kandhari",
+      "name_ur": "قندھاری انار"
+    },
+    {
+      "id": 18,
+      "name_en": "Pomegranate Quetta",
+      "name_ur": "کوئٹہ انار"
+    },
+    {
+      "id": 20,
+      "name_en": "Grapefruit",
+      "name_ur": "گریپ فروٹ"
+    },
+    {
+      "id": 22,
+      "name_en": "Melon",
+      "name_ur": "خربوزہ"
+    },
+    {
+      "id": 24,
+      "name_en": "Grape (Sunder Khani)",
+      "name_ur": "انگور (سندر کھانی)"
+    },
+    {
+      "id": 25,
+      "name_en": "Grape (Kalani)",
+      "name_ur": "انگور (کلانی)"
+    },
+    {
+      "id": 26,
+      "name_en": "Grape (Round)",
+      "name_ur": "انگور (گول)"
+    },
+    {
+      "id": 27,
+      "name_en": "Grape (Sunkani)",
+      "name_ur": "انگور (سنکانی)"
+    },
+    {
+      "id": 28,
+      "name_en": "Persimmon (Amlok)",
+      "name_ur": "آملوک"
+    },
+    {
+      "id": 30,
+      "name_en": "Mitha",
+      "name_ur": "میٹھا"
+    },
+    {
+      "id": 31,
+      "name_en": "Plum",
+      "name_ur": "آلو بخارا"
+    },
+    {
+      "id": 32,
+      "name_en": "Plum (Irani)",
+      "name_ur": "ایرانی آلو بخارا"
+    },
+    {
+      "id": 33,
+      "name_en": "Guava (Kusoor)",
+      "name_ur": "امرود (قصور)"
+    },
+    {
+      "id": 34,
+      "name_en": "Guava (Hyderabad)",
+      "name_ur": "امرود (حیدرآباد)"
+    },
+    {
+      "id": 35,
+      "name_en": "Guava (Larkana)",
+      "name_ur": "امرود (لاڑکانہ)"
+    },
+    {
+      "id": 36,
+      "name_en": "Sapodilla",
+      "name_ur": "چیکو"
+    },
+    {
+      "id": 38,
+      "name_en": "Custard Apple, Large Piece",
+      "name_ur": "کسٹرڈ ایپل، بڑا حصہ"
+    },
+    {
+      "id": 39,
+      "name_en": "Custard Apple, Small Piece",
+      "name_ur": "کسٹرڈ ایپل، چھوٹا حصہ"
+    },
+    {
+      "id": 40,
+      "name_en": "Kiwi Box (1250g)",
+      "name_ur": "کیوی باکس (1250 گرام)"
+    },
+    {
+      "id": 41,
+      "name_en": "Mosambi",
+      "name_ur": "موسمی"
+    },
+    {
+      "id": 43,
+      "name_en": "Striped Watermelon",
+      "name_ur": "دھاری دار تربوز"
+    },
+    {
+      "id": 44,
+      "name_en": "Date (Irani)",
+      "name_ur": "ایرانی کھجور"
+    },
+    {
+      "id": 46,
+      "name_en": "Date (Zahidi Basra)",
+      "name_ur": "زاہدی بصرہ کھجور"
+    },
+    {
+      "id": 48,
+      "name_en": "Date (Aseel)",
+      "name_ur": "عسیل کھجور"
+    },
+    {
+      "id": 50,
+      "name_en": "Orange",
+      "name_ur": "کینو/مالٹا،  فی درجن"
+    },
+    {
+      "id": 51,
+      "name_en": "Fruiter, Per Dozen",
+      "name_ur": "فروٹر فی درجن"
+    },
+    {
+      "id": 52,
+      "name_en": "Bair",
+      "name_ur": "بیر"
+    },
+    {
+      "id": 53,
+      "name_en": "Muskmelon (Garma)",
+      "name_ur": "گرما خربوزہ"
+    },
+    {
+      "id": 54,
+      "name_en": "Strawberry (450g)",
+      "name_ur": "اسٹرابیری (450 گرام)"
+    },
+    {
+      "id": 55,
+      "name_en": "Cherry (1250g)",
+      "name_ur": "چیری (1250 گرام)"
+    },
+    {
+      "id": 56,
+      "name_en": "Loquat (1250g)",
+      "name_ur": "لوکاٹ (1250 گرام)"
+    },
+    {
+      "id": 57,
+      "name_en": "Golarchi",
+      "name_ur": "گولارچی"
+    },
+    {
+      "id": 58,
+      "name_en": "Watermelon, Round",
+      "name_ur": "تربوز (گول)"
+    },
+    {
+      "id": 59,
+      "name_en": "Watermelon, Long",
+      "name_ur": "تربوز (لمبوترا)"
+    },
+    {
+      "id": 60,
+      "name_en": "Mango, Anwertol",
+      "name_ur": "آم (انویرٹول)"
+    },
+    {
+      "id": 61,
+      "name_en": "Mango, Dasheri",
+      "name_ur": "آم (دسہری)"
+    },
+    {
+      "id": 62,
+      "name_en": "Mango, Langra",
+      "name_ur": "آم (لنگڑا)"
+    },
+    {
+      "id": 63,
+      "name_en": "Mango, Saroli",
+      "name_ur": "آم (سرولی)"
+    },
+    {
+      "id": 64,
+      "name_en": "Mango, Sindhri",
+      "name_ur": "آم (سندھڑی)"
+    },
+    {
+      "id": 65,
+      "name_en": "Mango, Chaunsa",
+      "name_ur": "آم (چونسا)"
+    },
+    {
+      "id": 66,
+      "name_en": "Peach",
+      "name_ur": "آڑو"
+    },
+    {
+      "id": 68,
+      "name_en": "Apricot",
+      "name_ur": "خوبانی"
+    },
+    {
+      "id": 70,
+      "name_en": "Falsa",
+      "name_ur": "فالسہ"
+    },
+    {
+      "id": 71,
+      "name_en": "Jamun",
+      "name_ur": "جامن"
+    },
+    {
+      "id": 72,
+      "name_en": "Apple (Aamri)",
+      "name_ur": "سیب (آمری)"
+    },
+    {
+      "id": 74,
+      "name_en": "Apple (Kallati)",
+      "name_ur": "سیب (کلاتی)"
+    },
+    {
+      "id": 76,
+      "name_en": "Apple (New Zealand)",
+      "name_ur": "سیب (نیوزی لینڈ)"
+    },
+    {
+      "id": 77,
+      "name_en": "Sufi Bair",
+      "name_ur": "صوفی بیر"
+    },
+    {
+      "id": 78,
+      "name_en": "Angoor Mota",
+      "name_ur": "موٹا انگور"
+    },
+    {
+      "id": 81,
+      "name_en": "Khajoor (Khairpur)",
+      "name_ur": "کھجور (خیرپور)"
+    },
+    {
+      "id": 82,
+      "name_en": "Khajoor Khairpur (Yellow)",
+      "name_ur": "پیلی کھجور (خیرپور)"
+    },
+    {
+      "id": 84,
+      "name_en": "Mango (Fajri)",
+      "name_ur": "آم (فجری)"
+    },
+    {
+      "id": 85,
+      "name_en": "Mango (Fajri)",
+      "name_ur": "آم (فجری)، "
+    },
+    {
+      "id": 86,
+      "name_en": "Mango (Lal Badsha)",
+      "name_ur": "آم (لال بادشاہ)"
+    },
+    {
+      "id": 87,
+      "name_en": "Mango (Baigan Phali)",
+      "name_ur": "آم (بیگن پھلی)"
+    },
+    {
+      "id": 88,
+      "name_en": "Mango (Sunaira)",
+      "name_ur": "آم (سونیرہ)"
+    },
+    {
+      "id": 89,
+      "name_en": "Kairi (Raw Mango)",
+      "name_ur": "کیری (کچا آم)"
+    },
+    {
+      "id": 90,
+      "name_en": "Khajoor Mudhafati",
+      "name_ur": "کھجور (مدھافتی)"
+    },
+    {
+      "id": 91,
+      "name_en": "Lotus Seed Pod",
+      "name_ur": "کنول کا بیج پھلی / کمَل گٹہ (کمَل پھلی)"
+    },
+    {
+      "id": 92,
+      "name_en": "Sugar Cane",
+      "name_ur": "گنا"
+    },
+    {
+      "id": 93,
+      "name_en": "Sarda",
+      "name_ur": "سردا (خربوزے کی ایک قسم)"
+    },
+    {
+      "id": 94,
+      "name_en": "Mango (Desi)",
+      "name_ur": "آم (دیسی)"
+    },
+    {
+      "id": 95,
+      "name_en": "Khajoor (Karbala)",
+      "name_ur": "کھجور (کربلا)"
+    },
+    {
+      "id": 96,
+      "name_en": "Papaya (Farm)",
+      "name_ur": "پپیتا (فارم)"
+    },
+    {
+      "id": 97,
+      "name_en": "Date (Begum Jangi)",
+      "name_ur": "کھجور (بیگم جنگی)"
+    },
+    {
+      "id": 98,
+      "name_en": "Orange (36 pieces)",
+      "name_ur": "کینو/مالٹا (36 عدد)"
+    },
+    {
+      "id": 99,
+      "name_en": "Orange (48 pieces)",
+      "name_ur": "کینو/مالٹا (48 عدد)"
+    },
+    {
+      "id": 100,
+      "name_en": "Orange (60 pieces)",
+      "name_ur": "کینو/مالٹا (60 عدد)"
+    },
+    {
+      "id": 101,
+      "name_en": "Orange (80 pieces)",
+      "name_ur": "کینو/مالٹا (80 عدد)"
+    },
+    {
+      "id": 102,
+      "name_en": "Orange (100 pieces)",
+      "name_ur": "کینو/مالٹا (100 عدد)"
+    },
+    {
+      "id": 103,
+      "name_en": "Orange (120 pieces)",
+      "name_ur": "کینو/مالٹا (120 عدد)"
+    },
+    {
+      "id": 104,
+      "name_en": "Mango (Baigan Phali)",
+      "name_ur": "آم (بیگن پھلی)"
+    }
+  ],
+  "vegetables": [
+    {
+      "id": 1,
+      "name_en": "Potato",
+      "name_ur": "آلو"
+    },
+    {
+      "id": 3,
+      "name_en": "New Potato",
+      "name_ur": "نیا آلو"
+    },
+    {
+      "id": 4,
+      "name_en": "Red Potato",
+      "name_ur": "لال آلو"
+    },
+    {
+      "id": 5,
+      "name_en": "Onion",
+      "name_ur": "پیاز"
+    },
+    {
+      "id": 6,
+      "name_en": "Onion (Small)",
+      "name_ur": "چھوٹی پیاز"
+    },
+    {
+      "id": 7,
+      "name_en": "Onion (Punjab)",
+      "name_ur": "پنجاب کی پیاز"
+    },
+    {
+      "id": 8,
+      "name_en": "Cauliflower",
+      "name_ur": "پھول گوبھی"
+    },
+    {
+      "id": 10,
+      "name_en": "Cabbage",
+      "name_ur": "بند گوبھی"
+    },
+    {
+      "id": 12,
+      "name_en": "Round Bottle Gourd",
+      "name_ur": "گول لوکی"
+    },
+    {
+      "id": 13,
+      "name_en": "Long Bottle Gourd",
+      "name_ur": "لمبی لوکی"
+    },
+    {
+      "id": 14,
+      "name_en": "Turai",
+      "name_ur": "توری"
+    },
+    {
+      "id": 16,
+      "name_en": "Long Brinjal",
+      "name_ur": "لمبا بینگن"
+    },
+    {
+      "id": 17,
+      "name_en": "Round Brinjal",
+      "name_ur": "گول بینگن"
+    },
+    {
+      "id": 18,
+      "name_en": "Lady Finger Sultanabad",
+      "name_ur": "بھنڈی سلطان آباد"
+    },
+    {
+      "id": 19,
+      "name_en": "Lady Finger",
+      "name_ur": "بھنڈی"
+    },
+    {
+      "id": 20,
+      "name_en": "Bitter Gourd",
+      "name_ur": "کریلا"
+    },
+    {
+      "id": 22,
+      "name_en": "Pees (Malir)",
+      "name_ur": "مٹر (ملیر)"
+    },
+    {
+      "id": 23,
+      "name_en": "Pees (Punjab)",
+      "name_ur": "مٹر (پنجاب)"
+    },
+    {
+      "id": 24,
+      "name_en": "Pees (Classic)",
+      "name_ur": "مٹر (کلاسک)"
+    },
+    {
+      "id": 25,
+      "name_en": "Pees",
+      "name_ur": "مٹر"
+    },
+    {
+      "id": 27,
+      "name_en": "Tomato",
+      "name_ur": "ٹماٹر"
+    },
+    {
+      "id": 29,
+      "name_en": "Cucumber",
+      "name_ur": "کھیرا"
+    },
+    {
+      "id": 31,
+      "name_en": "Arvi",
+      "name_ur": "اروی"
+    },
+    {
+      "id": 33,
+      "name_en": "Tinda (Desi)",
+      "name_ur": "ٹنڈا (دیسی)"
+    },
+    {
+      "id": 34,
+      "name_en": "Tinda",
+      "name_ur": "ٹنڈا"
+    },
+    {
+      "id": 35,
+      "name_en": "Gawar Phali (Salwa)",
+      "name_ur": "گوار پھلی (سلوہ)"
+    },
+    {
+      "id": 36,
+      "name_en": "Gawar Phali",
+      "name_ur": "گوار پھلی"
+    },
+    {
+      "id": 37,
+      "name_en": "Carrot Red",
+      "name_ur": "لال گاجر"
+    },
+    {
+      "id": 38,
+      "name_en": "Carrot China",
+      "name_ur": "چائنا گاجر"
+    },
+    {
+      "id": 39,
+      "name_en": "Butta / Makai",
+      "name_ur": "مکئی / بھُٹا"
+    },
+    {
+      "id": 40,
+      "name_en": "Garlic",
+      "name_ur": "لہسن"
+    },
+    {
+      "id": 42,
+      "name_en": "Garlic (China)",
+      "name_ur": "چائنیز لہسن"
+    },
+    {
+      "id": 43,
+      "name_en": "Ginger (Without wash)",
+      "name_ur": "ادرک (بغیر دھویا ہوا)"
+    },
+    {
+      "id": 44,
+      "name_en": "Ginger (Without wash), Bangkok",
+      "name_ur": "ادرک (بنگکاک)"
+    },
+    {
+      "id": 46,
+      "name_en": "Capsicum",
+      "name_ur": "شملہ مرچ"
+    },
+    {
+      "id": 48,
+      "name_en": "Chilli (Shehzady)",
+      "name_ur": "مرچ (شہزادی)"
+    },
+    {
+      "id": 49,
+      "name_en": "Chilli (Moro)",
+      "name_ur": "مرچ (مورو)"
+    },
+    {
+      "id": 50,
+      "name_en": "Chilli",
+      "name_ur": "مرچ"
+    },
+    {
+      "id": 51,
+      "name_en": "Jerman Mirch",
+      "name_ur": "جرمن مرچ"
+    },
+    {
+      "id": 52,
+      "name_en": "Lemon",
+      "name_ur": "لیموں"
+    },
+    {
+      "id": 55,
+      "name_en": "Shaljum (With Leaves)",
+      "name_ur": "شلجم (پتوں سمیت)"
+    },
+    {
+      "id": 56,
+      "name_en": "Shaljum (Without Leaves)",
+      "name_ur": "شلجم (بغیر پتے)"
+    },
+    {
+      "id": 57,
+      "name_en": "Chukandar (With Leaves)",
+      "name_ur": "چقندر (پتوں سمیت)"
+    },
+    {
+      "id": 58,
+      "name_en": "Chukandar (Without Leaves)",
+      "name_ur": "چقندر (بغیر پتے)"
+    },
+    {
+      "id": 59,
+      "name_en": "Green Onion",
+      "name_ur": "ہری پیاز"
+    },
+    {
+      "id": 61,
+      "name_en": "Radish",
+      "name_ur": "مولی"
+    },
+    {
+      "id": 62,
+      "name_en": "Spinach",
+      "name_ur": "پالک"
+    },
+    {
+      "id": 63,
+      "name_en": "Sarson Saag",
+      "name_ur": "سرسوں کا ساگ"
+    },
+    {
+      "id": 64,
+      "name_en": "Methi",
+      "name_ur": "میتھی"
+    },
+    {
+      "id": 66,
+      "name_en": "Salad Patta",
+      "name_ur": "سلاد پتا"
+    },
+    {
+      "id": 67,
+      "name_en": "Soya Gaddi",
+      "name_ur": "سویا گڈی"
+    },
+    {
+      "id": 68,
+      "name_en": "Dhania Gaddi",
+      "name_ur": "دھنیا گڈی"
+    },
+    {
+      "id": 69,
+      "name_en": "Podina Gaddi",
+      "name_ur": "پودینہ گڈی"
+    },
+    {
+      "id": 70,
+      "name_en": "Karhi Patta",
+      "name_ur": "کڑی پتا"
+    },
+    {
+      "id": 71,
+      "name_en": "Kakri",
+      "name_ur": "ککڑی"
+    },
+    {
+      "id": 72,
+      "name_en": "Beh / Lotus Root",
+      "name_ur": "کنول کی جڑ (بیہ)"
+    },
+    {
+      "id": 73,
+      "name_en": "Raw Mango / Keeri",
+      "name_ur": "کچا آم / کیری"
+    },
+    {
+      "id": 74,
+      "name_en": "Papeta Hara",
+      "name_ur": "ہرا پپیتا"
+    },
+    {
+      "id": 75,
+      "name_en": "Methi Choti",
+      "name_ur": "چھوٹی میتھی"
+    },
+    {
+      "id": 76,
+      "name_en": "Green Chickpeas",
+      "name_ur": "ہرا چنا / سبز چنے"
+    },
+    {
+      "id": 77,
+      "name_en": "Cucumber (Karachi)",
+      "name_ur": "کھیرا (کراچی)"
+    },
+    {
+      "id": 78,
+      "name_en": "Cucumber (Karachi)",
+      "name_ur": "کھیرا (کراچی)"
+    },
+    {
+      "id": 79,
+      "name_en": "Patta Kaddu",
+      "name_ur": "پتہ کدو / پتا کدو"
+    },
+    {
+      "id": 80,
+      "name_en": "Sindhi Palak",
+      "name_ur": "سندھی پالک"
+    },
+    {
+      "id": 81,
+      "name_en": "Sindhi Turai",
+      "name_ur": "سندھی توری"
+    },
+    {
+      "id": 82,
+      "name_en": "Sindhi Tinda",
+      "name_ur": "سندھی ٹنڈا"
+    },
+    {
+      "id": 83,
+      "name_en": "Seem Ki Phali",
+      "name_ur": "سیم کی پھلی / سیم پھلی"
+    },
+    {
+      "id": 84,
+      "name_en": "Onion (Quetta)",
+      "name_ur": "پیاز (کوئٹہ)"
+    },
+    {
+      "id": 85,
+      "name_en": "Moongray",
+      "name_ur": "مونگرے / مونگری (مولی کے پھول)"
+    },
+    {
+      "id": 86,
+      "name_en": "Kulfa (Kulfa / Khurfa / Purslane)",
+      "name_ur": ""
+    },
+    {
+      "id": 87,
+      "name_en": "Mirch Talhari",
+      "name_ur": "مرچ (تلہاری)"
+    },
+    {
+      "id": 88,
+      "name_en": "Mirch Gajju",
+      "name_ur": "مرچ (گجو)"
+    },
+    {
+      "id": 89,
+      "name_en": "Cucumber Karachi",
+      "name_ur": "کھیرا (کراچی)"
+    },
+    {
+      "id": 90,
+      "name_en": "Mugri (Radish Seed Pods)",
+      "name_ur": "مونگری (مولی کے پھول)"
+    },
+    {
+      "id": 91,
+      "name_en": "Cucumber (Kakri)",
+      "name_ur": "ککڑی"
+    },
+    {
+      "id": 92,
+      "name_en": "Chappan Kaddu",
+      "name_ur": "چھپن کدو / چپن کدو (کدو کی ایک قسم)"
+    },
+    {
+      "id": 93,
+      "name_en": "Beh / Lotus Root (Mitti wale)",
+      "name_ur": "بیہ / کنول کی جڑ (مٹی والے)"
+    }
+  ]
+}

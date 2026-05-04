@@ -1,390 +1,431 @@
-import { Colors } from '@/constants/theme';
+import { Colors } from "@/constants/theme";
 // import i18n from "@/i18n/index";
 // import { useLanguageStore } from '@/i18n/store/languageStore';
-import { useTranslation } from '@/hooks/useLanguage';
-import { MaterialIcons } from '@expo/vector-icons';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import { useRouter } from 'expo-router';
-import React, { useMemo, useState } from 'react';
+import { useTranslation } from "@/hooks/useLanguage";
+import { MaterialIcons } from "@expo/vector-icons";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { useRouter } from "expo-router";
+import React, { useMemo, useState } from "react";
 import {
-    FlatList,
-    Modal,
-    Platform,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
-} from 'react-native';
+  FlatList,
+  Modal,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 const categories = [
-    'All Commodities',
-    'Fruits',
-    'Vegetables',
-    'Grains',
-    'Pulses',
+  "All Commodities",
+  "Fruits",
+  "Vegetables",
+  "Grains",
+  "Pulses",
 ];
 
 const DATA = [
-    { id: '1', category: 'Fruits', name: 'Banana', price: 248.5, volume: 12450, date: '2026-04-21', color: '#E9F9EF' },
-    { id: '2', category: 'Fruits', name: 'Apple', price: 512, volume: 8900, date: '2026-04-20', color: '#E8F1FF' },
-    { id: '3', category: 'Vegetables', name: 'Tomato', price: 120, volume: 15000, date: '2026-04-19', color: '#FFE9DD' },
-    { id: '4', category: 'Vegetables', name: 'Potato', price: 90, volume: 25000, date: '2026-04-18', color: '#FFF6DB' },
-    { id: '5', category: 'Grains', name: 'Wheat', price: 310, volume: 17800, date: '2026-04-17', color: '#FFF1D6' },
-    { id: '6', category: 'Pulses', name: 'Lentils', price: 220, volume: 14500, date: '2026-04-16', color: '#FFE3E3' },
+  {
+    id: "1",
+    category: "Fruits",
+    name: "Banana",
+    price: 248.5,
+    volume: 12450,
+    date: "2026-04-21",
+    color: "#E9F9EF",
+  },
+  {
+    id: "2",
+    category: "Fruits",
+    name: "Apple",
+    price: 512,
+    volume: 8900,
+    date: "2026-04-20",
+    color: "#E8F1FF",
+  },
+  {
+    id: "3",
+    category: "Vegetables",
+    name: "Tomato",
+    price: 120,
+    volume: 15000,
+    date: "2026-04-19",
+    color: "#FFE9DD",
+  },
+  {
+    id: "4",
+    category: "Vegetables",
+    name: "Potato",
+    price: 90,
+    volume: 25000,
+    date: "2026-04-18",
+    color: "#FFF6DB",
+  },
+  {
+    id: "5",
+    category: "Grains",
+    name: "Wheat",
+    price: 310,
+    volume: 17800,
+    date: "2026-04-17",
+    color: "#FFF1D6",
+  },
+  {
+    id: "6",
+    category: "Pulses",
+    name: "Lentils",
+    price: 220,
+    volume: 14500,
+    date: "2026-04-16",
+    color: "#FFE3E3",
+  },
 ];
 
 export default function CommodityTable() {
-    const router = useRouter();
-    const prev = new Date();
-    prev.setDate(prev.getDate() - 1);
-    const t = useTranslation();
+  const router = useRouter();
+  const prev = new Date();
+  prev.setDate(prev.getDate() - 1);
+  const t = useTranslation();
 
-    const [selectedCommodity, setSelectedCommodity] = useState('All Commodities');
-    const [showDropdown, setShowDropdown] = useState(false);
+  const [selectedCommodity, setSelectedCommodity] = useState("All Commodities");
+  const [showDropdown, setShowDropdown] = useState(false);
 
-    const [date, setDate] = useState(prev);
-    const [showPicker, setShowPicker] = useState(false);
+  const [date, setDate] = useState(prev);
+  const [showPicker, setShowPicker] = useState(false);
 
-    const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(false);
 
-    const selectedDate = date.toISOString().split('T')[0];
+  const selectedDate = date.toISOString().split("T")[0];
 
-    // ✅ DATE HANDLER (FIXED)
-    const onChangeDate = (event: any, selectedDate?: Date) => {
-        if (Platform.OS === 'android') {
-            setShowPicker(false);
-        }
+  // ✅ DATE HANDLER (FIXED)
+  const onChangeDate = (event: any, selectedDate?: Date) => {
+    if (Platform.OS === "android") {
+      setShowPicker(false);
+    }
 
-        if (selectedDate) {
-            setDate(selectedDate);
-        }
-    };
+    if (selectedDate) {
+      setDate(selectedDate);
+    }
+  };
 
-    const filteredData = useMemo(() => {
-        return DATA.filter(item => {
-            const matchCategory =
-                selectedCommodity === 'All Commodities' ||
-                item.category === selectedCommodity;
+  const filteredData = useMemo(() => {
+    return DATA.filter((item) => {
+      const matchCategory =
+        selectedCommodity === "All Commodities" ||
+        item.category === selectedCommodity;
 
-            const matchDate = item.date <= selectedDate;
+      const matchDate = item.date <= selectedDate;
 
-            return matchCategory && matchDate;
-        });
-    }, [selectedCommodity, selectedDate]);
+      return matchCategory && matchDate;
+    });
+  }, [selectedCommodity, selectedDate]);
 
-    const visibleData = expanded ? filteredData : filteredData.slice(0, 4);
+  const visibleData = expanded ? filteredData : filteredData.slice(0, 4);
 
-    const renderItem = ({ item }: any) => (
-        <View style={styles.row}>
-            <View style={[styles.iconBox, { backgroundColor: item.color }]}>
-                <Text style={styles.iconText}>
-                    {item.name.charAt(0)}
-                </Text>
-            </View>
+  const renderItem = ({ item }: any) => (
+    <View style={styles.row}>
+      <View style={[styles.iconBox, { backgroundColor: item.color }]}>
+        <Text style={styles.iconText}>{item.name.charAt(0)}</Text>
+      </View>
 
-            <Text style={styles.name}>{item.name}</Text>
-            <Text style={styles.price}>{item.price}</Text>
-            <Text style={styles.volume}>{item.volume}</Text>
+      <Text style={styles.name}>{item.name}</Text>
+      <Text style={styles.price}>{item.price}</Text>
+      <Text style={styles.volume}>{item.volume}</Text>
+    </View>
+  );
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.headerRow}>
+        <View style={{ flex: 1, paddingRight: 10 }}>
+          <Text style={styles.title}>{t("commodityTable.tableTitle")}</Text>
+          <Text style={styles.subtitle}>
+            {t("commodityTable.tableSubTitle")}
+          </Text>
         </View>
-    );
+        <TouchableOpacity
+          style={styles.recordBtn}
+          onPress={() => router.push("/commodityForm")}
+        >
+          <Text style={styles.recordBtnText}>
+            {t("commodityTable.recordButton")}
+          </Text>
+          <MaterialIcons name="add-circle-outline" color={"white"} size={20} />
+        </TouchableOpacity>
+      </View>
 
-    return (
-        <View style={styles.container}>
-            <View style={styles.headerRow}>
-                <View style={{ flex: 1, paddingRight: 10 }}>
-                    <Text style={styles.title}>{t("commodityTable.tableTitle")}</Text>
-                    <Text style={styles.subtitle}>
-                        {t("commodityTable.tableSubTitle")}
-                    </Text>
-                </View>
-                <TouchableOpacity
-                    style={styles.recordBtn}
-                    onPress={() => router.push('/commodityForm')}
-                >
-                    <Text style={styles.recordBtnText}>{t("commodityTable.recordButton")}</Text>
-                    <MaterialIcons name="add-circle-outline" color={"white"} size={20} />
-                </TouchableOpacity>
+      {/* FILTERS */}
+      <View style={styles.filterRow}>
+        {/* CATEGORY */}
+        <TouchableOpacity
+          style={styles.dropdown}
+          onPress={() => setShowDropdown(true)}
+        >
+          <Text style={styles.dropdownText}>{selectedCommodity}</Text>
+        </TouchableOpacity>
+
+        {/* DATE */}
+        <TouchableOpacity
+          style={styles.dateBox}
+          onPress={() => setShowPicker(true)}
+        >
+          <Text style={styles.dateText}>{selectedDate}</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.filterBtn}>
+          <Text style={{ color: "#fff", fontWeight: "700" }}>Filter</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* HEADER */}
+      <View style={styles.tableHeader}>
+        <Text style={styles.h1}>Commodity</Text>
+        <Text style={styles.h2}>Price</Text>
+        <Text style={styles.h3}>Volume</Text>
+      </View>
+
+      <FlatList
+        data={visibleData}
+        keyExtractor={(item) => item.id}
+        renderItem={renderItem}
+        scrollEnabled={false}
+      />
+
+      {filteredData.length > 4 && (
+        <TouchableOpacity
+          onPress={() => setExpanded(!expanded)}
+          style={styles.expandBtn}
+        >
+          <Text style={styles.expandText}>
+            {expanded
+              ? t("commodityTable.toggleLess")
+              : t("commodityTable.toggleMore")}
+          </Text>
+        </TouchableOpacity>
+      )}
+
+      {/* CATEGORY MODAL */}
+      <Modal visible={showDropdown} transparent animationType="fade">
+        <TouchableOpacity
+          style={styles.modalOverlay}
+          onPress={() => setShowDropdown(false)}
+        >
+          <View style={styles.modalBox}>
+            {categories.map((item, index) => (
+              <TouchableOpacity
+                key={index}
+                style={styles.option}
+                onPress={() => {
+                  setSelectedCommodity(item);
+                  setShowDropdown(false);
+                }}
+              >
+                <Text style={styles.optionText}>{item}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </TouchableOpacity>
+      </Modal>
+
+      {/* ✅ ANDROID PICKER */}
+      {showPicker && Platform.OS === "android" && (
+        <DateTimePicker
+          value={date}
+          mode="date"
+          display="default"
+          onChange={onChangeDate}
+        />
+      )}
+
+      {/* ✅ iOS PICKER (MODAL STYLE) */}
+      {showPicker && Platform.OS === "ios" && (
+        <Modal transparent animationType="slide">
+          <View style={styles.pickerModal}>
+            <View style={styles.pickerContainer}>
+              <DateTimePicker
+                value={date}
+                mode="date"
+                display="spinner"
+                onChange={onChangeDate}
+                textColor="#000" // ✅ FIX: makes text visible on iOS
+              />
+
+              <TouchableOpacity
+                style={styles.doneBtn}
+                onPress={() => setShowPicker(false)}
+              >
+                <Text style={{ color: "#fff", fontWeight: "700" }}>Done</Text>
+              </TouchableOpacity>
             </View>
-
-            {/* FILTERS */}
-            <View style={styles.filterRow}>
-
-                {/* CATEGORY */}
-                <TouchableOpacity
-                    style={styles.dropdown}
-                    onPress={() => setShowDropdown(true)}
-                >
-                    <Text style={styles.dropdownText}>
-                        {selectedCommodity}
-                    </Text>
-                </TouchableOpacity>
-
-                {/* DATE */}
-                <TouchableOpacity
-                    style={styles.dateBox}
-                    onPress={() => setShowPicker(true)}
-                >
-                    <Text style={styles.dateText}>{selectedDate}</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.filterBtn}>
-                    <Text style={{ color: '#fff', fontWeight: '700' }}>
-                        Filter
-                    </Text>
-                </TouchableOpacity>
-            </View>
-
-            {/* HEADER */}
-            <View style={styles.tableHeader}>
-                <Text style={styles.h1}>Commodity</Text>
-                <Text style={styles.h2}>Price</Text>
-                <Text style={styles.h3}>Volume</Text>
-            </View>
-
-            <FlatList
-                data={visibleData}
-                keyExtractor={item => item.id}
-                renderItem={renderItem}
-                scrollEnabled={false}
-            />
-
-            {filteredData.length > 4 && (
-                <TouchableOpacity
-                    onPress={() => setExpanded(!expanded)}
-                    style={styles.expandBtn}
-                >
-                    <Text style={styles.expandText}>
-                        {expanded ? t("commodityTable.toggleLess") : t("commodityTable.toggleMore")}
-                    </Text>
-                </TouchableOpacity>
-            )}
-
-            {/* CATEGORY MODAL */}
-            <Modal visible={showDropdown} transparent animationType="fade">
-                <TouchableOpacity
-                    style={styles.modalOverlay}
-                    onPress={() => setShowDropdown(false)}
-                >
-                    <View style={styles.modalBox}>
-                        {categories.map((item, index) => (
-                            <TouchableOpacity
-                                key={index}
-                                style={styles.option}
-                                onPress={() => {
-                                    setSelectedCommodity(item);
-                                    setShowDropdown(false);
-                                }}
-                            >
-                                <Text style={styles.optionText}>{item}</Text>
-                            </TouchableOpacity>
-                        ))}
-                    </View>
-                </TouchableOpacity>
-            </Modal>
-
-            {/* ✅ ANDROID PICKER */}
-            {showPicker && Platform.OS === 'android' && (
-                <DateTimePicker
-                    value={date}
-                    mode="date"
-                    display="default"
-                    onChange={onChangeDate}
-                />
-            )}
-
-            {/* ✅ iOS PICKER (MODAL STYLE) */}
-            {showPicker && Platform.OS === 'ios' && (
-                <Modal transparent animationType="slide">
-                    <View style={styles.pickerModal}>
-                        <View style={styles.pickerContainer}>
-
-                            <DateTimePicker
-                                value={date}
-                                mode="date"
-                                display="spinner"
-                                onChange={onChangeDate}
-                                textColor="#000"   // ✅ FIX: makes text visible on iOS
-                            />
-
-                            <TouchableOpacity
-                                style={styles.doneBtn}
-                                onPress={() => setShowPicker(false)}
-                            >
-                                <Text style={{ color: '#fff', fontWeight: '700' }}>
-                                    Done
-                                </Text>
-                            </TouchableOpacity>
-
-                        </View>
-                    </View>
-                </Modal>
-            )}
-        </View>
-    );
+          </View>
+        </Modal>
+      )}
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 15,
-        backgroundColor: '#F6F7FB',
-    },
+  container: {
+    flex: 1,
+    padding: 15,
+    backgroundColor: "#F6F7FB",
+  },
 
-    title: {
-        fontSize: 25,
-        fontWeight: '900',
-        color: Colors.light.primary,
-    },
+  title: {
+    fontSize: 25,
+    fontWeight: "900",
+    color: Colors.light.primary,
+  },
 
-    subtitle: {
-        fontSize: 12,
-        color: '#64748B',
-        marginBottom: 12,
-    },
-    headerRow: {
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        alignItems: 'flex-start',
-        marginBottom: 10,
-    },
-    recordBtn: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 5,
-        backgroundColor: Colors.light.primary,
-        paddingVertical: 15,
-        paddingHorizontal: 20,
-        borderRadius: 10,
-        elevation: 3,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-    },
-    recordBtnText: {
-        color: '#fff',
-        fontWeight: 'bold',
-        fontSize: 14,
-    },
-    pickerModal: {
-        flex: 1,
-        justifyContent: 'flex-end',
-        backgroundColor: 'rgba(0,0,0,0.4)',
-    },
+  subtitle: {
+    fontSize: 12,
+    color: "#64748B",
+    marginBottom: 12,
+  },
+  headerRow: {
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    marginBottom: 10,
+  },
+  recordBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    backgroundColor: Colors.light.primary,
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+  },
+  recordBtnText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 14,
+  },
+  pickerModal: {
+    flex: 1,
+    justifyContent: "flex-end",
+    backgroundColor: "rgba(0,0,0,0.4)",
+  },
 
-    pickerContainer: {
-        backgroundColor: '#fff',
-        padding: 16,
-        borderTopLeftRadius: 16,
-        borderTopRightRadius: 16,
-    },
+  pickerContainer: {
+    backgroundColor: "#fff",
+    padding: 16,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+  },
 
-    doneBtn: {
-        marginTop: 10,
-        backgroundColor: '#0B6B3A',
-        padding: 12,
-        borderRadius: 10,
-        alignItems: 'center',
-    },
-    filterRow: {
-        flexDirection: 'row',
-        gap: 8,
-        marginBottom: 15,
-    },
+  doneBtn: {
+    marginTop: 10,
+    backgroundColor: "#0B6B3A",
+    padding: 12,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  filterRow: {
+    flexDirection: "row",
+    gap: 8,
+    marginBottom: 15,
+  },
 
-    dropdown: {
-        flex: 1,
-        backgroundColor: '#fff',
-        padding: 10,
-        borderRadius: 8,
-    },
+  dropdown: {
+    flex: 1,
+    backgroundColor: "#fff",
+    padding: 10,
+    borderRadius: 8,
+  },
 
-    dropdownText: {
-        fontSize: 12,
-    },
+  dropdownText: {
+    fontSize: 12,
+  },
 
-    dateBox: {
-        backgroundColor: '#fff',
-        padding: 10,
-        borderRadius: 8,
-    },
+  dateBox: {
+    backgroundColor: "#fff",
+    padding: 10,
+    borderRadius: 8,
+  },
 
-    dateText: {
-        fontSize: 12,
-    },
+  dateText: {
+    fontSize: 12,
+  },
 
-    filterBtn: {
-        backgroundColor: Colors.light.primary,
-        paddingHorizontal: 14,
-        justifyContent: 'center',
-        borderRadius: 8,
-    },
+  filterBtn: {
+    backgroundColor: Colors.light.primary,
+    paddingHorizontal: 14,
+    justifyContent: "center",
+    borderRadius: 8,
+  },
 
-    tableHeader: {
-        flexDirection: 'row',
-        padding: 10,
-        backgroundColor: '#E2E8F0',
-        borderRadius: 8,
-    },
+  tableHeader: {
+    flexDirection: "row",
+    padding: 10,
+    backgroundColor: "#E2E8F0",
+    borderRadius: 8,
+  },
 
-    h1: { flex: 1, fontWeight: '700' },
-    h2: { width: 80, fontWeight: '700' },
-    h3: { width: 100, fontWeight: '700' },
+  h1: { flex: 1, fontWeight: "700" },
+  h2: { width: 80, fontWeight: "700" },
+  h3: { width: 100, fontWeight: "700" },
 
-    row: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: '#fff',
-        padding: 12,
-        marginTop: 8,
-        borderRadius: 10,
-    },
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    padding: 12,
+    marginTop: 8,
+    borderRadius: 10,
+  },
 
-    iconBox: {
-        width: 34,
-        height: 34,
-        borderRadius: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginRight: 10,
-    },
+  iconBox: {
+    width: 34,
+    height: 34,
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 10,
+  },
 
-    iconText: {
-        fontWeight: '800',
-    },
+  iconText: {
+    fontWeight: "800",
+  },
 
-    name: { flex: 1 },
-    price: { width: 80 },
-    volume: { width: 100 },
+  name: { flex: 1 },
+  price: { width: 80 },
+  volume: { width: 100 },
 
-    expandBtn: {
-        marginTop: 10,
-        alignSelf: 'center',
-    },
+  expandBtn: {
+    marginTop: 10,
+    alignSelf: "center",
+  },
 
-    expandText: {
-        color: Colors.light.primary,
-        fontWeight: '700',
-    },
+  expandText: {
+    color: Colors.light.primary,
+    fontWeight: "700",
+  },
 
-    modalOverlay: {
-        flex: 1,
-        justifyContent: 'center',
-        padding: 20,
-        backgroundColor: 'rgba(0,0,0,0.3)',
-    },
+  modalOverlay: {
+    flex: 1,
+    justifyContent: "center",
+    padding: 20,
+    backgroundColor: "rgba(0,0,0,0.3)",
+  },
 
-    modalBox: {
-        backgroundColor: '#fff',
-        borderRadius: 12,
-        padding: 10,
-    },
+  modalBox: {
+    backgroundColor: "#fff",
+    borderRadius: 12,
+    padding: 10,
+  },
 
-    option: {
-        padding: 12,
-    },
+  option: {
+    padding: 12,
+  },
 
-    optionText: {
-        fontSize: 14,
-    },
+  optionText: {
+    fontSize: 14,
+  },
 });
