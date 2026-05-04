@@ -1,4 +1,5 @@
-import HomeScreen from '@/screens/HomeScreen'
+import FeeCollectionScreen from '@/screens/FeeCollectionScreen'
+import HomeScreen from '@/screens/FeeCollectionScreen'
 import React from 'react'
 import { StyleSheet } from 'react-native'
 
@@ -9,5 +10,4 @@ const home = () => {
 }
 
 export default home
-
 const styles = StyleSheet.create({})
