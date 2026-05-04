@@ -1,3 +1,68 @@
+# AgriSindh - Market Information System (Android)
+
+A comprehensive Android application built with Expo and TypeScript for farmers and traders in Sindh to access market information, commodity rates, and weather updates.
+
+## Features
+
+- **Home Dashboard**: Quick access to daily market rates, commodities, weather, and news.
+- **Market Information**: Detailed market price listings with volume and trend analysis.
+- **Commodity Management**:
+  - Record daily commodity prices and transactions.
+  - Unified item list for consistent data entry.
+  - Image-based commodity identification and listing.
+- **Weather Integration**: Real-time weather updates including temperature, humidity, and forecast.
+- **News Feed**: Latest agricultural news and updates.
+- **Multi-language Support**: English and Urdu language support.
+- **Authentication**: Secure login system.
+
+## Getting Started
+
+### Prerequisites
+
+- **Node.js** (v18 or higher)
+- **npm**
+- **Expo CLI**
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone <repository-url>
+   cd AgriSindh-android-app
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+### Running the App
+
+Start the development server:
+
+```bash
+# Run with development build
+npx expo start --dev-client
+
+# Or run in Expo Go
+npx expo start
+```
+
+### Build Android APK
+
+Build a production APK:
+
+```bash
+npx expo build:android --apk
+```
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
 # Welcome to your Expo app 👋
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
