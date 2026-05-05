@@ -37,6 +37,18 @@ import urTabs from "./locales/ur/tabs";
 import enVolume from "./locales/en/volume";
 import urVolume from "./locales/ur/volume";
 
+import sinCategories from "./locales/sin/categories";
+import sinCommodityTable from "./locales/sin/commodityTable";
+import sinDataSync from "./locales/sin/dataSync";
+import sinForgotPassword from "./locales/sin/forgotPassword";
+import sinListCommodities from "./locales/sin/listCommodities";
+import sinLogin from "./locales/sin/login";
+import sinNewPassword from "./locales/sin/newPassword";
+import sinProfile from "./locales/sin/profile";
+import sinStatus from "./locales/sin/statusModal";
+import sinTabs from "./locales/sin/tabs";
+import sinVerifyOTP from "./locales/sin/verifyOTP";
+
 const i18n = new I18n();
 
 // Translations object — also exported for direct reactive lookup in useTranslation
@@ -69,6 +81,20 @@ export const translations = {
     newPassword: urNewPassword,
     tabs: urTabs,
     volume: urVolume,
+  },
+
+  sin: {
+    commodityTable: sinCommodityTable,
+    dataSync: sinDataSync,
+    login: sinLogin,
+    status: sinStatus,
+    categories: sinCategories,
+    listCommodities: sinListCommodities,
+    profile: sinProfile,
+    forgotPassword: sinForgotPassword,
+    verifyOTP: sinVerifyOTP,
+    newPassword: sinNewPassword,
+    tabs: sinTabs,
   },
 } as const;
 
