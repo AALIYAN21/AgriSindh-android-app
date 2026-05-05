@@ -13,5 +13,6 @@ export default {
     uploadVegetablePhoto: "سبزين جون تصويرون اپلوڊ ڪريو",
     uploadFruitsPhoto: "ميون جون تصويرون اپلوڊ ڪريو",
     saveBtn: "محفوظ ڪريو ۽ اڳتي وڌو",
+    volumeBtn: "مقدار جمع ڪريو",
     backBtn: "واپس"
 }
