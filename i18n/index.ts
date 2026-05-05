@@ -34,38 +34,42 @@ import urNewPassword from "./locales/ur/newPassword";
 import enTabs from "./locales/en/tabs";
 import urTabs from "./locales/ur/tabs";
 
+import enVolume from "./locales/en/volume";
+import urVolume from "./locales/ur/volume";
 
 const i18n = new I18n();
 
 // Translations object — also exported for direct reactive lookup in useTranslation
 export const translations = {
-    en: {
-        commodityTable: enCommodityTable,
-        dataSync: enDataSync,
-        login: enLogin,
-        status: enStatus,
-        categories: enCategories,
-        listCommodities: enListCommodities,
-        profile: enProfile,
-        forgotPassword: enForgotPassword,
-        verifyOTP: enVerifyOTP,
-        newPassword: enNewPassword,
-        tabs: enTabs,
-    },
+  en: {
+    commodityTable: enCommodityTable,
+    dataSync: enDataSync,
+    login: enLogin,
+    status: enStatus,
+    categories: enCategories,
+    listCommodities: enListCommodities,
+    profile: enProfile,
+    forgotPassword: enForgotPassword,
+    verifyOTP: enVerifyOTP,
+    newPassword: enNewPassword,
+    tabs: enTabs,
+    volume: enVolume,
+  },
 
-    ur: {
-        commodityTable: urCommodityTable,
-        dataSync: urDataSync,
-        login: urLogin,
-        status: urStatus,
-        categories: urCategories,
-        listCommodities: urListCommodities,
-        profile: urProfile,
-        forgotPassword: urForgotPassword,
-        verifyOTP: urVerifyOTP,
-        newPassword: urNewPassword,
-        tabs: urTabs,
-    },
+  ur: {
+    commodityTable: urCommodityTable,
+    dataSync: urDataSync,
+    login: urLogin,
+    status: urStatus,
+    categories: urCategories,
+    listCommodities: urListCommodities,
+    profile: urProfile,
+    forgotPassword: urForgotPassword,
+    verifyOTP: urVerifyOTP,
+    newPassword: urNewPassword,
+    tabs: urTabs,
+    volume: urVolume,
+  },
 } as const;
 
 i18n.translations = translations;

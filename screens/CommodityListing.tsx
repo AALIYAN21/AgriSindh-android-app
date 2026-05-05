@@ -2,6 +2,7 @@ import StatusModal from "@/components/StatusModal";
 import { useTranslation } from "@/hooks/useLanguage";
 import { useLanguageStore } from "@/i18n/store/languageStore";
 import commodities from "@/itemList/itemList.json";
+import { insertItemsBulk } from "@/utils/Database";
 import { FontAwesome5, MaterialIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker"; // 1. Import ImagePicker
 import { router } from "expo-router";
@@ -36,6 +37,15 @@ const CommodityListing = () => {
   const { language } = useLanguageStore();
 
   const t = useTranslation();
+
+  // useEffect(() => {
+  //   clearAllItems().then((res) => {
+  //     console.log("res", res);
+  //   });
+  //   getItemsWithoutVolume().then((items) => {
+  //     console.log("ITEMS WITHOUT VOLUME:", items);
+  //   });
+  // }, []);
 
   const clean = (str: string) =>
     str.replace(/,+/g, "").replace(/\s+/g, " ").trim();
@@ -208,8 +218,43 @@ const CommodityListing = () => {
     setListData({ ...listData, [category]: filteredList });
   };
 
-  const handleSave = () => setModalVisible(true);
-  const handleCloseModal = () => setModalVisible(false);
+  const saveToLocalDB = async () => {
+    try {
+      const category_id = category === "Vegetables" ? "1" : "2";
+
+      const formattedItems = listData[category].map((row) => ({
+        // item_id: `${Date.now()}_${row.id}`,
+        item_id: `${row.id}`,
+        item: row.item,
+        grade: row.grade,
+        price: parseFloat(row.price) || 0,
+        volume: null,
+        user_id: "USER_1", // replace later with real auth user
+        category_id,
+      }));
+
+      await insertItemsBulk(formattedItems, "USER_1");
+
+      return true;
+    } catch (error) {
+      console.log("DB SAVE ERROR:", error);
+      return false;
+    }
+  };
+
+  const handleSave = async () => {
+    const success = await saveToLocalDB();
+
+    if (success) {
+      setModalVisible(true);
+    } else {
+      Alert.alert("Error", "Failed to save data locally");
+    }
+  };
+  const handleCloseModal = () => {
+    setModalVisible(false);
+    router.push("/commodityForm/volume");
+  };
 
   return (
     <View style={styles.safeArea}>
@@ -396,6 +441,21 @@ const CommodityListing = () => {
         </TouchableOpacity>
 
         <TouchableOpacity
+          style={styles.volumeBtn}
+          onPress={() => router.push("/commodityForm/volume")}
+        >
+          <FontAwesome5
+            name="arrow-right"
+            size={18}
+            color="#FFF"
+            style={{ marginRight: 8 }}
+          />
+          <Text style={styles.saveBtnText}>
+            {t("listCommodities.volumeBtn")}
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
           style={styles.cancelBtn}
           onPress={() => router.back()}
         >
@@ -573,8 +633,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 10,
-    marginBottom: 20,
+    marginBottom: 10,
   },
+  volumeBtn: {
+    backgroundColor: "#1F5D2B",
+    flexDirection: "row",
+    height: 55,
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 25,
+  },
+
   saveBtnText: { color: "#FFF", fontSize: 16, fontWeight: "700" },
   cancelBtn: {
     alignItems: "center",

@@ -2,10 +2,11 @@ import { Colors } from "@/constants/theme";
 // import i18n from "@/i18n/index";
 // import { useLanguageStore } from '@/i18n/store/languageStore';
 import { useTranslation } from "@/hooks/useLanguage";
+import { getDB } from "@/utils/Database";
 import { MaterialIcons } from "@expo/vector-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useRouter } from "expo-router";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   FlatList,
   Modal,
@@ -24,63 +25,6 @@ const categories = [
   "Pulses",
 ];
 
-const DATA = [
-  {
-    id: "1",
-    category: "Fruits",
-    name: "Banana",
-    price: 248.5,
-    volume: 12450,
-    date: "2026-04-21",
-    color: "#E9F9EF",
-  },
-  {
-    id: "2",
-    category: "Fruits",
-    name: "Apple",
-    price: 512,
-    volume: 8900,
-    date: "2026-04-20",
-    color: "#E8F1FF",
-  },
-  {
-    id: "3",
-    category: "Vegetables",
-    name: "Tomato",
-    price: 120,
-    volume: 15000,
-    date: "2026-04-19",
-    color: "#FFE9DD",
-  },
-  {
-    id: "4",
-    category: "Vegetables",
-    name: "Potato",
-    price: 90,
-    volume: 25000,
-    date: "2026-04-18",
-    color: "#FFF6DB",
-  },
-  {
-    id: "5",
-    category: "Grains",
-    name: "Wheat",
-    price: 310,
-    volume: 17800,
-    date: "2026-04-17",
-    color: "#FFF1D6",
-  },
-  {
-    id: "6",
-    category: "Pulses",
-    name: "Lentils",
-    price: 220,
-    volume: 14500,
-    date: "2026-04-16",
-    color: "#FFE3E3",
-  },
-];
-
 export default function CommodityTable() {
   const router = useRouter();
   const prev = new Date();
@@ -95,7 +39,25 @@ export default function CommodityTable() {
 
   const [expanded, setExpanded] = useState(false);
 
+  const [dbData, setDbData] = useState<any[]>([]);
+
   const selectedDate = date.toISOString().split("T")[0];
+
+  const loadData = async () => {
+    const db = await getDB();
+
+    const result = await db.getAllAsync(`
+    SELECT * FROM items
+  `);
+
+    console.log("DB ITEMS:", result);
+
+    setDbData(result);
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
 
   // ✅ DATE HANDLER (FIXED)
   const onChangeDate = (event: any, selectedDate?: Date) => {
@@ -109,28 +71,30 @@ export default function CommodityTable() {
   };
 
   const filteredData = useMemo(() => {
-    return DATA.filter((item) => {
+    const categoryMap: any = {
+      Fruits: "2",
+      Vegetables: "1",
+    };
+    return dbData.filter((item) => {
       const matchCategory =
         selectedCommodity === "All Commodities" ||
-        item.category === selectedCommodity;
+        item.category_id === categoryMap[selectedCommodity];
 
-      const matchDate = item.date <= selectedDate;
-
-      return matchCategory && matchDate;
+      return matchCategory;
     });
-  }, [selectedCommodity, selectedDate]);
+  }, [dbData, selectedCommodity]);
 
   const visibleData = expanded ? filteredData : filteredData.slice(0, 4);
 
   const renderItem = ({ item }: any) => (
     <View style={styles.row}>
       <View style={[styles.iconBox, { backgroundColor: item.color }]}>
-        <Text style={styles.iconText}>{item.name.charAt(0)}</Text>
+        <Text style={styles.iconText}>{item.item}</Text>
       </View>
 
       <Text style={styles.name}>{item.name}</Text>
       <Text style={styles.price}>{item.price}</Text>
-      <Text style={styles.volume}>{item.volume}</Text>
+      <Text style={styles.volume}>{item.volume ?? 0}</Text>
     </View>
   );
 
@@ -391,7 +355,7 @@ const styles = StyleSheet.create({
   },
 
   iconText: {
-    fontWeight: "800",
+    fontWeight: "400",
   },
 
   name: { flex: 1 },

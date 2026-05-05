@@ -1,74 +1,123 @@
+import { useTranslation } from "@/hooks/useLanguage";
 import { MaterialIcons } from "@expo/vector-icons";
-import React, { use, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { PieChart } from "react-native-gifted-charts";
 import StatusModal from "./StatusModal";
-import { useTranslation } from "@/hooks/useLanguage";
+
+import { getSyncStats } from "@/utils/Database";
+import { syncData } from "@/utils/syncService";
 
 const DataSyncStatus = () => {
   const [showModal, setShowModal] = useState(false);
+  const [stats, setStats] = useState({ synced: 0, pending: 0 });
+  const [loading, setLoading] = useState(false);
+
   const t = useTranslation();
 
+  // 🔄 Load stats from DB
+  const loadStats = async () => {
+    const data = await getSyncStats();
+    console.log(data);
+    setStats(data);
+  };
 
+  useEffect(() => {
+    loadStats();
+  }, []);
+
+  // 📊 Dynamic pie data
+  const total = stats.synced + stats.pending;
+
+  const hasData = total > 0;
 
   const pieData = [
-    { value: 65, color: "#154212" },
-    { value: 35, color: "#dcdfe3" },
+    {
+      value: (stats.synced / total) * 100,
+      color: "#154212",
+    },
+    {
+      value: (stats.pending / total) * 100,
+      color: "#dcdfe3",
+    },
   ];
 
-  const handleUpload = () => {
+  // 🔄 Manual sync
+  const handleSync = async () => {
+    setLoading(true);
     setShowModal(true);
+
+    const result = await syncData();
+
+    setShowModal(false);
+    setLoading(false);
+
+    await loadStats(); // refresh chart after sync
   };
 
   return (
     <View style={{ flex: 1 }}>
-      {/* 🔥 MODAL MUST BE HERE (OUTSIDE BUTTON) */}
       {showModal && (
-        <StatusModal
-          status="upload"
-          onClose={() => setShowModal(false)}
-        />
+        <StatusModal status="upload" onClose={() => setShowModal(false)} />
       )}
+
       <View style={styles.container}>
         <Text style={styles.heading}>{t("dataSync.titleHeader")}</Text>
-        <Text style={styles.subHeading}>
-          {t("dataSync.subTitle")}
-        </Text>
+        <Text style={styles.subHeading}>{t("dataSync.subTitle")}</Text>
 
         <View style={styles.card}>
-          <PieChart
-            data={pieData}
-            donut
-            showText
-            textColor="#154212"
-            textSize={28}
-            radius={90}
-            innerRadius={65}
-            centerLabelComponent={() => (
-              <View style={{ alignItems: "center" }}>
-                <Text style={styles.percent}>65%</Text>
-                <Text style={styles.synced}>Synced</Text>
+          {!hasData ? (
+            <View style={styles.emptyState}>
+              <MaterialIcons name="sync-disabled" size={50} color="#aaa" />
+              <Text style={styles.emptyText}>No data to sync</Text>
+              <Text style={styles.emptySubText}>
+                Add commodities first to start syncing
+              </Text>
+            </View>
+          ) : (
+            <>
+              <PieChart
+                data={pieData}
+                donut
+                showText
+                textColor="#154212"
+                textSize={28}
+                radius={90}
+                innerRadius={65}
+                centerLabelComponent={() => (
+                  <View style={{ alignItems: "center" }}>
+                    <Text style={styles.percent}>
+                      {Math.round((stats.synced / total) * 100) || 0}%
+                    </Text>
+                    <Text style={styles.synced}>Synced</Text>
+                  </View>
+                )}
+              />
+
+              <View style={styles.legendContainer}>
+                <View style={styles.legendItem}>
+                  <View style={[styles.dot, { backgroundColor: "#154212" }]} />
+                  <Text>Synced Data</Text>
+                </View>
+
+                <View style={styles.legendItem}>
+                  <View style={[styles.dot, { backgroundColor: "#dcdfe3" }]} />
+                  <Text>{stats.pending} Pending</Text>
+                </View>
               </View>
-            )}
-          />
+            </>
+          )}
 
-          <View style={styles.legendContainer}>
-            <View style={styles.legendItem}>
-              <View style={[styles.dot, { backgroundColor: "#154212" }]} />
-              <Text>Synced Data</Text>
-            </View>
-
-            <View style={styles.legendItem}>
-              <View style={[styles.dot, { backgroundColor: "#dcdfe3" }]} />
-              <Text>35% Pending</Text>
-            </View>
-          </View>
-
-          <TouchableOpacity style={styles.button} onPress={handleUpload}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={handleSync}
+            disabled={loading || !hasData}
+          >
             <MaterialIcons name="sync" size={22} color="white" />
-            <Text style={styles.buttonText}>{t("dataSync.syncButton")}</Text>
+            <Text style={styles.buttonText}>
+              {loading ? "Syncing..." : t("dataSync.syncButton")}
+            </Text>
           </TouchableOpacity>
-
         </View>
       </View>
     </View>
@@ -139,5 +188,24 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     marginLeft: 8,
     fontSize: 16,
+  },
+  emptyState: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 40,
+  },
+
+  emptyText: {
+    fontSize: 16,
+    fontWeight: "700",
+    color: "#666",
+    marginTop: 10,
+  },
+
+  emptySubText: {
+    fontSize: 12,
+    color: "#999",
+    marginTop: 4,
+    textAlign: "center",
   },
 });

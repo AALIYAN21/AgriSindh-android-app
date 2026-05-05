@@ -2,17 +2,10 @@ import { Colors } from "@/constants/theme";
 import { useTranslation } from "@/hooks/useLanguage";
 import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
-import {
-  Modal,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-
+import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 type Props = {
-  status: "sync" | "upload" | "otp" | "passwordReset";
+  status: "sync" | "upload" | "otp" | "passwordReset" | "submission";
   onClose: () => void;
 };
 
@@ -41,16 +34,45 @@ type Props = {
 
 const statusConfig = {
   sync: {
-    icon: <MaterialIcons name="refresh" size={80} color={Colors.light.primary} />,
+    icon: (
+      <MaterialIcons name="refresh" size={80} color={Colors.light.primary} />
+    ),
   },
   upload: {
-    icon: <MaterialIcons name="check-circle" size={80} color={Colors.light.primary} />,
+    icon: (
+      <MaterialIcons
+        name="check-circle"
+        size={80}
+        color={Colors.light.primary}
+      />
+    ),
   },
   otp: {
-    icon: <MaterialIcons name="check-circle" size={80} color={Colors.light.primary} />,
+    icon: (
+      <MaterialIcons
+        name="check-circle"
+        size={80}
+        color={Colors.light.primary}
+      />
+    ),
   },
   passwordReset: {
-    icon: <MaterialIcons name="check-circle" size={80} color={Colors.light.primary} />,
+    icon: (
+      <MaterialIcons
+        name="check-circle"
+        size={80}
+        color={Colors.light.primary}
+      />
+    ),
+  },
+  submission: {
+    icon: (
+      <MaterialIcons
+        name="check-circle"
+        size={80}
+        color={Colors.light.primary}
+      />
+    ),
   },
 };
 
@@ -62,16 +84,11 @@ export default function StatusModal({ status = "upload", onClose }: Props) {
     <Modal transparent animationType="fade" visible={status !== null}>
       <View style={styles.overlay}>
         <View style={styles.card}>
-
           {/* ICON */}
-          <View style={{ marginBottom: 10 }}>
-            {data.icon}
-          </View>
+          <View style={{ marginBottom: 10 }}>{data.icon}</View>
 
           {/* TITLE */}
-          <Text style={styles.title}>
-            {t(`status.${status}.title`)}
-          </Text>
+          <Text style={styles.title}>{t(`status.${status}.title`)}</Text>
 
           {/* DESCRIPTION */}
           <Text style={styles.message}>
@@ -80,11 +97,8 @@ export default function StatusModal({ status = "upload", onClose }: Props) {
 
           {/* BUTTON */}
           <TouchableOpacity style={styles.button} onPress={onClose}>
-            <Text style={styles.buttonText}>
-              {t("status.ok")}
-            </Text>
+            <Text style={styles.buttonText}>{t("status.ok")}</Text>
           </TouchableOpacity>
-
         </View>
       </View>
     </Modal>
