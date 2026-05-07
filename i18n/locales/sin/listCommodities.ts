@@ -1,10 +1,10 @@
 export default {
-    titleHeader: "واپاري شين جي فهرست",
+    titleHeader: "واپاري شين جي لسٽ",
     subTitle: "هتان سڀ مارڪيٽ جون واپاري شيون لسٽ ڪريو۔",
     categorySelection: "قسم کڻو",
     selectorsVegetables: "سبزيون",
     selectorFruits: "ميوا",
-    EntryDate: "ڊيٽا داخل ڪريو",
+    EntryDate: "تاريخ داخل ڪريو",
     tableItemHeader: "آئٽم",
     tableGradeHeader: "درجو",
     tableKgsHeader: "ڪلو",
