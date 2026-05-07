@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
   },
 
   cancelBtn: {
-    marginTop: "10%",
+    marginTop: "5%",
     alignItems: "center",
     paddingBottom: 40,
     flexDirection: "row",

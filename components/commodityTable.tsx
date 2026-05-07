@@ -88,12 +88,16 @@ export default function CommodityTable() {
 
   const renderItem = ({ item }: any) => (
     <View style={styles.row}>
-      <View style={[styles.iconBox, { backgroundColor: item.color }]}>
+      <View style={[styles.iconBox, { backgroundColor: item.color, flex: 1 }]}>
         <Text style={styles.iconText}>{item.item}</Text>
       </View>
 
-      <Text style={styles.name}>{item.name}</Text>
+      <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">
+        {item.name}
+      </Text>
+
       <Text style={styles.price}>{item.price}</Text>
+
       <Text style={styles.volume}>{item.volume ?? 0}</Text>
     </View>
   );
@@ -332,9 +336,22 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
 
-  h1: { flex: 1, fontWeight: "700" },
-  h2: { width: 80, fontWeight: "700" },
-  h3: { width: 100, fontWeight: "700" },
+  h1: {
+    flex: 1,
+    fontWeight: "700",
+  },
+
+  h2: {
+    width: 80,
+    textAlign: "center",
+    fontWeight: "700",
+  },
+
+  h3: {
+    width: 100,
+    textAlign: "center",
+    fontWeight: "700",
+  },
 
   row: {
     flexDirection: "row",
@@ -343,6 +360,7 @@ const styles = StyleSheet.create({
     padding: 12,
     marginTop: 8,
     borderRadius: 10,
+    overflow: "hidden",
   },
 
   iconBox: {
@@ -352,15 +370,30 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginRight: 10,
+    flexShrink: 1,
   },
 
   iconText: {
-    fontWeight: "400",
+    fontSize: 12,
+    fontWeight: "700",
   },
 
-  name: { flex: 1 },
-  price: { width: 80 },
-  volume: { width: 100 },
+  name: {
+    flex: 1,
+    paddingRight: 6,
+  },
+
+  price: {
+    width: 80,
+    textAlign: "center",
+    flexShrink: 0,
+  },
+
+  volume: {
+    width: 100,
+    textAlign: "center",
+    flexShrink: 0,
+  },
 
   expandBtn: {
     marginTop: 10,

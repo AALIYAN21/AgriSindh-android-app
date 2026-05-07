@@ -48,6 +48,7 @@ import sinProfile from "./locales/sin/profile";
 import sinStatus from "./locales/sin/statusModal";
 import sinTabs from "./locales/sin/tabs";
 import sinVerifyOTP from "./locales/sin/verifyOTP";
+import sinVolume from "./locales/sin/volume";
 
 const i18n = new I18n();
 
@@ -95,6 +96,7 @@ export const translations = {
     verifyOTP: sinVerifyOTP,
     newPassword: sinNewPassword,
     tabs: sinTabs,
+    volume: sinVolume,
   },
 } as const;
 
