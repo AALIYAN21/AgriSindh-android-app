@@ -1,6 +1,6 @@
 export default {
     titleHeader: "زرعي جنس جي لسٽ",
-    subTitle: "هتان سڀ مارڪيٽ جون واپاري شيون لسٽ ڪريو۔",
+    subTitle: "هتان سڀ منڊن جون واپاري شيون لسٽ ڪريو۔",
     categorySelection: "قسم چونڊيو",
     selectorsVegetables: "سبزيون",
     selectorFruits: "ميوا",
