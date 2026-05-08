@@ -1,9 +1,9 @@
 export default {
-    titleHeader: "شيون رڪارڊ ڪيو",
-    subTitle: "نئون زرعي ڊيٽا رڪارڊ شامل ڪيو",
+    titleHeader: "جنس داخل ڪريو",
+    subTitle: "جديد ڄاڻ داخل ڪريو",
     categoriesCard: {
-        titleHeader: "رڪارڊ سامان",
-        subTitle: "توهان جي سڀني زرعي شين کي هڪ مرڪزي جڳهه تي محفوظ ڪيو.",
-        button: "رڪارڊ آئٽم"
+        titleHeader: "جنس داخل ڪريو",
+        subTitle: "ھڪڙي مرڪزي جڳھ ۾ پنھنجي گڏ ڪيل ڄاڻ کي  انجام ڏيو",
+        button: "جنس داخل ڪريو"
     }
 }

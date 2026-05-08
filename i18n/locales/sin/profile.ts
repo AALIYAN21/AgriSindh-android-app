@@ -1,9 +1,9 @@
 export default {
     titleSettings: "سيٽنگز",
     titleAccountInfo: "اڪائونٽ جي ڄاڻ",
-    subTitleAccountInfo: "ذاتي تفصيل ۽ پروفيشنل بايو",
+    subTitleAccountInfo: "ذاتي تفصيل ۽ پيشي جي باري ۾ ٻڌايو",
     titleSecurity: "سيڪيورٽي",
-    subTitleSecurity: "پاسورڊ ۽ لاگ ان تفصيل",
+    subTitleSecurity: "پاسورڊ ۽ لاگ ان جي تفصيل",
     titleHelpAndSupport: "مدد ۽ سپورٽ",
     subTitleHelpAndSupport: "دستاويز ۽ ترجيحي مدد",
     logoutbtn: "لاگ آئوٽ"

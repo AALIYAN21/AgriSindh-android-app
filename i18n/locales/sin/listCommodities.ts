@@ -1,18 +1,18 @@
 export default {
-    titleHeader: "واپاري شين جي لسٽ",
+    titleHeader: "زرعي جنس جي لسٽ",
     subTitle: "هتان سڀ مارڪيٽ جون واپاري شيون لسٽ ڪريو۔",
-    categorySelection: "قسم کڻو",
+    categorySelection: "قسم چونڊيو",
     selectorsVegetables: "سبزيون",
     selectorFruits: "ميوا",
     EntryDate: "تاريخ داخل ڪريو",
-    tableItemHeader: "آئٽم",
+    tableItemHeader: "شيءِ",
     tableGradeHeader: "درجو",
     tableKgsHeader: "ڪلو",
     tablePriceHeader: "قيمت في ڪلو",
     addRow: "صف شامل ڪريو",
-    uploadVegetablePhoto: "سبزين جون تصويرون اپلوڊ ڪريو",
-    uploadFruitsPhoto: "ميون جون تصويرون اپلوڊ ڪريو",
+    uploadVegetablePhoto: "سبزين جون تصويرون رکيو",
+    uploadFruitsPhoto: "ميون جون تصويرون رکيو",
     saveBtn: "محفوظ ڪريو ۽ اڳتي وڌو",
     volumeBtn: "مقدار جمع ڪريو",
-    backBtn: "واپس"
+    backBtn: "واپسي ٿيو"
 }

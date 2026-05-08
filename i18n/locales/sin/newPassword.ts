@@ -6,5 +6,5 @@ export default {
     number: "هڪڙو نمبر",
     specialCharacter: "هڪ خاص نشان",
     passwordMatch: "پاسورڊ ساڳيو",
-    resetBtn: "پاسورڊ ري سيٽ ڪريو"
+    resetBtn: "پاسورڊ ٻيھر سيٽ ڪريو"
 }

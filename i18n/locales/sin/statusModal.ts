@@ -1,18 +1,18 @@
 export default {
     upload: {
         title: "اپلوڊ مڪمل",
-        description: "توهان جو ڊيٽا ڪاميابي سان اپلوڊ ٿي ويو آهي۔"
+        description: "توهان جي ڏنل ڄاڻ ڪاميابي سان اپلوڊ ٿي وئ آهي۔"
     },
     sync: {
         title: "سنڪ مڪمل",
-        description: "توهان جو ڊيٽا ڪاميابي سان سنڪ ٿي ويو آهي۔",
+        description: "توهان جي ڏنل ڄاڻ ڪاميابي سان سنڪ ٿي وئ آهي۔",
     },
     otp: {
-        title: "OTP تصديق ٿي وئي",
-        description: "OTP تصديق ٿي وئي",
+        title: "OTPتصديق ٿي وئي آهي",
+        description: "OTP تصديق ٿي وئي آهي",
     },
     passwordReset: {
-        title: "پاسورڊ ري سيٽ ٿي ويو",
+        title: "نئون پاسورڊ ري سيٽ ٿي ويو آهي",
         description: "هاڻي توهان نئين پاسورڊ سان لاگ ان ڪري سگهو ٿا۔",
     },
      submission: {

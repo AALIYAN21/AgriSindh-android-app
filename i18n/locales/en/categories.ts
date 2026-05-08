@@ -1,9 +1,9 @@
 export default {
     titleHeader: "Record Commodities",
-    subTitle: "Add new agricultural data record",
+    subTitle: "Add new data record",
     categoriesCard: {
         titleHeader: "Record Commodities",
-        subTitle: "Manage all your agricultural commodities in one centralized location.",
+        subTitle: "Manage all your data records in one centralized location.",
         button: "Record Item"
     }
 }

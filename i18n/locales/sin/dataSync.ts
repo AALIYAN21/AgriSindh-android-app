@@ -1,5 +1,5 @@
 export default{
-    titleHeader: "ڊيٽا سنڪ اسٽيٽس",
-    subTitle: "ڊيٽا سنڪ جي موجوده حالت",
-    syncButton: "هاڻي سنڪ ڪيو"
+    titleHeader: "گڏ ڪيل ڄاڻ جي هم وقت سازي جي حالت",
+    subTitle: "وقت سازي جي موجوده حالت",
+    syncButton: "هاڻي رائج ڪيو"
 }
