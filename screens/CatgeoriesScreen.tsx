@@ -1,8 +1,8 @@
-import CatgeoriesCard from '@/components/CatgeoriesCard'
-import { Colors } from '@/constants/theme'
-import { useTranslation } from '@/hooks/useLanguage'
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import CatgeoriesCard from "@/components/CatgeoriesCard";
+import { Colors } from "@/constants/theme";
+import { useTranslation } from "@/hooks/useLanguage";
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
 
 const CatgeoriesScreen = () => {
   const t = useTranslation();
@@ -12,33 +12,29 @@ const CatgeoriesScreen = () => {
       {/* <Text style={styles.label}>DIGITAL AGRICULTURAL LEDGER</Text> */}
 
       {/* Heading */}
-      <Text style={styles.heading}>
-        {t("categories.titleHeader")}
-      </Text>
+      <Text style={styles.heading}>{t("categories.titleHeader")}</Text>
 
       {/* Description */}
-      <Text style={styles.description}>
-        {t("categories.subTitle")}
-      </Text>
+      <Text style={styles.description}>{t("categories.subTitle")}</Text>
       <View style={styles.categoryCardContainer}>
         <CatgeoriesCard />
       </View>
     </View>
-  )
-}
+  );
+};
 
-export default CatgeoriesScreen
+export default CatgeoriesScreen;
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#F6F7FB",
     marginBottom: 48,
     paddingHorizontal: 16,
-    top: "8%"
+    top: "8%",
   },
   categoryCardContainer: {
     backgroundColor: "#F6F7FB",
-    marginTop: '5%'
+    marginTop: "5%",
   },
 
   label: {
@@ -57,6 +53,7 @@ const styles = StyleSheet.create({
     color: Colors.light.primary,
     lineHeight: 38,
     marginBottom: 3,
+    paddingTop: "5%",
   },
   description: {
     fontSize: 16,
@@ -68,5 +65,4 @@ const styles = StyleSheet.create({
   highlight: {
     color: "#2e7d32", // primary green
   },
-
-})
+});
