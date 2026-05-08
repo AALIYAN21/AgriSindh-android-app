@@ -52,14 +52,26 @@ const CommodityListing = () => {
 
   const dropdownData = useMemo(() => {
     const fruits = commodities.fruits.map((item) => ({
-      label: clean(language === "ur" ? item.name_ur : item.name_en),
-      value: clean(item.name_en), // keep EN stable but cleaned
+      label: clean(
+        language === "ur"
+          ? item.name_ur || ""
+          : language === "sin"
+            ? item.name_sin || ""
+            : item.name_en || "",
+      ),
+      value: clean(item.name_en || ""), // keep EN stable but cleaned
     }));
 
     const vegetables = commodities.vegetables
       ? commodities.vegetables.map((item) => ({
-          label: clean(language === "ur" ? item.name_ur : item.name_en),
-          value: clean(item.name_en),
+          label: clean(
+            language === "ur"
+              ? item.name_ur || ""
+              : language === "sin"
+                ? item.name_sin || ""
+                : item.name_en || "",
+          ),
+          value: clean(item.name_en || ""),
         }))
       : [];
 
@@ -72,11 +84,21 @@ const CommodityListing = () => {
   const GRADE_OPTIONS = useMemo(() => {
     return [
       {
-        label: language === "ur" ? "درجہ اول" : "Grade A",
+        label:
+          language === "ur"
+            ? "درجہ اول"
+            : language === "sin"
+              ? "گريڊ A"
+              : "Grade A",
         value: "A",
       },
       {
-        label: language === "ur" ? "درجہ دوم" : "Grade B",
+        label:
+          language === "ur"
+            ? "درجہ دوم"
+            : language === "sin"
+              ? "گريڊ B"
+              : "Grade B",
         value: "B",
       },
     ];
@@ -334,7 +356,11 @@ const CommodityListing = () => {
                   value={row.item}
                   placeholder={{
                     label:
-                      language === "ur" ? "آئٹم منتخب کریں" : "Select Item",
+                      language === "ur"
+                        ? "آئٹم منتخب کریں"
+                        : language === "sin"
+                          ? "شيءِ چونڊيو"
+                          : "Select Item",
                     value: null,
                   }}
                   style={pickerSelectStyles}
@@ -354,7 +380,15 @@ const CommodityListing = () => {
                   onValueChange={(val) => updateRow(row.id, "grade", val)}
                   items={GRADE_OPTIONS}
                   value={row.grade}
-                  placeholder={{ label: "Grade", value: null }}
+                  placeholder={{
+                    label:
+                      language === "ur"
+                        ? "گریڈ"
+                        : language === "sin"
+                          ? "گريڊ"
+                          : "Grade",
+                    value: null,
+                  }}
                   style={pickerSelectStyles}
                   useNativeAndroidPickerStyle={false}
                   Icon={() => (
@@ -373,9 +407,16 @@ const CommodityListing = () => {
                   value={row.price}
                   keyboardType="numeric"
                   onChangeText={(val) => updateRow(row.id, "price", val)}
-                  placeholder="0"
+                  placeholder={
+                    language === "ur"
+                      ? "قیمت"
+                      : language === "sin"
+                        ? "قيمت"
+                        : "0"
+                  }
                   placeholderTextColor="#CCC"
                 />
+
                 <TouchableOpacity
                   onPress={() => removeRow(row.id)}
                   style={styles.removeBtn}
