@@ -12,17 +12,25 @@ type Language = keyof typeof translations;
  * Keys use dot notation, e.g. "commodityTable.tableTitle"
  */
 export const useTranslation = () => {
-    const language = useLanguageStore((s) => s.language) as Language;
+  const language = useLanguageStore((s) => s.language) as Language;
 
-    const t = (key: string): string => {
-        const keys = key.split(".");
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        let result: any = translations[language];
-        for (const k of keys) {
-            result = result?.[k];
-        }
-        return typeof result === "string" ? result : key;
-    };
+  const isRTL = language === "ur" || language === "sin";
 
-    return t;
+  const t = (key: string): string => {
+    const keys = key.split(".");
+
+    let result: any = translations[language];
+
+    for (const k of keys) {
+      result = result?.[k];
+    }
+
+    return typeof result === "string" ? result : key;
+  };
+
+  return {
+    t,
+    language,
+    isRTL,
+  };
 };

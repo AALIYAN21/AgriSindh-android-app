@@ -1,7 +1,7 @@
 import { Colors } from "@/constants/theme";
 import { useTranslation } from "@/hooks/useLanguage";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useRouter } from 'expo-router';
+import { useRouter } from "expo-router";
 import React from "react";
 import {
   ImageBackground,
@@ -12,13 +12,12 @@ import {
 } from "react-native";
 
 const FeatureScreen = () => {
-
   const router = useRouter();
 
-  const t = useTranslation();
+  const { t, isRTL } = useTranslation();
 
   const handlePress = () => {
-    router.push('/commodityForm');
+    router.push("/commodityForm");
   };
 
   return (
@@ -34,17 +33,31 @@ const FeatureScreen = () => {
           <View style={styles.overlay} />
 
           {/* CONTENT */}
-          <View style={styles.content}>
-            <Text style={styles.title}>{t("categories.categoriesCard.titleHeader")}</Text>
+          <View style={[styles.content, isRTL && { alignItems: "flex-end" }]}>
+            <Text style={styles.title}>
+              {t("categories.categoriesCard.titleHeader")}
+            </Text>
 
             <Text style={styles.description}>
               {t("categories.categoriesCard.subTitle")}
             </Text>
 
-            <TouchableOpacity style={styles.button} onPress={() => handlePress()}>
-              <Text style={styles.buttonText}>{t("categories.categoriesCard.button")}</Text>
+            <TouchableOpacity
+              style={[
+                styles.button,
+                isRTL && { flexDirection: "row-reverse", gap: 5 },
+              ]}
+              onPress={() => handlePress()}
+            >
+              <Text style={styles.buttonText}>
+                {t("categories.categoriesCard.button")}
+              </Text>
               {/* <Text style={styles.icon}>＋</Text> */}
-              <MaterialIcons name="add-circle-outline" color={"white"} size={20} />
+              <MaterialIcons
+                name="add-circle-outline"
+                color={"white"}
+                size={20}
+              />
             </TouchableOpacity>
           </View>
         </ImageBackground>
@@ -52,7 +65,6 @@ const FeatureScreen = () => {
     </View>
   );
 };
-
 
 export default FeatureScreen;
 
@@ -125,5 +137,4 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 18,
   },
-
 });

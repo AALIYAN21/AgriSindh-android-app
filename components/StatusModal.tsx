@@ -77,7 +77,7 @@ const statusConfig = {
 };
 
 export default function StatusModal({ status = "upload", onClose }: Props) {
-  const t = useTranslation();
+  const { t } = useTranslation();
   const data = statusConfig[status] || statusConfig.upload;
 
   return (

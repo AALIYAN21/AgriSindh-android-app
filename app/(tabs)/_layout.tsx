@@ -1,19 +1,19 @@
-import { useTranslation } from '@/hooks/useLanguage';
-import { MaterialIcons } from '@expo/vector-icons';
-import { Tabs } from 'expo-router';
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { useTranslation } from "@/hooks/useLanguage";
+import { MaterialIcons } from "@expo/vector-icons";
+import { Tabs } from "expo-router";
+import React from "react";
+import { StyleSheet, View } from "react-native";
 
 const Layout = () => {
-  const t = useTranslation();
+  const { t } = useTranslation();
 
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: true,
-        tabBarActiveTintColor: '#1F5D2B', // Changed to Green to match your active bg logic
-        tabBarInactiveTintColor: '#7A9E8C',
+        tabBarActiveTintColor: "#1F5D2B", // Changed to Green to match your active bg logic
+        tabBarInactiveTintColor: "#7A9E8C",
         tabBarStyle: styles.tabBar,
         tabBarLabelStyle: styles.label,
         // Remove tabBarItemStyle justifyContent: 'center' as it disrupts internal alignment
@@ -25,7 +25,11 @@ const Layout = () => {
           title: t("tabs.home"),
           tabBarIcon: ({ color, focused }) => (
             <View style={[styles.iconContainer, focused && styles.activeIcon]}>
-              <MaterialIcons name="home" size={24} color={focused ? '#fff' : color} />
+              <MaterialIcons
+                name="home"
+                size={24}
+                color={focused ? "#fff" : color}
+              />
             </View>
           ),
         }}
@@ -37,7 +41,11 @@ const Layout = () => {
           title: t("tabs.categories"),
           tabBarIcon: ({ color, focused }) => (
             <View style={[styles.iconContainer, focused && styles.activeIcon]}>
-              <MaterialIcons name="list" size={24} color={focused ? '#fff' : color} />
+              <MaterialIcons
+                name="list"
+                size={24}
+                color={focused ? "#fff" : color}
+              />
             </View>
           ),
         }}
@@ -49,7 +57,11 @@ const Layout = () => {
           title: t("tabs.profile"),
           tabBarIcon: ({ color, focused }) => (
             <View style={[styles.iconContainer, focused && styles.activeIcon]}>
-              <MaterialIcons name="person" size={24} color={focused ? '#fff' : color} />
+              <MaterialIcons
+                name="person"
+                size={24}
+                color={focused ? "#fff" : color}
+              />
             </View>
           ),
         }}
@@ -62,13 +74,13 @@ export default Layout;
 
 const styles = StyleSheet.create({
   tabBar: {
-    position: 'absolute',
+    position: "absolute",
     height: 85, // Increased height to accommodate the padding/highlight
     borderRadius: 20,
-    backgroundColor: '#F6F7FB',
+    backgroundColor: "#F6F7FB",
     borderTopWidth: 0,
     elevation: 8,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 10,
@@ -78,16 +90,16 @@ const styles = StyleSheet.create({
   iconContainer: {
     width: 40,
     height: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: 12,
   },
   activeIcon: {
-    backgroundColor: '#1F5D2B',
+    backgroundColor: "#1F5D2B",
   },
   label: {
     fontSize: 10,
-    fontWeight: '700',
+    fontWeight: "700",
     marginTop: 8,
   },
 });

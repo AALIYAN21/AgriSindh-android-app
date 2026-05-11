@@ -29,7 +29,7 @@ export default function CommodityTable() {
   const router = useRouter();
   const prev = new Date();
   prev.setDate(prev.getDate() - 1);
-  const t = useTranslation();
+  const { t, isRTL } = useTranslation();
 
   const [selectedCommodity, setSelectedCommodity] = useState("All Commodities");
   const [showDropdown, setShowDropdown] = useState(false);
@@ -104,10 +104,17 @@ export default function CommodityTable() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerRow}>
-        <View style={{ flex: 1, paddingRight: 10 }}>
-          <Text style={styles.title}>{t("commodityTable.tableTitle")}</Text>
-          <Text style={styles.subtitle}>
+      <View style={[styles.headerRow, isRTL && { alignItems: "flex-end" }]}>
+        <View
+          style={[
+            {
+              flex: 1,
+              alignItems: isRTL ? "flex-end" : "flex-start",
+            },
+          ]}
+        >
+          <Text style={[styles.title]}>{t("commodityTable.tableTitle")}</Text>
+          <Text style={[styles.subtitle]}>
             {t("commodityTable.tableSubTitle")}
           </Text>
         </View>

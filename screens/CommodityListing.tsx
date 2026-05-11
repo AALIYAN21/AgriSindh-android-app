@@ -36,7 +36,7 @@ const CommodityListing = () => {
 
   const { language } = useLanguageStore();
 
-  const t = useTranslation();
+  const { t, isRTL } = useTranslation();
 
   // useEffect(() => {
   //   clearAllItems().then((res) => {
@@ -293,10 +293,20 @@ const CommodityListing = () => {
           <Text style={styles.tagText}>COMMODITY LISTING</Text>
         </View>
 
-        <Text style={styles.mainTitle}>{t("listCommodities.titleHeader")}</Text>
-        <Text style={styles.subtitle}>{t("listCommodities.subTitle")}</Text>
+        <Text
+          style={[styles.mainTitle, { textAlign: isRTL ? "right" : "left" }]}
+        >
+          {t("listCommodities.titleHeader")}
+        </Text>
+        <Text
+          style={[styles.subtitle, { textAlign: isRTL ? "right" : "left" }]}
+        >
+          {t("listCommodities.subTitle")}
+        </Text>
 
-        <Text style={styles.sectionLabel}>
+        <Text
+          style={[styles.sectionLabel, { textAlign: isRTL ? "right" : "left" }]}
+        >
           {t("listCommodities.categorySelection")}
         </Text>
 
@@ -325,8 +335,12 @@ const CommodityListing = () => {
         </View>
 
         {/* DATE */}
-        <View style={styles.card}>
-          <Text style={styles.cardLabel}>{t("listCommodities.EntryDate")}</Text>
+        <View style={[styles.card]}>
+          <Text
+            style={[styles.cardLabel, { textAlign: isRTL ? "right" : "left" }]}
+          >
+            {t("listCommodities.EntryDate")}
+          </Text>
           <View style={styles.dateInput}>
             <Text style={styles.dateText}>{todaysDate}</Text>
             <MaterialIcons name="lock" size={18} color="#999" />
@@ -431,26 +445,39 @@ const CommodityListing = () => {
             </View>
           ))}
 
-          <TouchableOpacity style={styles.addRowBtn} onPress={addRow}>
+          <TouchableOpacity
+            style={[
+              styles.addRowBtn,
+              { flexDirection: isRTL ? "row-reverse" : "row", gap: 5 },
+            ]}
+            onPress={addRow}
+          >
             <MaterialIcons name="add-circle" size={20} color="#1F5D2B" />
             <Text style={styles.addRowText}>{t("listCommodities.addRow")}</Text>
           </TouchableOpacity>
         </View>
 
         {/* 5. IMAGE UPLOAD SECTION */}
-        <Text style={styles.sectionLabel}>
+        <Text
+          style={[styles.sectionLabel, { textAlign: isRTL ? "right" : "left" }]}
+        >
           {category === "Vegetables"
             ? t("listCommodities.uploadVegetablePhoto")
             : t("listCommodities.uploadFruitsPhoto")}
         </Text>
-        <View style={styles.imageSection}>
+        <View
+          style={[
+            styles.imageSection,
+            { alignItems: isRTL ? "flex-end" : "flex-start" },
+          ]}
+        >
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
             style={styles.imageScroll}
           >
             <TouchableOpacity
-              style={styles.uploadBox}
+              style={[styles.uploadBox]}
               onPress={handleImageUpload}
             >
               <MaterialIcons name="add-a-photo" size={28} color="#1F5D2B" />
@@ -471,7 +498,13 @@ const CommodityListing = () => {
           </ScrollView>
         </View>
 
-        <TouchableOpacity style={styles.saveBtn} onPress={handleSave}>
+        <TouchableOpacity
+          style={[
+            styles.saveBtn,
+            { flexDirection: isRTL ? "row-reverse" : "row", gap: 10 },
+          ]}
+          onPress={handleSave}
+        >
           <FontAwesome5
             name="save"
             size={18}

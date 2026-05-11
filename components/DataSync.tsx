@@ -13,7 +13,7 @@ const DataSyncStatus = () => {
   const [stats, setStats] = useState({ synced: 0, pending: 0 });
   const [loading, setLoading] = useState(false);
 
-  const t = useTranslation();
+  const { t, isRTL } = useTranslation();
 
   // 🔄 Load stats from DB
   const loadStats = async () => {
@@ -62,8 +62,12 @@ const DataSyncStatus = () => {
       )}
 
       <View style={styles.container}>
-        <Text style={styles.heading}>{t("dataSync.titleHeader")}</Text>
-        <Text style={styles.subHeading}>{t("dataSync.subTitle")}</Text>
+        <Text style={[styles.heading, isRTL && { textAlign: "right" }]}>
+          {t("dataSync.titleHeader")}
+        </Text>
+        <Text style={[styles.subHeading, isRTL && { textAlign: "right" }]}>
+          {t("dataSync.subTitle")}
+        </Text>
 
         <View style={styles.card}>
           {!hasData ? (
@@ -109,7 +113,10 @@ const DataSyncStatus = () => {
           )}
 
           <TouchableOpacity
-            style={styles.button}
+            style={[
+              styles.button,
+              isRTL && { flexDirection: "row-reverse", gap: 5 },
+            ]}
             onPress={handleSync}
             disabled={loading || !hasData}
           >

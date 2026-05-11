@@ -108,4 +108,8 @@ i18n.locale = Localization.getLocales()[0]?.languageCode || "en";
 // fallback
 i18n.enableFallback = true;
 
+export const getCurrentLanguage = () => {
+  return i18n.locale;
+};
+
 export default i18n;

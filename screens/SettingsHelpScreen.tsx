@@ -23,19 +23,19 @@ const HelpSupport = ({ navigation }: any) => {
       return;
     }
 
-    setIsModalVisible(true)
+    setIsModalVisible(true);
     setComplaint("");
   };
 
   const handleDismissModal = () => {
-    setIsModalVisible(false)
-  }
+    setIsModalVisible(false);
+  };
 
   return (
     <View style={styles.container}>
-      {isModalVisible &&
+      {isModalVisible && (
         <StatusModal status="upload" onClose={handleDismissModal} />
-      }
+      )}
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Heading */}
         <Text style={styles.heading}>Help & Support</Text>
@@ -43,7 +43,8 @@ const HelpSupport = ({ navigation }: any) => {
         {/* Description */}
         <Text style={styles.description}>
           Need assistance with the ledger or encountered an issue in the field?
-          Submit your concerns below and our technical team will review it shortly.
+          Submit your concerns below and our technical team will review it
+          shortly.
         </Text>
 
         {/* Complaint Label */}
@@ -86,7 +87,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F4F4F4",
-    padding: 18
+    padding: 18,
   },
 
   heading: {

@@ -5,17 +5,23 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 const CatgeoriesScreen = () => {
-  const t = useTranslation();
+  const { t, isRTL } = useTranslation();
   return (
     <View style={styles.container}>
       {/* Label */}
       {/* <Text style={styles.label}>DIGITAL AGRICULTURAL LEDGER</Text> */}
 
       {/* Heading */}
-      <Text style={styles.heading}>{t("categories.titleHeader")}</Text>
+      <Text style={[styles.heading, { textAlign: isRTL ? "right" : "left" }]}>
+        {t("categories.titleHeader")}
+      </Text>
 
       {/* Description */}
-      <Text style={styles.description}>{t("categories.subTitle")}</Text>
+      <Text
+        style={[styles.description, { textAlign: isRTL ? "right" : "left" }]}
+      >
+        {t("categories.subTitle")}
+      </Text>
       <View style={styles.categoryCardContainer}>
         <CatgeoriesCard />
       </View>

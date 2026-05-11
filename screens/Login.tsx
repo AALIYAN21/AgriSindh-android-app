@@ -21,7 +21,7 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const t = useTranslation();
+  const { t, isRTL } = useTranslation();
 
   // 👁 NEW STATE
   const [showPassword, setShowPassword] = useState(false);
@@ -47,10 +47,7 @@ const Login = () => {
             <View style={styles.logosRow}>
               <Image
                 source={require("../assets/images/sindh-gov-logo.png")}
-                style={[
-                  styles.headerLogo,
-                  { tintColor: "white" },
-                ]}
+                style={[styles.headerLogo, { tintColor: "white" }]}
                 resizeMode="contain"
               />
 
@@ -61,47 +58,36 @@ const Login = () => {
               />
             </View>
 
-            <Text style={styles.logoText}>
-              SWAT AMIS
-            </Text>
+            <Text style={styles.logoText}>SWAT AMIS</Text>
 
             <Text style={styles.logoSubText}>
-              Transforming Manual Records into
-              Digital Insights
+              Transforming Manual Records into Digital Insights
             </Text>
           </View>
         </SafeAreaView>
       </View>
 
-      <TouchableWithoutFeedback
-        onPress={() => Keyboard.dismiss()}
-      >
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <KeyboardAvoidingView
-          behavior={
-            Platform.OS === "ios"
-              ? "padding"
-              : "height"
-          }
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={{ flex: 1 }}
         >
           <View style={styles.contentParent}>
-            <Text style={styles.title}>{t("login.loginTitle")}</Text>
+            <Text style={[styles.title, isRTL && { textAlign: "right" }]}>
+              {t("login.loginTitle")}
+            </Text>
 
-            <Text style={styles.subtitle}>
+            <Text style={[styles.subtitle, isRTL && { textAlign: "right" }]}>
               {t("login.loginDescription")}
             </Text>
 
             {/* Username */}
-            <Text style={styles.label}>
+            <Text style={[styles.label, isRTL && { textAlign: "right" }]}>
               {t("login.Email")}
             </Text>
 
             <View style={styles.inputContainer}>
-              <MaterialIcons
-                name="person-outline"
-                size={18}
-                color="#999"
-              />
+              <MaterialIcons name="person-outline" size={18} color="#999" />
 
               <TextInput
                 placeholder="e.g. j.doe@swat-amis.com"
@@ -114,16 +100,10 @@ const Login = () => {
             </View>
 
             {/* Password */}
-            <Text style={styles.label}>
-              {t("login.password")}
-            </Text>
+            <Text style={styles.label}>{t("login.password")}</Text>
 
             <View style={styles.inputContainer}>
-              <MaterialIcons
-                name="lock-outline"
-                size={18}
-                color="#999"
-              />
+              <MaterialIcons name="lock-outline" size={18} color="#999" />
 
               <TextInput
                 placeholder="••••••••••••"
@@ -135,19 +115,9 @@ const Login = () => {
               />
 
               {/* 👁 FUNCTIONAL EYE */}
-              <TouchableOpacity
-                onPress={() =>
-                  setShowPassword(
-                    !showPassword
-                  )
-                }
-              >
+              <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
                 <MaterialIcons
-                  name={
-                    showPassword
-                      ? "visibility"
-                      : "visibility-off"
-                  }
+                  name={showPassword ? "visibility" : "visibility-off"}
                   size={20}
                   color="#999"
                 />
@@ -155,29 +125,21 @@ const Login = () => {
             </View>
 
             {/* Login Button */}
-            <TouchableOpacity
-              style={styles.loginButton}
-              onPress={handleLogin}
-            >
-              <Text style={styles.loginText}>
-                {t("login.LoginBtn")} ➜
-              </Text>
+            <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+              <Text style={styles.loginText}>{t("login.LoginBtn")} ➜</Text>
             </TouchableOpacity>
 
             {/* Forgot Password */}
             <TouchableOpacity
-              style={
-                styles.forgetPasswordButton
-              }
-              onPress={
-                handleForgetPassword
-              }
+              style={[
+                styles.forgetPasswordButton,
+                isRTL && {
+                  alignItems: "flex-end",
+                },
+              ]}
+              onPress={handleForgetPassword}
             >
-              <Text
-                style={
-                  styles.forgetPasswordText
-                }
-              >
+              <Text style={styles.forgetPasswordText}>
                 {t("login.forgetPassword")} ➜
               </Text>
             </TouchableOpacity>

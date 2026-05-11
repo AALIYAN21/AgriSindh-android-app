@@ -21,7 +21,7 @@ interface VolumeRow {
 }
 
 const VolumeScreen = () => {
-  const t = useTranslation();
+  const { t } = useTranslation();
   const [isModalVisible, setModalVisible] = useState(false);
   const [volumeData, setVolumeData] = useState<VolumeRow[]>([]);
   const [loading, setLoading] = useState(true);
