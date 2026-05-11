@@ -21,7 +21,7 @@ interface VolumeRow {
 }
 
 const VolumeScreen = () => {
-  const { t } = useTranslation();
+  const { t, isRTL } = useTranslation();
   const [isModalVisible, setModalVisible] = useState(false);
   const [volumeData, setVolumeData] = useState<VolumeRow[]>([]);
   const [loading, setLoading] = useState(true);
@@ -79,15 +79,24 @@ const VolumeScreen = () => {
 
       <ScrollView contentContainerStyle={styles.container}>
         {/* HEADER */}
-        <View style={styles.tagContainer}>
+        <View
+          style={[
+            styles.tagContainer,
+            { alignSelf: isRTL ? "flex-end" : "flex-start" },
+          ]}
+        >
           <Text style={styles.tagText}>VOLUME ENTRY</Text>
         </View>
 
-        <Text style={styles.mainTitle}>
+        <Text
+          style={[styles.mainTitle, { textAlign: isRTL ? "right" : "left" }]}
+        >
           {t("volume.title") || "Enter Commodity Volume"}
         </Text>
 
-        <Text style={styles.subtitle}>
+        <Text
+          style={[styles.subtitle, { textAlign: isRTL ? "right" : "left" }]}
+        >
           {t("volume.subtitle") ||
             "Provide volume (in kilograms) for each item"}
         </Text>
@@ -139,7 +148,16 @@ const VolumeScreen = () => {
 
         {/* SAVE BUTTON */}
         {!showEmpty && (
-          <TouchableOpacity style={styles.saveBtn} onPress={handleSave}>
+          <TouchableOpacity
+            style={[
+              styles.saveBtn,
+              {
+                flexDirection: isRTL ? "row-reverse" : "row",
+                gap: isRTL ? 10 : 0,
+              },
+            ]}
+            onPress={handleSave}
+          >
             <FontAwesome5
               name="save"
               size={18}
