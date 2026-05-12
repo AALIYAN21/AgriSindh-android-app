@@ -2,6 +2,7 @@
 
 import { Fonts } from "@/constants/theme";
 import { useTranslation } from "@/hooks/useLanguage";
+import { Logout } from "@/services/AuthService";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React from "react";
@@ -16,6 +17,16 @@ import {
 const Profile = () => {
   const router = useRouter();
   const { t, isRTL } = useTranslation();
+
+  const handleLogout = async () => {
+    const res = await Logout();
+    console.log(res);
+    if (res) {
+      router.replace("/(auth)/login");
+    } else {
+      console.log(res);
+    }
+  };
 
   type IconName = React.ComponentProps<typeof MaterialIcons>["name"];
 
@@ -165,6 +176,7 @@ const Profile = () => {
 
       {/* Logout */}
       <TouchableOpacity
+        onPress={() => handleLogout()}
         style={[
           styles.logout,
           {

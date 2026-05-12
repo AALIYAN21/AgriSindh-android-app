@@ -1,6 +1,6 @@
 import apiClient from "@/api/apiClient";
 import { LoginResponse } from "@/constants/types";
-import { saveToken } from "@/utils/asyncToken";
+import { removeToken, saveToken } from "@/utils/asyncToken";
 
 export const Login = async (
   email: string,
@@ -12,5 +12,15 @@ export const Login = async (
     return response.data;
   } catch (error) {
     throw error;
+  }
+};
+
+export const Logout = async () => {
+  try {
+    await removeToken();
+    return true;
+  } catch (e) {
+    console.log("Logout Error:", e);
+    return false;
   }
 };
