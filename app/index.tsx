@@ -9,7 +9,10 @@ import {
   View,
 } from "react-native";
 
-// ✅ IMPORT DB + SYNC
+import { getOnboarding, saveOnboarding } from "@/utils/asyncOnboarding";
+import { getToken } from "@/utils/asyncToken";
+
+// DB + SYNC
 import { initDB } from "@/utils/Database";
 import { startAutoSync } from "@/utils/syncService";
 
@@ -20,26 +23,14 @@ export default function Splash() {
   const scaleAnim = useRef(new Animated.Value(0.8)).current;
 
   useEffect(() => {
-    // 🔥 INIT DB + SYNC SYSTEM (non-blocking)
-    const setup = async () => {
-      try {
-        await initDB();
-        startAutoSync();
-        console.log("DB + Sync initialized");
-      } catch (e) {
-        console.log("Init error:", e);
-      }
-    };
-
-    setup();
-
-    // 🎬 ANIMATION START
+    // Start animations
     Animated.parallel([
       Animated.timing(fadeAnim, {
         toValue: 1,
         duration: 1500,
         useNativeDriver: true,
       }),
+
       Animated.spring(scaleAnim, {
         toValue: 1,
         friction: 4,
@@ -47,13 +38,48 @@ export default function Splash() {
       }),
     ]).start();
 
-    // ⏳ REDIRECT AFTER 3 SEC
-    const redirectTimer = setTimeout(() => {
-      router.replace("/onboarding");
-    }, 3000);
+    // App initialization
+    const setupApp = async () => {
+      try {
+        // Initialize DB & Sync in background
+        await initDB();
+        startAutoSync();
 
-    return () => clearTimeout(redirectTimer);
-  }, [router]);
+        console.log("DB + Sync initialized");
+
+        // Small splash delay
+        await new Promise((resolve) => setTimeout(resolve, 2500));
+
+        // Check onboarding
+        const onboardingDone = await getOnboarding();
+
+        // If onboarding NOT done
+        if (!onboardingDone) {
+          await saveOnboarding();
+
+          router.replace("/onboarding");
+          return;
+        }
+
+        // Check token
+        const token = await getToken();
+
+        // If logged in
+        if (token) {
+          router.replace("/(tabs)/home");
+        } else {
+          router.replace("/(auth)/login");
+        }
+      } catch (error) {
+        console.log("Splash Error:", error);
+
+        // fallback
+        router.replace("/(auth)/login");
+      }
+    };
+
+    setupApp();
+  }, []);
 
   return (
     <ImageBackground
@@ -66,7 +92,10 @@ export default function Splash() {
       <Animated.View
         style={[
           styles.logoContainer,
-          { opacity: fadeAnim, transform: [{ scale: scaleAnim }] },
+          {
+            opacity: fadeAnim,
+            transform: [{ scale: scaleAnim }],
+          },
         ]}
       >
         <Image
@@ -83,6 +112,7 @@ export default function Splash() {
         {/* Footer */}
         <View style={styles.footer}>
           <Text style={styles.footerText}>Powered by</Text>
+
           <Text style={styles.footerText}>Verge Systems (Pvt) Ltd</Text>
         </View>
       </Animated.View>

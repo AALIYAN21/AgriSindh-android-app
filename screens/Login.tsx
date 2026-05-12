@@ -1,3 +1,4 @@
+import { useLogin } from "@/hooks/Auth/login";
 import { useTranslation } from "@/hooks/useLanguage";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
@@ -28,8 +29,23 @@ const Login = () => {
 
   const router = useRouter();
 
-  const handleLogin = () => {
-    router.push("/(tabs)/home");
+  // Login Query
+  const loginMutation = useLogin();
+
+  const handleLogin = async () => {
+    try {
+      const response = await loginMutation.mutateAsync({
+        email: username,
+        password: password,
+      });
+
+      console.log("Login Response:", response);
+
+      // Navigate
+      router.replace("/(tabs)/home");
+    } catch (error: any) {
+      console.log("Login Error:", error?.response?.data || error.message);
+    }
   };
 
   const handleForgetPassword = () => {
