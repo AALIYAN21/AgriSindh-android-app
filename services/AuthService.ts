@@ -5,9 +5,16 @@ import { removeToken, saveToken } from "@/utils/asyncToken";
 export const Login = async (
   email: string,
   password: string,
+  latitude: number,
+  longitude: number,
 ): Promise<LoginResponse> => {
   try {
-    const response = await apiClient.post("/login", { email, password });
+    const response = await apiClient.post("/login", {
+      email,
+      password,
+      latitude,
+      longitude,
+    });
     await saveToken(response.data.token);
     return response.data;
   } catch (error) {

@@ -10,7 +10,14 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "icon": "./assets/images/swat-app-icon-ios.png"
+      "icon": "./assets/images/swat-app-icon-ios.png",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Allow SWAT AMIS App to access your location for geo-tagging commodity records.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "Allow SWAT AMIS App to access your location for geo-tagging commodity records.",
+        "NSMicrophoneUsageDescription": "Allow SWAT AMIS App to access your microphone to record voice notes.",
+        "NSCameraUsageDescription": "Allow SWAT AMIS App to access your camera to take commodity photos.",
+        "NSPhotoLibraryUsageDescription": "Allow SWAT AMIS App to access your photos to upload commodity records."
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -22,8 +29,11 @@
       "package": "com.aali_edward.AmisSindh",
       "permissions": [
         "CAMERA",
-        "READ_EXTERNAL_STORAGE",
-        "WRITE_EXTERNAL_STORAGE"
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_BACKGROUND_LOCATION",
+        "INTERNET",
+        "ACCESS_NETWORK_STATE"
       ]
     },
     "web": {
@@ -50,15 +60,24 @@
         {
           "photosPermission": "The SWAT AMIS App needs access your photos to to upload the record of the commodities.",
           "colors": {
-            "cropToolabrColor": "#ffffff"
+            "cropToolbarColor": "#ffffff"
           },
           "cameraPermission": "The SWAT AMIS App needs access your camera to take the picture of the commodities.",
-          "microPhonePermission": "The SWAT AMIS App needs access your microphone to record the voice note of the commodities."
+          "microphonePermission": "The SWAT AMIS App needs access your microphone to record the voice note of the commodities."
         }
       ],
       "expo-web-browser",
       "expo-localization",
-      "expo-sqlite"
+      "expo-sqlite",
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow SWAT AMIS App to access your location for the purpose of geo-tagging the commodity record.",
+          "isAndroidBackgroundLocationEnabled": true,
+          "locationWhenInUsePermission": "Allow SWAT AMIS App to access your location for the purpose of geo-tagging the commodity record.",
+          "isIosBackgroundLocationEnabled": true
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

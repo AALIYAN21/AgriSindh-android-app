@@ -1,9 +1,14 @@
 import { useLogin } from "@/hooks/Auth/login";
 import { useTranslation } from "@/hooks/useLanguage";
+import {
+  getCurrentLocation,
+  requestLocationPermission,
+} from "@/utils/locations";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
+  Alert,
   Image,
   Keyboard,
   KeyboardAvoidingView,
@@ -34,17 +39,61 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
+      // STEP 1: ASK PERMISSION (WAIT FOR RESULT)
+      const hasPermission = await requestLocationPermission();
+
+      console.log("Permission Status:", hasPermission);
+
+      if (!hasPermission) {
+        Alert.alert(
+          "Location Required",
+          "Please allow location permission to continue login.",
+        );
+        return;
+      }
+
+      // STEP 2: GET USER LOCATION
+      const locationResult = await getCurrentLocation();
+
+      // STEP 3: VALIDATE LOCATION
+      if (!locationResult.success || !locationResult.location) {
+        Alert.alert(
+          "Location Error",
+          locationResult.message || "Unable to fetch location.",
+        );
+        return;
+      }
+
+      const { latitude, longitude } = locationResult.location;
+
+      console.log("User Location:", locationResult.location);
+
+      console.log("PAYLOAD:", {
+        email: username,
+        password: password,
+        latitude,
+        longitude,
+      });
+
+      // STEP 4: LOGIN API CALL
       const response = await loginMutation.mutateAsync({
         email: username,
         password: password,
+        latitude,
+        longitude,
       });
 
       console.log("Login Response:", response);
 
-      // Navigate
+      // STEP 5: NAVIGATE
       router.replace("/(tabs)/home");
     } catch (error: any) {
       console.log("Login Error:", error?.response?.data || error.message);
+
+      Alert.alert(
+        "Login Failed",
+        error?.response?.data?.message || "Something went wrong.",
+      );
     }
   };
 

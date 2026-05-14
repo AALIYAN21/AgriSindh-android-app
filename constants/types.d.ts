@@ -7,6 +7,18 @@ export interface LoginResponse {
   };
 }
 
+export type UserCoordinates = {
+  latitude: number;
+  longitude: number;
+};
+
+export type LocationResult = {
+  success: boolean;
+  location?: UserCoordinates;
+  error?: string;
+  message?: string;
+};
+
 export interface User {
   id: number;
   name: string;
