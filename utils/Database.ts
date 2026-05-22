@@ -95,7 +95,7 @@ export const insertItemsBulk = async (
 // ===============================
 export const updateItemVolume = async (
   id: number,
-  volume: number
+  volume: any
 ) => {
   const db = await getDB();
 
@@ -105,7 +105,7 @@ export const updateItemVolume = async (
     SET volume = ?, synced = 0 
     WHERE id = ?;
     `,
-    [volume ?? 0, id]
+    [Number(volume ?? 0), id]
   );
 };
 
