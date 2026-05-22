@@ -9,7 +9,7 @@ export const Login = async (
   longitude: number,
 ): Promise<LoginResponse> => {
   try {
-    const response = await apiClient.post("/login", {
+    const response = await apiClient.post("/api/login", {
       email,
       password,
       latitude,

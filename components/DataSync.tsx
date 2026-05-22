@@ -1,12 +1,14 @@
 import { useTranslation } from "@/hooks/useLanguage";
 import { MaterialIcons } from "@expo/vector-icons";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { PieChart } from "react-native-gifted-charts";
 import StatusModal from "./StatusModal";
 
+
 import { getSyncStats } from "@/utils/Database";
 import { syncData } from "@/utils/syncService";
+import { useFocusEffect } from "expo-router";
 
 const DataSyncStatus = () => {
   const [showModal, setShowModal] = useState(false);
@@ -17,31 +19,46 @@ const DataSyncStatus = () => {
 
   // 🔄 Load stats from DB
   const loadStats = async () => {
-    const data = await getSyncStats();
-    console.log(data);
-    setStats(data);
+    try {
+      const data = await getSyncStats();
+
+      setStats({
+        synced: Number(data?.synced || 0),
+        pending: Number(data?.pending || 0),
+      });
+    } catch (error) {
+      console.log("LOAD STATS ERROR:", error);
+    }
   };
 
-  useEffect(() => {
-    loadStats();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      loadStats();
 
+      const interval = setInterval(() => {
+        loadStats();
+      }, 3000);
+
+      return () => clearInterval(interval);
+    }, [])
+  );
   // 📊 Dynamic pie data
   const total = stats.synced + stats.pending;
 
   const hasData = total > 0;
 
-  const pieData = [
-    {
-      value: (stats.synced / total) * 100,
-      color: "#154212",
-    },
-    {
-      value: (stats.pending / total) * 100,
-      color: "#dcdfe3",
-    },
-  ];
-
+  const pieData = total
+    ? [
+      {
+        value: (stats.synced / total) * 100,
+        color: "#154212",
+      },
+      {
+        value: (stats.pending / total) * 100,
+        color: "#dcdfe3",
+      },
+    ]
+    : [];
   // 🔄 Manual sync
   const handleSync = async () => {
     setLoading(true);

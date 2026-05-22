@@ -5,8 +5,8 @@ import axios from "axios";
 
 // Create axios instance
 const apiClient = axios.create({
-  baseURL: "https://produced-washer-fire-eos.trycloudflare.com/api",
-  timeout: 10000,
+  baseURL: "https://popularity-munich-dvds-pensions.trycloudflare.com",
+  // timeout: 10000,
 });
 
 // APIs where token should NOT be attached

@@ -4,6 +4,7 @@ import { useLanguageStore } from "@/i18n/store/languageStore";
 import commodities from "@/itemList/itemList.json";
 import { insertItemsBulk } from "@/utils/Database";
 import { FontAwesome5, MaterialIcons } from "@expo/vector-icons";
+import * as ImageManipulator from "expo-image-manipulator";
 import * as ImagePicker from "expo-image-picker"; // 1. Import ImagePicker
 import { router } from "expo-router";
 import React, { useMemo, useState } from "react";
@@ -47,6 +48,31 @@ const CommodityListing = () => {
   //   });
   // }, []);
 
+  const normalizeImage = async (uri: string) => {
+    try {
+      const lower = uri.toLowerCase();
+
+      // Convert HEIC/HEIF to JPEG
+      if (lower.endsWith(".heic") || lower.endsWith(".heif")) {
+        const manipulatedImage = await ImageManipulator.manipulateAsync(
+          uri,
+          [],
+          {
+            compress: 0.7,
+            format: ImageManipulator.SaveFormat.JPEG,
+          }
+        );
+
+        return manipulatedImage.uri;
+      }
+
+      return uri;
+    } catch (error) {
+      console.log("IMAGE NORMALIZE ERROR:", error);
+      return uri;
+    }
+  };
+
   const clean = (str: string) =>
     str.replace(/,+/g, "").replace(/\s+/g, " ").trim();
 
@@ -64,15 +90,15 @@ const CommodityListing = () => {
 
     const vegetables = commodities.vegetables
       ? commodities.vegetables.map((item) => ({
-          label: clean(
-            language === "ur"
-              ? item.name_ur || ""
-              : language === "sin"
-                ? item.name_sin || ""
-                : item.name_en || "",
-          ),
-          value: clean(item.name_en || ""),
-        }))
+        label: clean(
+          language === "ur"
+            ? item.name_ur || ""
+            : language === "sin"
+              ? item.name_sin || ""
+              : item.name_en || "",
+        ),
+        value: clean(item.name_en || ""),
+      }))
       : [];
 
     return {
@@ -160,7 +186,11 @@ const CommodityListing = () => {
     });
 
     if (!result.canceled) {
-      const newUris = result.assets.map((asset) => asset.uri);
+      const newUris = await Promise.all(
+        result.assets.map(async (asset) => {
+          return await normalizeImage(asset.uri);
+        })
+      );
       setImages({
         ...images,
         [category]: [...images[category], ...newUris],
@@ -197,7 +227,11 @@ const CommodityListing = () => {
     });
 
     if (!result.canceled) {
-      const newUris = result.assets.map((asset) => asset.uri);
+      const newUris = await Promise.all(
+        result.assets.map(async (asset) => {
+          return await normalizeImage(asset.uri);
+        })
+      );
       setImages({
         ...images,
         [category]: [...images[category], ...newUris],
@@ -245,13 +279,16 @@ const CommodityListing = () => {
       const category_id = category === "Vegetables" ? "1" : "2";
 
       const formattedItems = listData[category].map((row) => ({
-        // item_id: `${Date.now()}_${row.id}`,
         item_id: `${row.id}`,
         item: row.item,
         grade: row.grade,
         price: parseFloat(row.price) || 0,
         volume: null,
-        user_id: "USER_1", // replace later with real auth user
+
+        // ✅ STORE AS JSON STRING SAFE FORMAT
+        images: images[category] || [],
+
+        user_id: "USER_1",
         category_id,
       }));
 
@@ -269,13 +306,30 @@ const CommodityListing = () => {
 
     if (success) {
       setModalVisible(true);
+
+      // clear current category data
+      setListData((prev) => ({
+        ...prev,
+        [category]: [{ id: Date.now(), item: "", grade: "", price: "" }],
+      }));
+
+      setImages((prev) => ({
+        ...prev,
+        [category]: [],
+      }));
+
+      // optional auto-switch
+      if (category === "Vegetables") {
+        setCategory("Fruits");
+      }
     } else {
       Alert.alert("Error", "Failed to save data locally");
     }
   };
+
   const handleCloseModal = () => {
     setModalVisible(false);
-    router.push("/commodityForm/volume");
+    // router.push("/commodityForm/volume");
   };
 
   return (

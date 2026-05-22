@@ -13,7 +13,7 @@ import { getOnboarding, saveOnboarding } from "@/utils/asyncOnboarding";
 import { getToken } from "@/utils/asyncToken";
 
 // DB + SYNC
-import { initDB } from "@/utils/Database";
+import { getUnsyncedItems, initDB } from "@/utils/Database";
 import { startAutoSync } from "@/utils/syncService";
 
 export default function Splash() {
@@ -23,7 +23,6 @@ export default function Splash() {
   const scaleAnim = useRef(new Animated.Value(0.8)).current;
 
   useEffect(() => {
-    // Start animations
     Animated.parallel([
       Animated.timing(fadeAnim, {
         toValue: 1,
@@ -38,33 +37,54 @@ export default function Splash() {
       }),
     ]).start();
 
-    // App initialization
     const setupApp = async () => {
       try {
-        // Initialize DB & Sync in background
+        // ===============================
+        // INIT DB
+        // ===============================
         await initDB();
-        startAutoSync();
 
-        console.log("DB + Sync initialized");
+        // ===============================
+        // CHECK PENDING DATA BEFORE SYNC
+        // ===============================
+        const pendingItems = await getUnsyncedItems();
 
-        // Small splash delay
-        await new Promise((resolve) => setTimeout(resolve, 2500));
+        console.log(
+          "PENDING ITEMS ON START:",
+          pendingItems.length,
+        );
 
-        // Check onboarding
-        const onboardingDone = await getOnboarding();
+        if (pendingItems.length > 0) {
+          startAutoSync();
+          console.log("AUTO SYNC ENABLED");
+        } else {
+          console.log("NO PENDING DATA → AUTO SYNC SKIPPED");
+        }
 
-        // If onboarding NOT done
+        // ===============================
+        // SPLASH DELAY
+        // ===============================
+        await new Promise((resolve) =>
+          setTimeout(resolve, 2500),
+        );
+
+        // ===============================
+        // ONBOARDING CHECK
+        // ===============================
+        const onboardingDone =
+          await getOnboarding();
+
         if (!onboardingDone) {
           await saveOnboarding();
-
           router.replace("/onboarding");
           return;
         }
 
-        // Check token
+        // ===============================
+        // TOKEN CHECK
+        // ===============================
         const token = await getToken();
 
-        // If logged in
         if (token) {
           router.replace("/(tabs)/home");
         } else {
@@ -72,8 +92,6 @@ export default function Splash() {
         }
       } catch (error) {
         console.log("Splash Error:", error);
-
-        // fallback
         router.replace("/(auth)/login");
       }
     };
@@ -109,11 +127,14 @@ export default function Splash() {
           Sindh Water & Agriculture Transformation
         </Text>
 
-        {/* Footer */}
         <View style={styles.footer}>
-          <Text style={styles.footerText}>Powered by</Text>
+          <Text style={styles.footerText}>
+            Powered by
+          </Text>
 
-          <Text style={styles.footerText}>Verge Systems (Pvt) Ltd</Text>
+          <Text style={styles.footerText}>
+            Verge Systems (Pvt) Ltd
+          </Text>
         </View>
       </Animated.View>
     </ImageBackground>

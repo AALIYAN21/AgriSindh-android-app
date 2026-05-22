@@ -1,19 +1,20 @@
 import * as SQLite from "expo-sqlite";
 
-let db: SQLite.SQLiteDatabase | null = null;
+let dbPromise: Promise<SQLite.SQLiteDatabase> | null = null;
 
 // ===============================
-// DB INSTANCE
+// DB INSTANCE (SAFE SINGLETON)
 // ===============================
 export const getDB = async (): Promise<SQLite.SQLiteDatabase> => {
-  if (!db) {
-    db = await SQLite.openDatabaseAsync("local_data.db");
+  if (!dbPromise) {
+    dbPromise = SQLite.openDatabaseAsync("local_data.db");
   }
-  return db;
+
+  return dbPromise;
 };
 
 // ===============================
-// INIT DATABASE
+// INIT DATABASE (SAFE + IDENTITY FIX)
 // ===============================
 export const initDB = async (): Promise<void> => {
   const database = await getDB();
@@ -26,94 +27,85 @@ export const initDB = async (): Promise<void> => {
       grade TEXT,
       price REAL,
       volume REAL,
+      images TEXT,
       user_id TEXT,
       category_id TEXT,
       synced INTEGER DEFAULT 0
     );
 
     CREATE INDEX IF NOT EXISTS idx_items_sync
-    ON items (synced, volume);
+    ON items (synced);
   `);
 
   console.log("Database initialized");
-};
 
-// ===============================
-// INSERT ITEMS (STEP 1)
-// ===============================
-export const insertItemsBulk = async (
-  items: any[],
-  user_id: string,
-): Promise<{ success: boolean; error?: string }> => {
-  const database = await getDB();
-
-  const query = `
-    INSERT INTO items 
-    (item_id, item, grade, price, volume, user_id, category_id, synced)
-    VALUES (?, ?, ?, ?, ?, ?, ?, 0);
-  `;
-
+  // 🔥 Safe migration fix
   try {
-    // ✅ VALIDATION (NO ALERTS IN DB LAYER)
-    for (let i = 0; i < items.length; i++) {
-      const entry = items[i];
-
-      if (
-        !entry.item_id ||
-        !entry.item ||
-        !entry.grade ||
-        entry.price === undefined ||
-        entry.price === null ||
-        entry.price === "" ||
-        !entry.category_id
-      ) {
-        return {
-          success: false,
-          error: `Missing required fields at row ${i + 1}`,
-        };
-      }
-    }
-
-    // ✅ INSERT
-    for (const entry of items) {
-      await database.runAsync(query, [
-        entry.item_id,
-        entry.item,
-        entry.grade,
-        Number(entry.price) || 0,
-        entry.volume ?? null,
-        user_id,
-        entry.category_id,
-      ]);
-    }
-
-    return { success: true };
-  } catch (error) {
-    console.error("Insert error:", error);
-
-    return {
-      success: false,
-      error: "Failed to insert items",
-    };
+    await database.execAsync(`
+      ALTER TABLE items ADD COLUMN images TEXT;
+    `);
+  } catch (e) {
+    console.log("images column already exists or migration skipped");
   }
 };
 
 // ===============================
-// UPDATE VOLUME (STEP 2)
+// INSERT ITEMS (OPTIMIZED BULK SAFE)
+// ===============================
+export const insertItemsBulk = async (
+  items: any[],
+  user_id: string
+) => {
+  try {
+    const db = await getDB();
+
+    const query = `
+      INSERT INTO items 
+      (item_id, item, grade, price, volume, images, user_id, category_id, synced)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0);
+    `;
+
+    // Use transaction for speed + safety
+    await db.withTransactionAsync(async () => {
+      for (const entry of items) {
+        if (!entry) continue;
+
+        await db.runAsync(query, [
+          String(entry.item_id ?? ""),
+          String(entry.item ?? ""),
+          String(entry.grade ?? ""),
+          Number(entry.price ?? 0),
+          entry.volume ?? null,
+          JSON.stringify(entry.images ?? []),
+          user_id,
+          String(entry.category_id ?? ""),
+        ]);
+      }
+    });
+
+    return { success: true };
+  } catch (error) {
+    console.log("DB insert error:", error);
+    return { success: false, error: "Insert failed" };
+  }
+};
+
+// ===============================
+// UPDATE VOLUME
 // ===============================
 export const updateItemVolume = async (
   id: number,
-  volume: number,
-): Promise<void> => {
-  const database = await getDB();
+  volume: number
+) => {
+  const db = await getDB();
 
-  await database.runAsync(
+  await db.runAsync(
     `
     UPDATE items 
     SET volume = ?, synced = 0 
     WHERE id = ?;
     `,
-    [volume, id],
+    [volume ?? 0, id]
   );
 };
 
@@ -121,57 +113,78 @@ export const updateItemVolume = async (
 // GET ITEMS WITHOUT VOLUME
 // ===============================
 export const getItemsWithoutVolume = async (): Promise<any[]> => {
-  const database = await getDB();
+  const db = await getDB();
 
-  return await database.getAllAsync(
-    `SELECT * FROM items WHERE volume IS NULL;`,
+  return await db.getAllAsync(
+    `SELECT * FROM items WHERE volume IS NULL OR volume = '' ORDER BY id DESC;`
   );
 };
 
 // ===============================
-// GET UNSYNCED ITEMS (READY FOR SYNC)
+// GET UNSYNCED ITEMS
 // ===============================
 export const getUnsyncedItems = async (): Promise<any[]> => {
-  const database = await getDB();
+  const db = await getDB();
 
-  return await database.getAllAsync(
-    `SELECT * FROM items 
-     WHERE synced = 0 AND volume IS NOT NULL;`,
+  const items = await db.getAllAsync(
+    `SELECT * FROM items WHERE synced = 0;`
   );
+
+  return items ?? [];
 };
 
 // ===============================
-// MARK AS SYNCED
+// MARK AS SYNCED (SAFE BATCH)
 // ===============================
-export const markItemsAsSynced = async (ids: number[]): Promise<void> => {
-  if (!ids.length) return;
+export const markItemsAsSynced = async (ids: number[]) => {
+  if (!ids?.length) return;
 
-  const database = await getDB();
+  const db = await getDB();
+
   const placeholders = ids.map(() => "?").join(",");
 
-  await database.runAsync(
+  await db.runAsync(
     `
     UPDATE items 
     SET synced = 1 
     WHERE id IN (${placeholders});
     `,
-    ids,
+    ids
   );
 };
 
 // ===============================
-// SYNC STATS (FOR CHART)
+// DELETE SYNCED ITEMS (SAFE)
+// ===============================
+export const deleteSyncedItems = async (ids: number[]) => {
+  if (!ids?.length) return;
+
+  const db = await getDB();
+
+  const placeholders = ids.map(() => "?").join(",");
+
+  await db.runAsync(
+    `
+    DELETE FROM items
+    WHERE id IN (${placeholders});
+    `,
+    ids
+  );
+};
+
+// ===============================
+// SYNC STATS
 // ===============================
 export const getSyncStats = async () => {
   const db = await getDB();
 
   try {
     const synced = await db.getFirstAsync<{ count: number }>(
-      "SELECT COUNT(*) as count FROM items WHERE synced = 1",
+      "SELECT COUNT(*) as count FROM items WHERE synced = 1"
     );
 
     const pending = await db.getFirstAsync<{ count: number }>(
-      "SELECT COUNT(*) as count FROM items WHERE synced = 0",
+      "SELECT COUNT(*) as count FROM items WHERE synced = 0"
     );
 
     return {
@@ -185,18 +198,28 @@ export const getSyncStats = async () => {
 };
 
 // ===============================
-// CLEAR ALL DATA (DEV ONLY)
+// CLEAR ALL DATA
 // ===============================
 export const clearAllItems = async () => {
-  const database = await getDB();
-
   try {
-    await database.runAsync("DELETE FROM items;");
+    const db = await getDB();
+    await db.runAsync("DELETE FROM items;");
     return true;
   } catch (error) {
     console.error("Clear DB error:", error);
     return false;
   }
+};
+
+// RESET DB
+export const resetDB = async () => {
+  const db = await getDB();
+
+  await db.execAsync(`
+    DROP TABLE IF EXISTS items;
+  `);
+
+  console.log("DB cleared");
 };
 
 export default getDB;

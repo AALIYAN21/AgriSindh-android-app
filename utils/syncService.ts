@@ -1,27 +1,30 @@
+import apiClient from "@/api/apiClient";
 import NetInfo from "@react-native-community/netinfo";
-import { getUnsyncedItems, markItemsAsSynced } from "./Database";
-
-// 🔁 Replace with your real API endpoint
-const API_URL = "https://your-api.com/sync";
+import { Platform } from "react-native";
+import {
+  deleteSyncedItems,
+  getUnsyncedItems,
+} from "./Database";
 
 // ===============================
-// CHECK INTERNET (SAFE VERSION)
+// INTERNET CHECK
 // ===============================
 export const isOnline = async (): Promise<boolean> => {
   const state = await NetInfo.fetch();
 
   return Boolean(
-    state.isConnected && state.isInternetReachable !== false, // handles null/undefined case
+    state.isConnected &&
+    state.isInternetReachable !== false
   );
 };
 
 // ===============================
-// SYNC LOCK (prevents duplicate calls)
+// SYNC LOCK
 // ===============================
 let isSyncing = false;
 
 // ===============================
-// CORE SYNC FUNCTION
+// MAIN SYNC FUNCTION (FILE READY)
 // ===============================
 export const syncData = async (): Promise<{
   success: boolean;
@@ -34,64 +37,148 @@ export const syncData = async (): Promise<{
 
     isSyncing = true;
 
+    // ===============================
+    // CHECK INTERNET
+    // ===============================
     const online = await isOnline();
-
     if (!online) {
       return { success: false, message: "No internet connection" };
     }
 
+    // ===============================
+    // GET UNSYNCED ITEMS
+    // ===============================
     const unsyncedItems = await getUnsyncedItems();
 
     if (!unsyncedItems.length) {
       return { success: true, message: "Nothing to sync" };
     }
 
+    const syncedIds: number[] = [];
+
     // ===============================
-    // API CALL (with timeout safety)
+    // SYNC LOOP
     // ===============================
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 15000); // 15s timeout
+    for (const item of unsyncedItems) {
+      try {
+        const formData = new FormData();
 
-    const response = await fetch(API_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ items: unsyncedItems }),
-      signal: controller.signal,
-    });
+        // ===============================
+        // SAFE FIELD MAPPING
+        // ===============================
+        formData.append("commodity_id", String(item.item_id ?? ""));
+        formData.append("grade", String(item.grade ?? ""));
+        formData.append("price", String(item.price ?? 0));
+        formData.append("unit", "kg");
+        formData.append("total", String(item.volume ?? 0));
 
-    clearTimeout(timeout);
+        // ===============================
+        // IMAGE HANDLING (IMPORTANT FIX)
+        // ===============================
+        let images: string[] = [];
 
-    if (!response.ok) {
-      return { success: false, message: "Server error" };
+        try {
+          images = item.images ? JSON.parse(item.images) : [];
+
+          // FIX DOUBLE STRINGIFIED JSON
+          if (typeof images === "string") {
+            images = JSON.parse(images);
+          }
+        } catch (e) {
+          images = [];
+        }
+
+        if (Array.isArray(images)) {
+          images.forEach((imageUri: string, index: number) => {
+            if (!imageUri) return;
+
+            let filename =
+              imageUri.split("/").pop() || `photo_${index}.jpg`;
+
+            filename = filename.replace(".HEIC", ".jpg");
+            filename = filename.replace(".heic", ".jpg");
+            filename = filename.replace(".HEIF", ".jpg");
+            filename = filename.replace(".heif", ".jpg");
+
+            const match = /\.(\w+)$/.exec(filename);
+
+            let extension = match?.[1]?.toLowerCase() || "jpg";
+
+            if (extension === "heic" || extension === "heif") {
+              extension = "jpeg";
+            }
+
+            const type = `image/${extension}`;
+
+            formData.append("image", {
+              uri:
+                Platform.OS === "ios"
+                  ? imageUri.replace("file://", "")
+                  : imageUri,
+              name: filename,
+              type,
+            } as any);
+          });
+        }
+        // ===============================
+        // API CALL
+        // ===============================
+        const response = await apiClient.post(
+          "/api/price-list/store",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+            timeout: 15000,
+          }
+        );
+
+        // ===============================
+        // SUCCESS CHECK
+        // ===============================
+        if (
+          response?.status === 200 ||
+          response?.status === 201 ||
+          response?.data?.success === true
+        ) {
+          syncedIds.push(item.id);
+        } else {
+          console.log("Server rejected item:", response?.data);
+        }
+      } catch (err: any) {
+        console.log(
+          "ITEM SYNC FAILED:",
+          err?.response?.data || err
+        );
+      }
     }
 
-    const result = await response.json();
+    // ===============================
+    // DELETE SYNCED ITEMS LOCALLY
+    // ===============================
+    if (syncedIds.length > 0) {
+      await deleteSyncedItems(syncedIds);
 
-    /**
-     * Expected:
-     * {
-     *   success: true,
-     *   syncedIds: number[]
-     * }
-     */
-
-    if (result?.success && Array.isArray(result.syncedIds)) {
-      await markItemsAsSynced(result.syncedIds);
+      console.log("DELETED LOCALLY:", syncedIds);
 
       return {
         success: true,
-        message: `${result.syncedIds.length} items synced`,
+        message: `${syncedIds.length} items synced successfully`,
       };
     }
 
     return {
       success: false,
-      message: "Invalid server response",
+      message: "No items were synced",
     };
   } catch (error: any) {
-    if (error.name === "AbortError") {
+    console.log("SYNC ERROR:", error?.response?.data || error);
+
+    if (
+      error?.code === "ECONNABORTED" ||
+      error?.message?.includes("timeout")
+    ) {
       return { success: false, message: "Sync timeout" };
     }
 
@@ -105,25 +192,38 @@ export const syncData = async (): Promise<{
 };
 
 // ===============================
-// AUTO SYNC (SAFE VERSION)
+// AUTO SYNC (NO EMPTY CALLS)
 // ===============================
 export const startAutoSync = (): (() => void) => {
   let lastSyncTime = 0;
-  const COOLDOWN = 10000; // 10 seconds cooldown
+  const COOLDOWN = 10000;
 
   const unsubscribe = NetInfo.addEventListener(async (state) => {
     const now = Date.now();
 
     const online = Boolean(
-      state.isConnected && state.isInternetReachable !== false,
+      state.isConnected &&
+      state.isInternetReachable !== false
     );
 
-    if (online && now - lastSyncTime > COOLDOWN) {
-      lastSyncTime = now;
+    if (!online) return;
 
-      console.log("🌐 Internet restored → syncing...");
-      await syncData();
+    // ===============================
+    // IMPORTANT: PRE-CHECK DB
+    // ===============================
+    const items = await getUnsyncedItems();
+
+    if (!items.length) {
+      console.log("AutoSync skipped — no pending data");
+      return;
     }
+
+    if (now - lastSyncTime < COOLDOWN) return;
+
+    lastSyncTime = now;
+
+    console.log("AutoSync triggered...");
+    await syncData();
   });
 
   return unsubscribe;

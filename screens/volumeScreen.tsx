@@ -1,6 +1,6 @@
 import StatusModal from "@/components/StatusModal";
 import { useTranslation } from "@/hooks/useLanguage";
-import { getItemsWithoutVolume } from "@/utils/Database";
+import { getItemsWithoutVolume, updateItemVolume } from "@/utils/Database";
 import { FontAwesome5, MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
@@ -53,20 +53,28 @@ const VolumeScreen = () => {
     loadData();
   }, []);
 
-  const updateVolume = (id: number, value: string) => {
+  const updateVolume = (id: number, value: any) => {
     const updated = volumeData.map((row) =>
       row.id === id ? { ...row, volume: value } : row,
     );
     setVolumeData(updated);
   };
 
-  const handleSave = () => {
-    setModalVisible(true);
-    // TODO: save to DB
+  const handleSave = async () => {
+    try {
+      for (const row of volumeData) {
+        await updateItemVolume(row.id, row.volume);
+      }
+
+      setModalVisible(true);
+    } catch (error) {
+      console.log("SAVE VOLUME ERROR:", error);
+    }
   };
 
   const handleCloseModal = () => {
     setModalVisible(false);
+    router.replace("/");
   };
 
   const showEmpty = !loading && volumeData.length === 0;

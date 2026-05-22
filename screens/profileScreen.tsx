@@ -2,11 +2,13 @@
 
 import { Fonts } from "@/constants/theme";
 import { useTranslation } from "@/hooks/useLanguage";
+import { useProfile } from "@/hooks/User/useProfile";
 import { Logout } from "@/services/AuthService";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
+  Image,
   ScrollView,
   StyleSheet,
   Text,
@@ -15,8 +17,17 @@ import {
 } from "react-native";
 
 const Profile = () => {
+  const [userProfile, setUserProfile] = useState(null);
   const router = useRouter();
   const { t, isRTL } = useTranslation();
+  const { data } = useProfile();
+  console.log("PROFILE DATA", JSON.stringify(data, null, 2));
+
+  useEffect(() => {
+    if (data) {
+      setUserProfile(data.user);
+    }
+  }, [data]);
 
   const handleLogout = async () => {
     const res = await Logout();
@@ -103,9 +114,13 @@ const Profile = () => {
     >
       {/* Avatar */}
       <View style={styles.avatarWrapper}>
-        <View style={styles.avatar}>
+        {/* <View style={styles.avatar}>
           <MaterialIcons name="person" size={40} color="#555" />
-        </View>
+        </View> */}
+        <Image
+          source={{ uri: userProfile?.image }}
+          style={styles.avatar}
+        />
 
         <View style={styles.checkIcon}>
           <MaterialIcons name="check" size={16} color="#fff" />
@@ -121,7 +136,7 @@ const Profile = () => {
           },
         ]}
       >
-        Allah Dino
+        {userProfile?.name}
       </Text>
 
       <Text
@@ -132,7 +147,7 @@ const Profile = () => {
           },
         ]}
       >
-        alikhan2026@gmail.com
+        {userProfile?.email}
       </Text>
 
       {/* Settings */}
