@@ -9,6 +9,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
+import Toast from "react-native-toast-message";
 
 export const unstable_settings = {
   anchor: "(auth)",
@@ -35,6 +36,7 @@ export default function RootLayout() {
           <Stack.Screen name="onboarding" options={{ headerShown: false }} />
         </Stack>
         <StatusBar style="dark" translucent={true} animated={true} />
+        <Toast />
       </ThemeProvider>
     </QueryClientProvider>
   );

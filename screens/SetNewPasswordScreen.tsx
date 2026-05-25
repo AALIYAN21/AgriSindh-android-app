@@ -1,4 +1,5 @@
 import StatusModal from "@/components/StatusModal";
+import { useChangePassword } from "@/hooks/Auth/password";
 import { useTranslation } from "@/hooks/useLanguage";
 import {
   AntDesign,
@@ -24,15 +25,21 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const SetNewPasswordScreen = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [currentPassword, setCurrentPassword] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false);
 
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+
   const { t, isRTL } = useTranslation();
 
   const router = useRouter();
+
+  const { mutate: changePassword, isPending: isPendingChangePassword } =
+    useChangePassword();
 
   const passwordChecks = {
     minLength: password.length >= 8,
@@ -50,8 +57,20 @@ const SetNewPasswordScreen = () => {
     passwordChecks.match;
 
   const handleResetPassword = () => {
-    if (!isPasswordStrong) return;
-    setIsModalVisible(true);
+    if (!isPasswordStrong || isPendingChangePassword) return;
+
+    changePassword(
+      {
+        currentPassword,
+        newPassword: password,
+        confirmPassword,
+      },
+      {
+        onSuccess: () => {
+          setIsModalVisible(true);
+        },
+      },
+    );
   };
 
   const handleCloseModal = () => {
@@ -108,6 +127,30 @@ const SetNewPasswordScreen = () => {
             <Text style={[styles.subtitle, isRTL && { textAlign: "right" }]}>
               {t("newPassword.subTitle")}
             </Text>
+
+            {/* Current Password */}
+            <View style={styles.inputContainer}>
+              <Feather name="lock" size={20} color="#666" style={styles.icon} />
+
+              <TextInput
+                style={styles.input}
+                placeholder="Current Password"
+                placeholderTextColor="#999"
+                secureTextEntry={!showCurrentPassword}
+                value={currentPassword}
+                onChangeText={setCurrentPassword}
+              />
+
+              <TouchableOpacity
+                onPress={() => setShowCurrentPassword(!showCurrentPassword)}
+              >
+                <Ionicons
+                  name={showCurrentPassword ? "eye-off-outline" : "eye-outline"}
+                  size={22}
+                  color="#666"
+                />
+              </TouchableOpacity>
+            </View>
 
             {/* New Password */}
             <View style={styles.inputContainer}>

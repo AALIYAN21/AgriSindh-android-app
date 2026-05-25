@@ -117,10 +117,7 @@ const Profile = () => {
         {/* <View style={styles.avatar}>
           <MaterialIcons name="person" size={40} color="#555" />
         </View> */}
-        <Image
-          source={{ uri: userProfile?.image }}
-          style={styles.avatar}
-        />
+        <Image source={{ uri: userProfile?.image }} style={styles.avatar} />
 
         <View style={styles.checkIcon}>
           <MaterialIcons name="check" size={16} color="#fff" />
@@ -186,6 +183,13 @@ const Profile = () => {
           title={t("profile.titleHelpAndSupport")}
           subtitle={t("profile.subTitleHelpAndSupport")}
           onPress={() => router.push("/settings/help")}
+        />
+
+        <MenuItem
+          icon="lock"
+          title={t("profile.titleChangePassword")}
+          subtitle={t("profile.subTitleChangePassword")}
+          onPress={() => router.push("/(auth)/set-password")}
         />
       </View>
 

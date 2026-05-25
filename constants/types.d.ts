@@ -24,3 +24,9 @@ export interface User {
   name: string;
   email: string;
 }
+
+export interface ChangeUserPassword {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}

@@ -5,7 +5,7 @@ import axios from "axios";
 
 // Create axios instance
 const apiClient = axios.create({
-  baseURL: "https://popularity-munich-dvds-pensions.trycloudflare.com",
+  baseURL: "https://prostate-instructor-repeat-recruitment.trycloudflare.com",
   // timeout: 10000,
 });
 
